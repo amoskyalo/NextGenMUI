@@ -89,3 +89,8 @@ const MyForm = () => {
 };
 
 ```
+
+<img width="260" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/3505c4cd-009b-43f2-bba7-c217f09b761d">
+<img width="247" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/17890adb-9f30-4b58-8fe2-e3fb29163a24">
+
+
