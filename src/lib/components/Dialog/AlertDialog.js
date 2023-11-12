@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Dialog, Box, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-const DialogModel = ({ dialogContentText, dialogTitle, open, size = "xs", onClose, onAction, }) => {
+const AlertDialog = ({ dialogContentText, dialogTitle, open, size, onClose, onAction, }) => {
     return (
         <Dialog
             open={open}
@@ -32,7 +32,7 @@ const DialogModel = ({ dialogContentText, dialogTitle, open, size = "xs", onClos
     );
 };
 
-DialogModel.propTypes = {
+AlertDialog.propTypes = {
     dialogContentText: PropTypes.string.isRequired,
     dialogTitle: PropTypes.string.isRequired,
     open: PropTypes.bool.isRequired,
@@ -41,8 +41,8 @@ DialogModel.propTypes = {
     size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl'])
 }
 
-DialogModel.defaultProps = {
+AlertDialog.defaultProps = {
     size: "xs"
 }
 
-export default DialogModel
+export default AlertDialog

@@ -5,62 +5,45 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _react = _interopRequireDefault(require("react"));
+var _Close = _interopRequireDefault(require("@mui/icons-material/Close"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _material = require("@mui/material");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 const DialogModel = _ref => {
   let {
-    dialogContentText,
-    dialogTitle,
-    open,
-    size = "xs",
     onClose,
-    onAction
+    open,
+    title,
+    fullWidth,
+    maxWidth,
+    children
   } = _ref;
   return /*#__PURE__*/_react.default.createElement(_material.Dialog, {
     open: open,
-    maxWidth: size,
-    onClose: onClose
-  }, /*#__PURE__*/_react.default.createElement(_material.Box, {
-    sx: {
-      paddingY: 1
-    }
-  }, /*#__PURE__*/_react.default.createElement(_material.DialogTitle, null, dialogTitle), /*#__PURE__*/_react.default.createElement(_material.DialogContent, {
-    sx: {
-      paddingY: 2
-    }
-  }, /*#__PURE__*/_react.default.createElement(_material.DialogContentText, {
-    sx: {
-      fontSize: 14
-    }
-  }, dialogContentText)), /*#__PURE__*/_react.default.createElement(_material.DialogActions, null, /*#__PURE__*/_react.default.createElement(_material.Button, {
-    sx: {
-      textTransform: "capitalize"
-    },
-    onClick: onClose
-  }, "Cancel"), /*#__PURE__*/_react.default.createElement(_material.Button, {
-    onClick: () => {
-      onClose();
-      onAction();
-    },
-    autoFocus: true,
-    sx: {
-      borderRadius: 50,
-      paddingX: 4,
-      paddingY: 0.7
-    },
-    variant: "contained"
-  }, "Ok"))));
+    onClose: onClose,
+    fullWidth: fullWidth,
+    maxWidth: maxWidth
+  }, title && /*#__PURE__*/_react.default.createElement(_material.DialogTitle, null, /*#__PURE__*/_react.default.createElement(_material.Box, {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
+  }, /*#__PURE__*/_react.default.createElement(_material.Typography, {
+    variant: "h6"
+  }, title), /*#__PURE__*/_react.default.createElement(_material.IconButton, {
+    onClick: onClose,
+    "aria-label": "close"
+  }, /*#__PURE__*/_react.default.createElement(_Close.default, null)))), /*#__PURE__*/_react.default.createElement(_material.DialogContent, null, children));
 };
 DialogModel.propTypes = {
-  dialogContentText: _propTypes.default.string.isRequired,
-  dialogTitle: _propTypes.default.string.isRequired,
-  open: _propTypes.default.bool.isRequired,
   onClose: _propTypes.default.func.isRequired,
-  onAction: _propTypes.default.func.isRequired,
-  size: _propTypes.default.oneOf(['xs', 'sm', 'md', 'lg', 'xl'])
+  open: _propTypes.default.bool.isRequired,
+  title: _propTypes.default.string,
+  fullWidth: _propTypes.default.bool,
+  maxWidth: _propTypes.default.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+  children: _propTypes.default.node.isRequired
 };
 DialogModel.defaultProps = {
-  size: "xs"
+  maxWidth: "sm",
+  fullWidth: false
 };
 var _default = exports.default = DialogModel;

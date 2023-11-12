@@ -1,48 +1,46 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Button, Dialog, Box, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import React from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import PropTypes from "prop-types";
+import { IconButton, DialogTitle, Dialog, DialogContent, Box, Typography } from "@mui/material";
 
-const DialogModel = ({ dialogContentText, dialogTitle, open, size = "xs", onClose, onAction, }) => {
+const DialogModel = ({ onClose, open, title, fullWidth, maxWidth, children }) => {
     return (
         <Dialog
             open={open}
-            maxWidth={size}
             onClose={onClose}
+            fullWidth={fullWidth}
+            maxWidth={maxWidth}
         >
-            <Box sx={{ paddingY: 1 }}>
-                <DialogTitle>{dialogTitle}</DialogTitle>
-                <DialogContent sx={{ paddingY: 2 }}>
-                    <DialogContentText sx={{ fontSize: 14 }}>
-                        {dialogContentText}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button sx={{ textTransform: "capitalize" }} onClick={onClose}>Cancel</Button>
-                    <Button
-                        onClick={() => { onClose(); onAction() }}
-                        autoFocus
-                        sx={{ borderRadius: 50, paddingX: 4, paddingY: 0.7 }}
-                        variant="contained"
-                    >
-                        Ok
-                    </Button>
-                </DialogActions>
-            </Box>
+            {
+                title &&
+                <DialogTitle>
+                    <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+                        <Typography variant="h6">{title}</Typography>
+                        <IconButton onClick={onClose} aria-label="close">
+                            <CloseIcon />
+                        </IconButton>
+                    </Box>
+                </DialogTitle>
+            }
+            <DialogContent>
+                {children}
+            </DialogContent>
         </Dialog>
     );
 };
 
 DialogModel.propTypes = {
-    dialogContentText: PropTypes.string.isRequired,
-    dialogTitle: PropTypes.string.isRequired,
-    open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    onAction: PropTypes.func.isRequired,
-    size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl'])
+    open: PropTypes.bool.isRequired,
+    title: PropTypes.string,
+    fullWidth: PropTypes.bool,
+    maxWidth: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+    children: PropTypes.node.isRequired
 }
 
 DialogModel.defaultProps = {
-    size: "xs"
+    maxWidth: "sm",
+    fullWidth: false
 }
 
-export default DialogModel
+export default DialogModel;
