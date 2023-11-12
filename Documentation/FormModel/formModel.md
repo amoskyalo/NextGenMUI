@@ -1,5 +1,10 @@
 ## FormModel Component
 
+<img width="260" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/3505c4cd-009b-43f2-bba7-c217f09b761d">
+<img width="247" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/17890adb-9f30-4b58-8fe2-e3fb29163a24">
+<img width="269" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/c23b5140-36ab-4430-8878-3913027d0eb9">
+
+
 The FormModel component is a versatile form component built using Material-UI. It dynamically renders input fields based on the provided configuration and handles both text and select input types. The form also supports loading states and submit button control.
 
 ### Props
@@ -89,8 +94,3 @@ const MyForm = () => {
 };
 
 ```
-
-<img width="260" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/3505c4cd-009b-43f2-bba7-c217f09b761d">
-<img width="247" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/17890adb-9f30-4b58-8fe2-e3fb29163a24">
-
-
