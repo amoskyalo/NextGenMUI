@@ -1,7 +1,7 @@
 ## FormModel Component
 
 <img width="260" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/3505c4cd-009b-43f2-bba7-c217f09b761d">
-<img width="260" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/17890adb-9f30-4b58-8fe2-e3fb29163a24">
+<img width="258" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/17890adb-9f30-4b58-8fe2-e3fb29163a24">
 <img width="260" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/c23b5140-36ab-4430-8878-3913027d0eb9">
 
 
