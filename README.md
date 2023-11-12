@@ -24,3 +24,41 @@ The component accepts the following props:
 - **isLoading** (boolean): If true, shows a loading indicator in the submit button.
 - **onSubmit** (func): The function to call when the form is submitted.
 - **onFieldChange** (func): The function to call when any input field value changes.
+
+### Props
+
+- `maxWidth`: 300
+- `disableSubmitButton`: false
+
+### Usage
+
+Here's an example of how to use the `FormModel` component:
+
+```
+import FormModel from './FormModel';
+
+const MyForm = () => {
+  const inputs = [
+    { name: 'username', label: 'Username', type: 'text', required: true },
+    // Add more input configurations here
+  ];
+
+  const handleFieldChange = (event) => {
+    // Handle field change
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Handle form submission
+  };
+
+  return (
+    <FormModel
+      inputs={inputs}
+      onSubmit={handleSubmit}
+      onFieldChange={handleFieldChange}
+    />
+  );
+};
+
+```
