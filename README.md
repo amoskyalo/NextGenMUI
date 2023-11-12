@@ -18,3 +18,9 @@ The component accepts the following props:
   - **`lookups`** (array): An array of objects for select inputs, each with a `name` and `value`.
   - **`multiselect`** (boolean): If true, allows multiple selections in a select input.
   - **`disabled`** (boolean): If true, disables the input field.
+- **maxWidth** (number): The maximum width of the form.
+- **options** (object): Additional options for styling and behavior customization.
+- **disableSubmitButton** (boolean): If true, disables the submit button.
+- **isLoading** (boolean): If true, shows a loading indicator in the submit button.
+- **onSubmit** (func): The function to call when the form is submitted.
+- **onFieldChange** (func): The function to call when any input field value changes.
