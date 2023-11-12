@@ -32,10 +32,10 @@ The component accepts the following props:
 Here's an example of how to use the `FormModel` component:
 
 ```javaScript
-import FormModel from './FormModel';
+import {FormModel} from 'NextGenMUI';
 
 const MyForm = () => {
-    const [payload, setPayload] = useState({ userName: null, userEmail: null, isAdmin: null });
+  const [payload, setPayload] = useState({ userName: null, userEmail: null, isAdmin: null });
 
   const { userName, userEmail, isAdmin } = payload;
 
