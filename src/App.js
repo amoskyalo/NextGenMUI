@@ -55,20 +55,24 @@ function App() {
         <button onClick={() => setOpenFormDialog(true)}>Open form Dialog</button>
       </div>
 
-      <DialogModel open={openFormDialog} maxWidth="xs" fullWidth={true} title="Add New User" onClose={() => setOpenFormDialog(false)}>
+      {/* <DialogModel open={openFormDialog} maxWidth="xs" fullWidth={true} title="Add New User" onClose={() => setOpenFormDialog(false)}> */}
+      <div style={{ display: "flex", height: "100vh", width: "100%", alignItems: "center", justifyContent: "center" }}>
         <FormModel
           inputs={inputs}
           onFieldChange={handleChange}
           onSubmit={onSubmit}
-          maxWidth={"100%"}
+          maxWidth={500}
           options={{
             form: {
-              paddingTop: 4,
+              padding: 32,
               borderRadius: 8,
+              width: 300,
+              backgroundColor: "#f5fafe"
             }
           }}
         />
-      </DialogModel>
+      </div>
+      {/* </DialogModel> */}
 
       <AlertDialog
         dialogContentText="Are you sure you want to proceed with this action?"
