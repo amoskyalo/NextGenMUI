@@ -35,26 +35,56 @@ Here's an example of how to use the `FormModel` component:
 import FormModel from './FormModel';
 
 const MyForm = () => {
+    const [payload, setPayload] = useState({ userName: null, userEmail: null, isAdmin: null });
+
+  const { userName, userEmail, isAdmin } = payload;
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setPayload({ ...payload, [name]: value }) //setting up payload
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    //handle form submission
+  };
+
   const inputs = [
-    { name: 'username', label: 'Username', type: 'text', required: true },
-    // Add more input configurations here
-  ];
-
-  const handleFieldChange = (event) => {
-    // Handle field change
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission
-  };
+    {
+      name: "userName",
+      label: "User Name",
+      type: "text",
+      value: userName,
+      required: true
+    },
+    {
+      name: "userEmail",
+      label: "User Email",
+      type: "email",
+      value: userEmail,
+      required: true
+    },
+    {
+      name: "isAdmin",
+      label: "Is Admin",
+      lookups: [{ name: "Yes", value: 0 }, { name: "No", value: "Yes" }],
+      value: isAdmin,
+      required: true
+    }
 
   return (
     <FormModel
-      inputs={inputs}
-      onSubmit={handleSubmit}
-      onFieldChange={handleFieldChange}
-    />
+          inputs={inputs}
+          onFieldChange={handleChange}
+          onSubmit={onSubmit}
+          maxWidth={"100%"}
+          options={{
+            form: {
+              paddingTop: 4,
+              borderRadius: 8,
+            }
+          }}
+        />
   );
 };
 
