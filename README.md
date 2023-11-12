@@ -11,3 +11,10 @@ The FormModel component is a versatile form component built using Material-UI. I
 The component accepts the following props:
 - **inputs**: An array of objects describing each input field in the form. Each object can have the following properties:
   - **` name `** (string, required): The name of the input field.
+  - **` name `** (string, required): The name of the input field.
+  - **` name `** (string, required): The name of the input field.
+  - **` name `** (string, required): The name of the input field.
+  - **` name `** (string, required): The name of the input field.
+  - **` name `** (string, required): The name of the input field.
+  - **` name `** (string, required): The name of the input field.
+  - **` name `** (string, required): The name of the input field.
