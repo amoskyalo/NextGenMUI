@@ -34,7 +34,7 @@ The component accepts the following props:
 
 Here's an example of how to use the `FormModel` component:
 
-```
+```javaScript
 import FormModel from './FormModel';
 
 const MyForm = () => {
