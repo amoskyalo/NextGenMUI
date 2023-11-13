@@ -38,7 +38,7 @@ const defaultOptions = {
     preserveAspectRatio: 'xMidYMid slice'
   }
 };
-const GridModal = _ref => {
+const GridModel = _ref => {
   let {
       columns,
       rows,
@@ -232,7 +232,7 @@ const GridModal = _ref => {
     startIcon: /*#__PURE__*/_react.default.createElement(_Add.default, null)
   }, "New")));
 };
-GridModal.propTypes = {
+GridModel.propTypes = {
   columns: _propTypes.default.array.isRequired,
   rows: _propTypes.default.array.isRequired,
   loading: _propTypes.default.bool,
@@ -251,7 +251,7 @@ GridModal.propTypes = {
   defaultStartDate: _propTypes.default.string,
   defaultEndDate: _propTypes.default.string
 };
-GridModal.defaultProps = {
+GridModel.defaultProps = {
   disableAdd: false,
   disableExport: false,
   disablePrint: false,
@@ -262,4 +262,4 @@ GridModal.defaultProps = {
   defaultStartDate: _Utils.fromDate,
   defaultEndDate: _Utils.toDate
 };
-var _default = exports.default = GridModal;
+var _default = exports.default = GridModel;

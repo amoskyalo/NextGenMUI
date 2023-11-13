@@ -65,7 +65,8 @@ const StepperFormModel = _ref => {
     isLoading: isLoading,
     onSubmit: !isLastStep() ? handleNext : onSubmit,
     submitButtonWidth: submitButtonWidth,
-    gridColumnsCount: gridColumnsCount
+    gridColumnsCount: gridColumnsCount,
+    options: options
   }), /*#__PURE__*/_react.default.createElement(_material.Box, {
     sx: {
       display: 'flex',
