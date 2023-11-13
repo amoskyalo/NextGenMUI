@@ -65,7 +65,6 @@ function App() {
 
   return (
     <>
-      <div style={{ width: 400, margin: "auto", marginTop: 200 }}>
         <StepperFormModel
           steps={stepsList}
           options={{
@@ -77,7 +76,6 @@ function App() {
           }
         }}
         />
-      </div>
     </>
   );
 }
