@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { TextField, Select, MenuItem, FormControl, Button, CircularProgress, OutlinedInput, InputLabel } from "@mui/material";
 
-const FormModel = ({ onFieldChange, onSubmit, isLoading, disableSubmitButton, inputs, width, options, gridColumnsCount, submitButtonWidth }) => {
+const FormModel = ({ onFieldChange, onSubmit, isLoading, disableSubmitButton, inputs, width, options, gridColumnsCount, submitButtonWidth, buttonLabel }) => {
   return (
     <form
       onSubmit={onSubmit}
@@ -22,6 +22,7 @@ const FormModel = ({ onFieldChange, onSubmit, isLoading, disableSubmitButton, in
             (
               <FormControl sx={{ width: "100%" }} size="small">
                 <TextField
+                  fullWidth
                   key={input.label}
                   value={input.value || ''}
                   label={input.label}
@@ -74,7 +75,7 @@ const FormModel = ({ onFieldChange, onSubmit, isLoading, disableSubmitButton, in
         sx={{ textTransform: "capitalize", height: 42, width: submitButtonWidth, gridColumn: `span ${gridColumnsCount}` }}
         disabled={disableSubmitButton}
       >
-        {isLoading ? (<CircularProgress color="inherit" size={24} />) : "Submit"}
+        {isLoading ? (<CircularProgress color="inherit" size={24} />) : buttonLabel}
       </Button>
     </form>
   )
@@ -85,6 +86,7 @@ FormModel.propTypes = {
   width: PropTypes.number,
   gridColumnsCount: PropTypes.number,
   submitButtonWidth: PropTypes.number,
+  buttonLabel: PropTypes.string,
   inputs: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
@@ -113,10 +115,11 @@ FormModel.propTypes = {
 };
 
 FormModel.defaultProps = {
-  width: 300,
+  width: "100%",
   disableSubmitButton: false,
   gridColumnsCount: 1,
-  submitButtonWidth: "100%"
+  submitButtonWidth: "100%",
+  buttonLabel: "Submit"
 }
 
 export default FormModel
