@@ -24,7 +24,7 @@ const defaultOptions = {
     }
 };
 
-const GridModal = ({
+const GridModel = ({
     columns,
     rows,
     loading,
@@ -243,7 +243,7 @@ const GridModal = ({
     );
 };
 
-GridModal.propTypes = {
+GridModel.propTypes = {
     columns: PropTypes.array.isRequired,
     rows: PropTypes.array.isRequired,
     loading: PropTypes.bool,
@@ -263,7 +263,7 @@ GridModal.propTypes = {
     defaultEndDate: PropTypes.string
 };
 
-GridModal.defaultProps = {
+GridModel.defaultProps = {
     disableAdd: false,
     disableExport: false,
     disablePrint: false,
@@ -275,4 +275,4 @@ GridModal.defaultProps = {
     defaultEndDate: toDate
 }
 
-export default GridModal;
+export default GridModel;

@@ -41,6 +41,7 @@ const StepperFormModel = ({ steps, onFieldChange, isLoading, onSubmit, width, bu
                 onSubmit={!isLastStep() ? handleNext : onSubmit}
                 submitButtonWidth={submitButtonWidth}
                 gridColumnsCount={gridColumnsCount}
+                options={options}
             />
 
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
