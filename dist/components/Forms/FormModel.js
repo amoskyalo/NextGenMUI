@@ -21,21 +21,23 @@ const FormModel = _ref => {
     isLoading,
     disableSubmitButton,
     inputs,
-    maxWidth,
-    options
+    width,
+    options,
+    gridColumnsCount,
+    submitButtonWidth
   } = _ref;
   return /*#__PURE__*/_react.default.createElement("form", {
     onSubmit: onSubmit,
     style: _objectSpread({
       display: "grid",
-      gridTemplateColumns: "repeat(1, 1fr)",
-      columnGap: 32,
+      gridTemplateColumns: "repeat(".concat(gridColumnsCount, ", 1fr)"),
+      columnGap: 24,
+      rowGap: 24,
       height: "max-content",
-      maxWidth
+      width
     }, options === null || options === void 0 ? void 0 : options.form)
   }, inputs.map((input, __) => !Array.isArray(input.lookups) ? /*#__PURE__*/_react.default.createElement(_material.FormControl, {
     sx: {
-      mb: 3,
       width: "100%"
     },
     size: "small"
@@ -53,7 +55,6 @@ const FormModel = _ref => {
     size: "small"
   })) : /*#__PURE__*/_react.default.createElement(_material.FormControl, {
     sx: {
-      mb: 3,
       width: "100%"
     },
     size: "small"
@@ -87,7 +88,10 @@ const FormModel = _ref => {
     type: "submit",
     variant: "contained",
     sx: {
-      textTransform: "capitalize"
+      textTransform: "capitalize",
+      height: 42,
+      width: submitButtonWidth,
+      gridColumn: "span ".concat(gridColumnsCount)
     },
     disabled: disableSubmitButton
   }, isLoading ? /*#__PURE__*/_react.default.createElement(_material.CircularProgress, {
@@ -97,7 +101,9 @@ const FormModel = _ref => {
 };
 FormModel.propTypes = {
   options: _propTypes.default.object,
-  maxWidth: _propTypes.default.number,
+  width: _propTypes.default.number,
+  gridColumnsCount: _propTypes.default.number,
+  submitButtonWidth: _propTypes.default.number,
   inputs: _propTypes.default.arrayOf(_propTypes.default.shape({
     name: _propTypes.default.string.isRequired,
     label: _propTypes.default.string.isRequired,
@@ -119,7 +125,9 @@ FormModel.propTypes = {
   onFieldChange: _propTypes.default.func
 };
 FormModel.defaultProps = {
-  maxWidth: 300,
-  disableSubmitButton: false
+  width: 300,
+  disableSubmitButton: false,
+  gridColumnsCount: 1,
+  submitButtonWidth: "100%"
 };
 var _default = exports.default = FormModel;
