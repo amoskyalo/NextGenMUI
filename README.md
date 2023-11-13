@@ -1,10 +1,6 @@
 # NextGenMUI
 
-<div border="1px solid red">
-  <img width="157" margin="auto" alt="image" src="https://github.com/amoskyalo/NextGenMUI/assets/91586973/b84ee1cd-b1a1-48d2-afb6-680778edb79f">
-</div>
-
-
+<img width="157" margin="auto" alt="image" src="https://github.com/amoskyalo/NextGenMUI/assets/91586973/b84ee1cd-b1a1-48d2-afb6-680778edb79f">
 
 NextGenMUI is an innovative plugin designed to extend the capabilities of Material-UI, providing developers with an enhanced toolkit for creating dynamic, responsive, and visually appealing web applications. This plugin is a collection of thoughtfully designed components built on top of Material-UI, offering additional functionality and customization options to streamline the development process.
 
