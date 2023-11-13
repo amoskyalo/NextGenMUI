@@ -1,6 +1,8 @@
 # NextGenMUI
 
-<img width="157" margin="auto" alt="image" src="https://github.com/amoskyalo/NextGenMUI/assets/91586973/b84ee1cd-b1a1-48d2-afb6-680778edb79f">
+<div border="1px solid red">
+  <img width="157" margin="auto" alt="image" src="https://github.com/amoskyalo/NextGenMUI/assets/91586973/b84ee1cd-b1a1-48d2-afb6-680778edb79f">
+</div>
 
 
 
