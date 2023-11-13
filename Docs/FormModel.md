@@ -3,6 +3,8 @@
 <img width="260" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/3505c4cd-009b-43f2-bba7-c217f09b761d">
 <img width="258" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/17890adb-9f30-4b58-8fe2-e3fb29163a24">
 <img width="260" alt="image" src="https://github.com/amoskyalo/React-Components-Plugin/assets/91586973/c23b5140-36ab-4430-8878-3913027d0eb9">
+<img width="521" alt="image" src="https://github.com/amoskyalo/NextGenMUI/assets/91586973/29cf861b-15ab-4f2b-8095-9467b9c30434">
+
 
 
 The FormModel component is a versatile form component built using Material-UI. It dynamically renders input fields based on the provided configuration and handles both text and select input types. The form also supports loading states and submit button control.
@@ -20,7 +22,9 @@ The component accepts the following props:
   - **`lookups`** (array): An array of objects for select inputs, each with a `name` and `value`.
   - **`multiselect`** (boolean): If true, allows multiple selections in a select input.
   - **`disabled`** (boolean): If true, disables the input field.
-- **maxWidth** (number): The maximum width of the form.
+- **width** (number): Sets width of the form.
+- **gridColumnsCount** (number): Sets the grid columns cunt for the form since the form has a grid layout.
+- **submitButtoWidth** ( number): Sets th width for the submit button. `Default is "100%"`
 - **options** (object): Additional options for styling and behavior customization.
 - **disableSubmitButton** (boolean): If true, disables the submit button.
 - **isLoading** (boolean): If true, shows a loading indicator in the submit button.
@@ -78,15 +82,17 @@ const MyForm = () => {
     }
 
   return (
-    <FormModel
+     <FormModel
           inputs={inputs}
           onFieldChange={handleChange}
           onSubmit={onSubmit}
-          maxWidth={"100%"}
+          width={700}
+          gridColumnsCount={2}
           options={{
             form: {
-              paddingTop: 4,
+              padding: 32,
               borderRadius: 8,
+              backgroundColor: "#f5fafe"
             }
           }}
         />
