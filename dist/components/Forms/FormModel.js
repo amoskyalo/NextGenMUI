@@ -24,7 +24,8 @@ const FormModel = _ref => {
     width,
     options,
     gridColumnsCount,
-    submitButtonWidth
+    submitButtonWidth,
+    buttonLabel
   } = _ref;
   return /*#__PURE__*/_react.default.createElement("form", {
     onSubmit: onSubmit,
@@ -42,6 +43,7 @@ const FormModel = _ref => {
     },
     size: "small"
   }, /*#__PURE__*/_react.default.createElement(_material.TextField, {
+    fullWidth: true,
     key: input.label,
     value: input.value || '',
     label: input.label,
@@ -97,13 +99,14 @@ const FormModel = _ref => {
   }, isLoading ? /*#__PURE__*/_react.default.createElement(_material.CircularProgress, {
     color: "inherit",
     size: 24
-  }) : "Submit"));
+  }) : buttonLabel));
 };
 FormModel.propTypes = {
   options: _propTypes.default.object,
   width: _propTypes.default.number,
   gridColumnsCount: _propTypes.default.number,
   submitButtonWidth: _propTypes.default.number,
+  buttonLabel: _propTypes.default.string,
   inputs: _propTypes.default.arrayOf(_propTypes.default.shape({
     name: _propTypes.default.string.isRequired,
     label: _propTypes.default.string.isRequired,
@@ -125,9 +128,10 @@ FormModel.propTypes = {
   onFieldChange: _propTypes.default.func
 };
 FormModel.defaultProps = {
-  width: 300,
+  width: "100%",
   disableSubmitButton: false,
   gridColumnsCount: 1,
-  submitButtonWidth: "100%"
+  submitButtonWidth: "100%",
+  buttonLabel: "Submit"
 };
 var _default = exports.default = FormModel;
