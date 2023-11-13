@@ -2,16 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { TextField, Select, MenuItem, FormControl, Button, CircularProgress, OutlinedInput, InputLabel } from "@mui/material";
 
-const FormModel = ({ onFieldChange, onSubmit, isLoading, disableSubmitButton, inputs, maxWidth, options }) => {
+const FormModel = ({ onFieldChange, onSubmit, isLoading, disableSubmitButton, inputs, width, options, gridColumnsCount, submitButtonWidth }) => {
   return (
     <form
       onSubmit={onSubmit}
       style={{
         display: "grid",
-        gridTemplateColumns: `repeat(1, 1fr)`,
-        columnGap: 32,
+        gridTemplateColumns: `repeat(${gridColumnsCount}, 1fr)`,
+        columnGap: 24,
+        rowGap: 24,
         height: "max-content",
-        maxWidth,
+        width,
         ...options?.form
       }}
     >
@@ -19,7 +20,7 @@ const FormModel = ({ onFieldChange, onSubmit, isLoading, disableSubmitButton, in
         (input, __) =>
           !Array.isArray(input.lookups) ?
             (
-              <FormControl sx={{ mb: 3, width: "100%" }} size="small">
+              <FormControl sx={{ width: "100%" }} size="small">
                 <TextField
                   key={input.label}
                   value={input.value || ''}
@@ -36,7 +37,7 @@ const FormModel = ({ onFieldChange, onSubmit, isLoading, disableSubmitButton, in
               </FormControl>
             ) :
             (
-              <FormControl sx={{ mb: 3, width: "100%" }} size="small">
+              <FormControl sx={{ width: "100%" }} size="small">
                 <InputLabel id={`${input.name}-label`}>{input.label}</InputLabel>
                 <Select
                   labelId={`${input.name}-label`}
@@ -70,7 +71,7 @@ const FormModel = ({ onFieldChange, onSubmit, isLoading, disableSubmitButton, in
       <Button
         type='submit'
         variant="contained"
-        sx={{ textTransform: "capitalize" }}
+        sx={{ textTransform: "capitalize", height: 42, width: submitButtonWidth, gridColumn: `span ${gridColumnsCount}` }}
         disabled={disableSubmitButton}
       >
         {isLoading ? (<CircularProgress color="inherit" size={24} />) : "Submit"}
@@ -81,7 +82,9 @@ const FormModel = ({ onFieldChange, onSubmit, isLoading, disableSubmitButton, in
 
 FormModel.propTypes = {
   options: PropTypes.object,
-  maxWidth: PropTypes.number,
+  width: PropTypes.number,
+  gridColumnsCount: PropTypes.number,
+  submitButtonWidth: PropTypes.number,
   inputs: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
@@ -110,8 +113,10 @@ FormModel.propTypes = {
 };
 
 FormModel.defaultProps = {
-  maxWidth: 300,
-  disableSubmitButton: false
+  width: 300,
+  disableSubmitButton: false,
+  gridColumnsCount: 1,
+  submitButtonWidth: "100%"
 }
 
 export default FormModel

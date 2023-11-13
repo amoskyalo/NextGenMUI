@@ -61,12 +61,12 @@ function App() {
           inputs={inputs}
           onFieldChange={handleChange}
           onSubmit={onSubmit}
-          maxWidth={500}
+          width={700}
+          gridColumnsCount={2}
           options={{
             form: {
               padding: 32,
               borderRadius: 8,
-              width: 300,
               backgroundColor: "#f5fafe"
             }
           }}
