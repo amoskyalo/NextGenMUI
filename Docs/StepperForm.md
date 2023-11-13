@@ -18,14 +18,14 @@
 
 The `StepperFormModel` component accepts the following props:
 
-- **steps**: An array of objects representing each step. Each object must have a `label` and an `inputs` array.
-- **onFieldChange**: A function triggered on input change.
-- **isLoading**: A boolean to indicate loading state.
-- **onSubmit**: A function triggered when the form is submitted.
-- **width**: The width of the stepper, can be a number or a string.
-- **buttonLabel**: The label for the submit button on the last step.
-- **submitButtonWidth**: The width of the submit button.
-- **gridColumnsCount**: Number of columns in the grid layout for form inputs.
+- **`steps`**: An array of objects representing each step. Each object must have a `label` and an `inputs` array.
+- **`onFieldChange`**: A function triggered on input change.
+- **`isLoading`**: A boolean to indicate loading state.
+- **`onSubmit`**: A function triggered when the form is submitted.
+- **`width`**: The width of the stepper, can be a number or a string.
+- **`buttonLabel`**: The label for the submit button on the last step.
+- **`submitButtonWidth`**: The width of the submit button.
+- **`gridColumnsCount`**: Number of columns in the grid layout for form inputs.
 
 ## Customization
 
@@ -33,12 +33,15 @@ You can customize the appearance of the stepper and the form by passing styles t
 
 ```javascript
  options={{
-          stepper: {
+     stepper: {
             backgroundColor: "white",
             padding: 4,
             borderRadius: 2,
             boxShadow: "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
           }
+ form: {
+     // styles for form
+}
         }}
 ```
 
