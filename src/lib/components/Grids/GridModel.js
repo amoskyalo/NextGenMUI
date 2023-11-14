@@ -57,6 +57,7 @@ const GridModel = ({
                             sx={{ textTransform: "capitalize" }}
                             startIcon={<PrintIcon />}
                             variant="contained"
+                            size="small"
                             onClick={handlePrint}
                         >
                             Print
@@ -65,6 +66,7 @@ const GridModel = ({
                             sx={{ textTransform: "capitalize" }}
                             startIcon={<ExitToAppIcon />}
                             variant="contained"
+                            size="small"
                             onClick={() => handleExportToExcel(columns, rows)}
                         >
                             Export to Excel
@@ -155,6 +157,7 @@ const GridModel = ({
                                 startIcon={<AddIcon />}
                                 onClick={onAdd}
                                 variant="contained"
+                                size="small"
                                 sx={{ textTransform: "capitalize" }}>
                                 New
                             </Button>
@@ -234,6 +237,7 @@ const GridModel = ({
                     {!disableAdd && <Button
                         onClick={onAdd}
                         variant="contained"
+                        size="small"
                         sx={{ textTransform: 'capitalize', width: 300, mt: 1 }}
                         startIcon={<AddIcon />}
                     >
