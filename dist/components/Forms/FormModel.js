@@ -29,7 +29,6 @@ const FormModel = _ref => {
     validationSchema,
     onSubmit: _onSubmit,
     isLoading,
-    disableSubmitButton,
     inputs,
     width,
     options,
@@ -162,7 +161,6 @@ const FormModel = _ref => {
       width: submitButtonWidth,
       gridColumn: "span ".concat(gridColumnsCount)
     },
-    disabled: disableSubmitButton,
     size: "medium"
   }, isLoading ? /*#__PURE__*/_react.default.createElement(_material.CircularProgress, {
     color: "inherit",
@@ -191,13 +189,11 @@ FormModel.propTypes = {
     multiselect: _propTypes.default.bool,
     disabled: _propTypes.default.bool
   })).isRequired,
-  disableSubmitButton: _propTypes.default.bool,
   isLoading: _propTypes.default.bool,
   onSubmit: _propTypes.default.func
 };
 FormModel.defaultProps = {
   width: "100%",
-  disableSubmitButton: false,
   gridColumnsCount: 1,
   submitButtonWidth: "100%",
   buttonLabel: "Submit"

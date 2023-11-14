@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { TextField, Select, MenuItem, FormControl, Button, CircularProgress, OutlinedInput, InputLabel, Typography, Box } from "@mui/material";
 
-const FormModel = ({ validationSchema, onSubmit, isLoading, disableSubmitButton, inputs, width, options, gridColumnsCount, submitButtonWidth, buttonLabel, CustomTitle }) => {
+const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, options, gridColumnsCount, submitButtonWidth, buttonLabel, CustomTitle }) => {
 
   function constructInitialValues() {
     let initialValues = {};
@@ -139,7 +139,6 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, disableSubmitButton,
               type='submit'
               variant="contained"
               sx={{ textTransform: "capitalize", width: submitButtonWidth, gridColumn: `span ${gridColumnsCount}` }}
-              disabled={disableSubmitButton}
               size='medium'
             >
               {isLoading ? (<CircularProgress color="inherit" size={20} />) : buttonLabel}
@@ -179,14 +178,12 @@ FormModel.propTypes = {
     multiselect: PropTypes.bool,
     disabled: PropTypes.bool
   })).isRequired,
-  disableSubmitButton: PropTypes.bool,
   isLoading: PropTypes.bool,
   onSubmit: PropTypes.func,
 };
 
 FormModel.defaultProps = {
   width: "100%",
-  disableSubmitButton: false,
   gridColumnsCount: 1,
   submitButtonWidth: "100%",
   buttonLabel: "Submit"
