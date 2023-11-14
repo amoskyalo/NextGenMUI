@@ -45,55 +45,40 @@ Here's an example of how to use the `FormModel` component:
 import {FormModel} from 'NextGenMUI';
 
 const MyForm = () => {
-  const [payload, setPayload] = useState({ userName: null, userEmail: null, isAdmin: null });
-
-  const { userName, userEmail, isAdmin } = payload;
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setPayload({ ...payload, [name]: value }) //setting up payload
-  }
-
-  const onSubmit = (e) => {
-    e.preventDefault()
-    //handle form submission
-  };
-
   const inputs = [
     {
       name: "userName",
-      label: "User Name",
       type: "text",
-      value: userName,
+      label: "Full Name",
+      value: null,
       required: true
+    },
+    {
+      name: "userPhone",
+      label: "Phone Number",
+      value: null,
+      required: true,
+      type: "tel"
     },
     {
       name: "userEmail",
-      label: "User Email",
-      type: "email",
-      value: userEmail,
-      required: true
-    },
-    {
-      name: "isAdmin",
-      label: "Is Admin",
-      lookups: [{ name: "Yes", value: 0 }, { name: "No", value: "Yes" }],
-      value: isAdmin,
-      required: true
+      label: "Email Address",
+      value: null,
+      required: true,
+      type: "email"
     }
+  ]
 
   return (
-     <FormModel
-          inputs={inputs}
-          onFieldChange={handleChange}
-          onSubmit={onSubmit}
-          width={700}
-          gridColumnsCount={2}
+      <FormModel inputs={inputs}
+          CustomTitle={() => <p style={{ fontSize: 18, fontWeight: 900 }}>Add New User</p>}
+          onSubmit={(values) => { console.log(values) }}
           options={{
             form: {
-              padding: 32,
+              backgroundColor: "white",
+              padding: ".5rem 2rem 2rem 2rem",
               borderRadius: 8,
-              backgroundColor: "#f5fafe"
+              boxShadow: "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
             }
           }}
         />
