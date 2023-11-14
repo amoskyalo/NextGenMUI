@@ -35,7 +35,8 @@ const FormModel = _ref => {
     options,
     gridColumnsCount,
     submitButtonWidth,
-    buttonLabel
+    buttonLabel,
+    CustomTitle
   } = _ref;
   function constructInitialValues() {
     let initialValues = {};
@@ -59,20 +60,22 @@ const FormModel = _ref => {
   }
   return /*#__PURE__*/_react.default.createElement(_formik.Formik, {
     initialValues: constructInitialValues(),
-    onSubmit: values => {
-      _onSubmit(values);
-    },
+    onSubmit: values => _onSubmit(values),
     validationSchema: validationSchema || defaultValidationSchema()
   }, formik => /*#__PURE__*/_react.default.createElement("form", {
     onSubmit: formik.handleSubmit,
     style: _objectSpread({
-      display: "grid",
-      gridTemplateColumns: "repeat(".concat(gridColumnsCount, ", 1fr)"),
-      columnGap: 24,
-      rowGap: 24,
       height: "max-content",
       width
     }, options === null || options === void 0 ? void 0 : options.form)
+  }, CustomTitle && /*#__PURE__*/_react.default.createElement(CustomTitle, null), /*#__PURE__*/_react.default.createElement(_material.Box, {
+    sx: {
+      display: "grid",
+      gridTemplateColumns: "repeat(".concat(gridColumnsCount, ", 1fr)"),
+      columnGap: 3,
+      rowGap: 3,
+      marginTop: 3
+    }
   }, inputs.map((input, __) => !Array.isArray(input.lookups) ? /*#__PURE__*/_react.default.createElement(_material.FormControl, {
     sx: {
       width: "100%"
@@ -156,15 +159,15 @@ const FormModel = _ref => {
     variant: "contained",
     sx: {
       textTransform: "capitalize",
-      height: 42,
       width: submitButtonWidth,
       gridColumn: "span ".concat(gridColumnsCount)
     },
-    disabled: disableSubmitButton
+    disabled: disableSubmitButton,
+    size: "medium"
   }, isLoading ? /*#__PURE__*/_react.default.createElement(_material.CircularProgress, {
     color: "inherit",
-    size: 24
-  }) : buttonLabel)));
+    size: 20
+  }) : buttonLabel))));
 };
 FormModel.propTypes = {
   options: _propTypes.default.object,
@@ -172,6 +175,7 @@ FormModel.propTypes = {
   gridColumnsCount: _propTypes.default.number,
   submitButtonWidth: _propTypes.default.number,
   buttonLabel: _propTypes.default.string,
+  CustomTitle: _propTypes.default.node,
   inputs: _propTypes.default.arrayOf(_propTypes.default.shape({
     name: _propTypes.default.string.isRequired,
     label: _propTypes.default.string.isRequired,

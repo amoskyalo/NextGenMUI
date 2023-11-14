@@ -75,6 +75,7 @@ const GridModel = _ref => {
     },
     startIcon: /*#__PURE__*/_react.default.createElement(_Print.default, null),
     variant: "contained",
+    size: "small",
     onClick: _Utils.handlePrint
   }, "Print"), !disableExport && /*#__PURE__*/_react.default.createElement(_material.Button, {
     sx: {
@@ -82,6 +83,7 @@ const GridModel = _ref => {
     },
     startIcon: /*#__PURE__*/_react.default.createElement(_ExitToApp.default, null),
     variant: "contained",
+    size: "small",
     onClick: () => (0, _Utils.handleExportToExcel)(columns, rows)
   }, "Export to Excel")), /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
@@ -158,6 +160,7 @@ const GridModel = _ref => {
     startIcon: /*#__PURE__*/_react.default.createElement(_Add.default, null),
     onClick: onAdd,
     variant: "contained",
+    size: "small",
     sx: {
       textTransform: "capitalize"
     }
@@ -226,6 +229,7 @@ const GridModel = _ref => {
   }), /*#__PURE__*/_react.default.createElement(_material.Typography, null, "Looks like you dont have any data"), !disableAdd && /*#__PURE__*/_react.default.createElement(_material.Button, {
     onClick: onAdd,
     variant: "contained",
+    size: "small",
     sx: {
       textTransform: 'capitalize',
       width: 300,

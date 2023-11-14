@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { TextField, Select, MenuItem, FormControl, Button, CircularProgress, OutlinedInput, InputLabel, Typography } from "@mui/material";
+import { TextField, Select, MenuItem, FormControl, Button, CircularProgress, OutlinedInput, InputLabel, Typography, Box } from "@mui/material";
 
-const FormModel = ({ validationSchema, onSubmit, isLoading, disableSubmitButton, inputs, width, options, gridColumnsCount, submitButtonWidth, buttonLabel }) => {
+const FormModel = ({ validationSchema, onSubmit, isLoading, disableSubmitButton, inputs, width, options, gridColumnsCount, submitButtonWidth, buttonLabel, CustomTitle }) => {
 
   function constructInitialValues() {
     let initialValues = {};
@@ -36,107 +36,115 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, disableSubmitButton,
   return (
     <Formik
       initialValues={constructInitialValues()}
-      onSubmit={(values) => {
-        onSubmit(values)
-      }}
+      onSubmit={values => onSubmit(values)}
       validationSchema={validationSchema || defaultValidationSchema()}
     >
       {formik => (
         <form
           onSubmit={formik.handleSubmit}
           style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${gridColumnsCount}, 1fr)`,
-            columnGap: 24,
-            rowGap: 24,
             height: "max-content",
             width,
             ...options?.form
           }}
         >
-          {inputs.map(
-            (input, __) =>
-              !Array.isArray(input.lookups) ?
-                (
-                  <FormControl sx={{ width: "100%" }} size="small" key={input.name}>
-                    <TextField
-                      id={input.name}
-                      fullWidth
-                      label={input.label}
-                      name={input.name}
-                      type={input.type}
-                      disabled={input?.disabled}
-                      autoFocus={!!input.value}
-                      variant="outlined"
-                      size="small"
-                      {...formik.getFieldProps(input.name)}
-                      sx={{
-                        "& .MuiFormLabel-root": {
-                          color: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default"
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          color: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default"
-                        },
-                        "&:hover .MuiOutlinedInput-root fieldset": {
-                          borderColor: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default"
-                        },
-                        "& .MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default",
+
+          {CustomTitle && <CustomTitle />}
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: `repeat(${gridColumnsCount}, 1fr)`,
+              columnGap: 3,
+              rowGap: 3,
+              marginTop: 3
+            }}
+          >
+            {inputs.map(
+              (input, __) =>
+                !Array.isArray(input.lookups) ?
+                  (
+                    <FormControl sx={{ width: "100%" }} size="small" key={input.name}>
+                      <TextField
+                        id={input.name}
+                        fullWidth
+                        label={input.label}
+                        name={input.name}
+                        type={input.type}
+                        disabled={input?.disabled}
+                        autoFocus={!!input.value}
+                        variant="outlined"
+                        size="small"
+                        {...formik.getFieldProps(input.name)}
+                        sx={{
+                          "& .MuiFormLabel-root": {
+                            color: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default"
                           },
-                          "&.Mui-focused fieldset": {
+                          "& .MuiOutlinedInput-input": {
+                            color: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default"
+                          },
+                          "&:hover .MuiOutlinedInput-root fieldset": {
                             borderColor: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default"
                           },
-                        },
-                      }}
-                    />
-                    {formik.touched[input.name] && formik.errors[input.name] && (
-                      <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>
-                        {formik.errors[input.name]}
-                      </Typography>
-                    )}
-                  </FormControl>
-                ) :
-                (
-                  <FormControl sx={{ width: "100%" }} size="small" key={input.label}>
-                    <InputLabel id={`${input.name}-label`}>{input.label}</InputLabel>
-                    <Select
-                      labelId={`${input.name}-label`}
-                      id={input.name}
-                      label={input.label}
-                      name={input.name}
-                      multiple={input.multiselect}
-                      disabled={input.disabled}
-                      {...formik.getFieldProps(input.name)}
-                      input={<OutlinedInput label={input.label} />}
-                      MenuProps={{
-                        PaperProps: {
-                          style: {
-                            maxHeight: 300,
-                            overflowY: 'auto',
+                          "& .MuiOutlinedInput-root": {
+                            "& fieldset": {
+                              borderColor: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default",
+                            },
+                            "&.Mui-focused fieldset": {
+                              borderColor: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default"
+                            },
                           },
-                        },
-                      }}
-                    >
-                      {input?.lookups.map((lookup, __) => (
-                        <MenuItem key={lookup.name} value={lookup?.value}>{lookup?.name}</MenuItem>
-                      ))}
-                    </Select>
+                        }}
+                      />
+                      {formik.touched[input.name] && formik.errors[input.name] && (
+                        <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>
+                          {formik.errors[input.name]}
+                        </Typography>
+                      )}
+                    </FormControl>
+                  ) :
+                  (
+                    <FormControl sx={{ width: "100%" }} size="small" key={input.label}>
+                      <InputLabel id={`${input.name}-label`}>{input.label}</InputLabel>
+                      <Select
+                        labelId={`${input.name}-label`}
+                        id={input.name}
+                        label={input.label}
+                        name={input.name}
+                        multiple={input.multiselect}
+                        disabled={input.disabled}
+                        {...formik.getFieldProps(input.name)}
+                        input={<OutlinedInput label={input.label} />}
+                        MenuProps={{
+                          PaperProps: {
+                            style: {
+                              maxHeight: 300,
+                              overflowY: 'auto',
+                            },
+                          },
+                        }}
+                      >
+                        {input?.lookups.map((lookup, __) => (
+                          <MenuItem key={lookup.name} value={lookup?.value}>{lookup?.name}</MenuItem>
+                        ))}
+                      </Select>
 
-                    {formik.touched[input.name] && formik.errors[input.name] && <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>{formik.errors[input.name]}</Typography>}
-                  </FormControl>
+                      {formik.touched[input.name] && formik.errors[input.name] && <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>{formik.errors[input.name]}</Typography>}
+                    </FormControl>
 
-                )
-          )}
+                  )
+            )}
 
-          <Button
-            type='submit'
-            variant="contained"
-            sx={{ textTransform: "capitalize", height: 42, width: submitButtonWidth, gridColumn: `span ${gridColumnsCount}` }}
-            disabled={disableSubmitButton}
-          >
-            {isLoading ? (<CircularProgress color="inherit" size={24} />) : buttonLabel}
-          </Button>
+            <Button
+              type='submit'
+              variant="contained"
+              sx={{ textTransform: "capitalize", width: submitButtonWidth, gridColumn: `span ${gridColumnsCount}` }}
+              disabled={disableSubmitButton}
+              size='medium'
+            >
+              {isLoading ? (<CircularProgress color="inherit" size={20} />) : buttonLabel}
+            </Button>
+          </Box>
         </form>
       )}
     </Formik>
@@ -149,6 +157,7 @@ FormModel.propTypes = {
   gridColumnsCount: PropTypes.number,
   submitButtonWidth: PropTypes.number,
   buttonLabel: PropTypes.string,
+  CustomTitle: PropTypes.node,
   inputs: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
