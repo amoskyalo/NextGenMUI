@@ -50,116 +50,117 @@ const GridModel = ({
 
     return (
         <Box>
-            {showGridHeader && <Box display={"flex"} justifyContent={"space-between"}>
-                <Box display={"flex"} columnGap={3}>
-                    {!disablePrint && <Button
-                        sx={{ textTransform: "capitalize" }}
-                        startIcon={<PrintIcon />}
-                        variant="contained"
-                        onClick={handlePrint}
-                    >
-                        Print
-                    </Button>}
-                    {!disableExport && <Button
-                        sx={{ textTransform: "capitalize" }}
-                        startIcon={<ExitToAppIcon />}
-                        variant="contained"
-                        onClick={() => handleExportToExcel(columns, rows)}
-                    >
-                        Export to Excel
-                    </Button>}
-                </Box>
-
-                <Box display={"flex"} columnGap={3}>
-                    {showSearchBar && <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            border: "1px solid gray",
-                            borderRadius: 1,
-                            paddingX: 1,
-                            minWidth: 300,
-                        }}
-                    >
-                        <TextField
-                            placeholder="Search"
-                            fullWidth
-                            sx={{
-                                "& .MuiInputBase-input": {
-                                    height: 36,
-                                    padding: 0,
-                                    flex: 1,
-                                },
-                                "& .MuiOutlinedInput-root": {
-                                    "&.Mui-focused fieldset": {
-                                        borderColor: "transparent",
-                                    },
-                                    "& fieldset": {
-                                        borderColor: "transparent",
-                                    },
-                                    "&:hover fieldset": {
-                                        borderColor: "transparent",
-                                    },
-                                },
-                                "& .MuiOutlinedInput-input": {
-                                    "&:focus": {
-                                        outline: "none",
-                                    }
-                                }
-                            }}
-                        />
-
-                        <SearchIcon sx={{ color: "gray" }} />
-                    </Box>}
-
-
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        {showStartDateFilter && <DatePicker
-                            label="From"
-                            value={dayjs(defaultStartDate)}
-                            onChange={onChangeStartDate}
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    height: 38,
-                                    width: 175
-                                },
-                                "& .MuiFormLabel-root": {
-                                    top: -7,
-                                },
-                            }}
-                        />}
-
-                        {showEndDateFilter && <DatePicker
-                            label="To"
-                            value={dayjs(defaultEndDate)}
-                            onChange={onChangeEndDate}
-                            sx={{
-                                "& .MuiOutlinedInput-root": {
-                                    height: 38,
-                                    width: 175
-                                },
-                                "& .MuiFormLabel-root": {
-                                    top: -7,
-                                }
-                            }}
-                        />}
-                    </LocalizationProvider>
-
-
-                    {FilterComponent && <FilterComponent />}
-
-                    {!disableAdd && (
-                        <Button
-                            startIcon={<AddIcon />}
-                            onClick={onAdd}
+            {showGridHeader &&
+                <Box display={"flex"} justifyContent={"space-between"} marginBottom={6}>
+                    <Box display={"flex"} columnGap={3}>
+                        {!disablePrint && <Button
+                            sx={{ textTransform: "capitalize" }}
+                            startIcon={<PrintIcon />}
                             variant="contained"
-                            sx={{ textTransform: "capitalize" }}>
-                            New
-                        </Button>
-                    )}
-                </Box>
-            </Box>}
+                            onClick={handlePrint}
+                        >
+                            Print
+                        </Button>}
+                        {!disableExport && <Button
+                            sx={{ textTransform: "capitalize" }}
+                            startIcon={<ExitToAppIcon />}
+                            variant="contained"
+                            onClick={() => handleExportToExcel(columns, rows)}
+                        >
+                            Export to Excel
+                        </Button>}
+                    </Box>
+
+                    <Box display={"flex"} columnGap={3}>
+                        {showSearchBar && <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                border: "1px solid gray",
+                                borderRadius: 1,
+                                paddingX: 1,
+                                minWidth: 300,
+                            }}
+                        >
+                            <TextField
+                                placeholder="Search"
+                                fullWidth
+                                sx={{
+                                    "& .MuiInputBase-input": {
+                                        height: 36,
+                                        padding: 0,
+                                        flex: 1,
+                                    },
+                                    "& .MuiOutlinedInput-root": {
+                                        "&.Mui-focused fieldset": {
+                                            borderColor: "transparent",
+                                        },
+                                        "& fieldset": {
+                                            borderColor: "transparent",
+                                        },
+                                        "&:hover fieldset": {
+                                            borderColor: "transparent",
+                                        },
+                                    },
+                                    "& .MuiOutlinedInput-input": {
+                                        "&:focus": {
+                                            outline: "none",
+                                        }
+                                    }
+                                }}
+                            />
+
+                            <SearchIcon sx={{ color: "gray" }} />
+                        </Box>}
+
+
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            {showStartDateFilter && <DatePicker
+                                label="From"
+                                value={dayjs(defaultStartDate)}
+                                onChange={onChangeStartDate}
+                                sx={{
+                                    "& .MuiOutlinedInput-root": {
+                                        height: 38,
+                                        width: 175
+                                    },
+                                    "& .MuiFormLabel-root": {
+                                        top: -7,
+                                    },
+                                }}
+                            />}
+
+                            {showEndDateFilter && <DatePicker
+                                label="To"
+                                value={dayjs(defaultEndDate)}
+                                onChange={onChangeEndDate}
+                                sx={{
+                                    "& .MuiOutlinedInput-root": {
+                                        height: 38,
+                                        width: 175
+                                    },
+                                    "& .MuiFormLabel-root": {
+                                        top: -7,
+                                    }
+                                }}
+                            />}
+                        </LocalizationProvider>
+
+
+                        {FilterComponent && <FilterComponent />}
+
+                        {!disableAdd && (
+                            <Button
+                                startIcon={<AddIcon />}
+                                onClick={onAdd}
+                                variant="contained"
+                                sx={{ textTransform: "capitalize" }}>
+                                New
+                            </Button>
+                        )}
+                    </Box>
+                </Box>}
 
             {GridButtonsComponent && <GridButtonsComponent />}
 
@@ -182,12 +183,12 @@ const GridModel = ({
                         sx={{
                             "&>.MuiDataGrid-main": {
                                 "& .MuiDataGrid-columnHeaderTitle": {
-                                    fontWeight: "900",
+                                    // fontWeight: "900",
                                     fontSize: 15,
                                 },
                                 "& .MuiDataGrid-columnHeader:focus": {
                                     outline: "none",
-                                    border: "none",
+                                    // border: "none",
                                 },
                                 "& .MuiDataGrid-columnHeader:focus-within": {
                                     outline: "none !important",

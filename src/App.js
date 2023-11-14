@@ -18,7 +18,7 @@ function App() {
           name: "userName",
           type: "text",
           label: "Full Name",
-          value: null,
+          value: "Amos Kyalo",
           required: true
         },
         {
@@ -26,7 +26,7 @@ function App() {
           label: "Phone Number",
           value: null,
           required: true,
-          type: "number"
+          type: "tel"
         },
         {
           name: "userEmail",
@@ -62,6 +62,9 @@ function App() {
     <>
       <div style={{ width: 400, margin: "auto", marginTop: 200 }}>
         <StepperFormModel steps={stepsList}
+          onSubmit={(values) => {
+            console.log(values)
+          }}
           options={{
             stepper: {
               backgroundColor: "white",

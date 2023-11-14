@@ -64,7 +64,8 @@ const GridModel = _ref => {
     props = _objectWithoutProperties(_ref, _excluded);
   return /*#__PURE__*/_react.default.createElement(_material.Box, null, showGridHeader && /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginBottom: 6
   }, /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
     columnGap: 3
@@ -179,13 +180,14 @@ const GridModel = _ref => {
     sx: {
       "&>.MuiDataGrid-main": {
         "& .MuiDataGrid-columnHeaderTitle": {
-          fontWeight: "900",
+          // fontWeight: "900",
           fontSize: 15
         },
         "& .MuiDataGrid-columnHeader:focus": {
-          outline: "none",
-          border: "none"
+          outline: "none"
+          // border: "none",
         },
+
         "& .MuiDataGrid-columnHeader:focus-within": {
           outline: "none !important"
         }
