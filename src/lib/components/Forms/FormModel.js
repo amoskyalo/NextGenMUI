@@ -1,83 +1,145 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { TextField, Select, MenuItem, FormControl, Button, CircularProgress, OutlinedInput, InputLabel } from "@mui/material";
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as Yup from 'yup';
+import { Formik } from 'formik';
+import { TextField, Select, MenuItem, FormControl, Button, CircularProgress, OutlinedInput, InputLabel, Typography } from "@mui/material";
 
-const FormModel = ({ onFieldChange, onSubmit, isLoading, disableSubmitButton, inputs, width, options, gridColumnsCount, submitButtonWidth, buttonLabel }) => {
+const FormModel = ({ validationSchema, onSubmit, isLoading, disableSubmitButton, inputs, width, options, gridColumnsCount, submitButtonWidth, buttonLabel }) => {
+
+  function constructInitialValues() {
+    let initialValues = {};
+    for (let input of inputs) {
+      initialValues[input.name] = input.value
+    }
+
+    return initialValues
+  }
+
+  function defaultValidationSchema() {
+    const schema = {};
+
+    for (let key of Object.keys(constructInitialValues())) {
+      if (key.toLowerCase().includes("email")) {
+        schema[key] = Yup.string().email("Invalid email address").required("This field required")
+      } else if (key.toLowerCase().includes("password")) {
+        schema[key] = Yup.string().required("This field is required")
+      } else {
+        schema[key] = Yup.string().required("This field is required")
+      }
+    }
+
+    return Yup.object({
+      ...schema,
+    })
+  }
+
   return (
-    <form
-      onSubmit={onSubmit}
-      style={{
-        display: "grid",
-        gridTemplateColumns: `repeat(${gridColumnsCount}, 1fr)`,
-        columnGap: 24,
-        rowGap: 24,
-        height: "max-content",
-        width,
-        ...options?.form
+    <Formik
+      initialValues={constructInitialValues()}
+      onSubmit={(values) => {
+        onSubmit(values)
       }}
+      validationSchema={validationSchema || defaultValidationSchema()}
     >
-      {inputs.map(
-        (input, __) =>
-          !Array.isArray(input.lookups) ?
-            (
-              <FormControl sx={{ width: "100%" }} size="small">
-                <TextField
-                  fullWidth
-                  key={input.label}
-                  value={input.value || ''}
-                  label={input.label}
-                  name={input.name}
-                  type={input.type}
-                  disabled={input?.disabled}
-                  onChange={onFieldChange}
-                  autoFocus={!!input.value}
-                  required={input.required}
-                  variant="outlined"
-                  size="small"
-                />
-              </FormControl>
-            ) :
-            (
-              <FormControl sx={{ width: "100%" }} size="small">
-                <InputLabel id={`${input.name}-label`}>{input.label}</InputLabel>
-                <Select
-                  labelId={`${input.name}-label`}
-                  key={input.label}
-                  label={input.label}
-                  name={input.name}
-                  onChange={onFieldChange}
-                  multiple={input.multiselect}
-                  disabled={input.disabled}
-                  required={input.required}
-                  value={input.multiselect ? input.selectValue : input.value !== null ? input.value : ''}
-                  input={<OutlinedInput label={input.label} />}
-                  MenuProps={{
-                    PaperProps: {
-                      style: {
-                        maxHeight: 300,
-                        overflowY: 'auto',
-                      },
-                    },
-                  }}
-                >
-                  {input?.lookups.map((lookup, __) => (
-                    <MenuItem key={lookup.name} value={lookup?.value}>{lookup?.name} </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+      {formik => (
+        <form
+          onSubmit={formik.handleSubmit}
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${gridColumnsCount}, 1fr)`,
+            columnGap: 24,
+            rowGap: 24,
+            height: "max-content",
+            width,
+            ...options?.form
+          }}
+        >
+          {inputs.map(
+            (input, __) =>
+              !Array.isArray(input.lookups) ?
+                (
+                  <FormControl sx={{ width: "100%" }} size="small" key={input.name}>
+                    <TextField
+                      id={input.name}
+                      fullWidth
+                      label={input.label}
+                      name={input.name}
+                      type={input.type}
+                      disabled={input?.disabled}
+                      autoFocus={!!input.value}
+                      variant="outlined"
+                      size="small"
+                      {...formik.getFieldProps(input.name)}
+                      sx={{
+                        "& .MuiFormLabel-root": {
+                          color: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default"
+                        },
+                        "& .MuiOutlinedInput-input": {
+                          color: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default"
+                        },
+                        "&:hover .MuiOutlinedInput-root fieldset": {
+                          borderColor: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default"
+                        },
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            borderColor: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default",
+                          },
+                          "&.Mui-focused fieldset": {
+                            borderColor: formik.touched[input.name] && formik.errors[input.name] ? "red" : "default"
+                          },
+                        },
+                      }}
+                    />
+                    {formik.touched[input.name] && formik.errors[input.name] && (
+                      <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>
+                        {formik.errors[input.name]}
+                      </Typography>
+                    )}
+                  </FormControl>
+                ) :
+                (
+                  <FormControl sx={{ width: "100%" }} size="small" key={input.label}>
+                    <InputLabel id={`${input.name}-label`}>{input.label}</InputLabel>
+                    <Select
+                      labelId={`${input.name}-label`}
+                      id={input.name}
+                      label={input.label}
+                      name={input.name}
+                      multiple={input.multiselect}
+                      disabled={input.disabled}
+                      {...formik.getFieldProps(input.name)}
+                      input={<OutlinedInput label={input.label} />}
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 300,
+                            overflowY: 'auto',
+                          },
+                        },
+                      }}
+                    >
+                      {input?.lookups.map((lookup, __) => (
+                        <MenuItem key={lookup.name} value={lookup?.value}>{lookup?.name}</MenuItem>
+                      ))}
+                    </Select>
 
-            )
+                    {formik.touched[input.name] && formik.errors[input.name] && <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>{formik.errors[input.name]}</Typography>}
+                  </FormControl>
+
+                )
+          )}
+
+          <Button
+            type='submit'
+            variant="contained"
+            sx={{ textTransform: "capitalize", height: 42, width: submitButtonWidth, gridColumn: `span ${gridColumnsCount}` }}
+            disabled={disableSubmitButton}
+          >
+            {isLoading ? (<CircularProgress color="inherit" size={24} />) : buttonLabel}
+          </Button>
+        </form>
       )}
-
-      <Button
-        type='submit'
-        variant="contained"
-        sx={{ textTransform: "capitalize", height: 42, width: submitButtonWidth, gridColumn: `span ${gridColumnsCount}` }}
-        disabled={disableSubmitButton}
-      >
-        {isLoading ? (<CircularProgress color="inherit" size={24} />) : buttonLabel}
-      </Button>
-    </form>
+    </Formik>
   )
 }
 
@@ -111,7 +173,6 @@ FormModel.propTypes = {
   disableSubmitButton: PropTypes.bool,
   isLoading: PropTypes.bool,
   onSubmit: PropTypes.func,
-  onFieldChange: PropTypes.func
 };
 
 FormModel.defaultProps = {
