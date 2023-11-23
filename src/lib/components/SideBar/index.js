@@ -7,11 +7,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DrawerItemsModel from './DrawerItemsModel'
 
 const drawerWidth = 250;
-const minWidth = 250;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  minWidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -41,7 +39,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open, backgroundColor, textColor }) => ({
     width: drawerWidth,
-    // flexShrink: 0,
+    flexShrink: 0,
     whiteSpace: 'nowrap',
     ...(open && {
       ...openedMixin(theme),
@@ -59,7 +57,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         ...closedMixin(theme),
         backgroundColor,
         color: textColor,
-        padding: "0 16px"
+        padding: "0 16px",
       },
     }),
   }),
