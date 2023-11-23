@@ -1,10 +1,12 @@
 "use strict";
 
+require("core-js/modules/es.symbol.description.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-require("core-js/modules/es.symbol.description.js");
+require("core-js/modules/es.regexp.exec.js");
+require("core-js/modules/es.string.replace.js");
 var _react = _interopRequireDefault(require("react"));
 var _material = require("@mui/material");
 var _reactRouterDom = require("react-router-dom");
@@ -29,13 +31,17 @@ const ListItemsModel = _ref => {
   const navigate = (0, _reactRouterDom.useNavigate)();
   const path = location.pathname;
   function getActiveTab(tab) {
+    var _tab$path;
     let active = false;
-    if (path === tab.path && !tab.subLinks) {
+    if ((path === null || path === void 0 ? void 0 : path.replace("%20", "-")) === ((_tab$path = tab.path) === null || _tab$path === void 0 ? void 0 : _tab$path.replace(" ", "-")) && !tab.subLinks) {
       // for tabs without sublinks
       active = true;
     } else if (tab.subLinks) {
       // for tabs with sublinks
-      const sublinkWithCurrentPath = tab.subLinks.find(link => link.path === path);
+      const sublinkWithCurrentPath = tab.subLinks.find(link => {
+        var _link$path;
+        return ((_link$path = link.path) === null || _link$path === void 0 ? void 0 : _link$path.replace(" ", "-")) === (path === null || path === void 0 ? void 0 : path.replace("%20", "-"));
+      });
       if (sublinkWithCurrentPath) {
         active = true;
       }
