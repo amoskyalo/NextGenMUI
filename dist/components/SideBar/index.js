@@ -64,7 +64,8 @@ const Drawer = (0, _styles.styled)(_Drawer.default, {
   return _objectSpread(_objectSpread({
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box'
   }, open && _objectSpread(_objectSpread({}, openedMixin(theme)), {}, {
     '& .MuiDrawer-paper': _objectSpread(_objectSpread({}, openedMixin(theme)), {}, {
       backgroundColor,
