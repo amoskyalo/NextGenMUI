@@ -11,10 +11,10 @@ const ListItemsModel = ({ listItems, expanded, open, setExpanded, handleClick, t
     function getActiveTab(tab) {
         let active = false;
 
-        if (path === tab.path && !tab.subLinks) { // for tabs without sublinks
+        if (path?.replace("%20", "-") === tab.path?.replace(" ", "-") && !tab.subLinks) { // for tabs without sublinks
             active = true;
         } else if (tab.subLinks) { // for tabs with sublinks
-            const sublinkWithCurrentPath = tab.subLinks.find(link => link.path === path);
+            const sublinkWithCurrentPath = tab.subLinks.find(link => link.path?.replace(" ", "-") === path?.replace("%20", "-"));
             if (sublinkWithCurrentPath) {
                 active = true;
             }
