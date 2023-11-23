@@ -23,10 +23,8 @@ function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key i
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 const drawerWidth = 250;
-const minWidth = 250;
 const openedMixin = theme => ({
   width: drawerWidth,
-  minWidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen
@@ -65,7 +63,7 @@ const Drawer = (0, _styles.styled)(_Drawer.default, {
   } = _ref2;
   return _objectSpread(_objectSpread({
     width: drawerWidth,
-    // flexShrink: 0,
+    flexShrink: 0,
     whiteSpace: 'nowrap'
   }, open && _objectSpread(_objectSpread({}, openedMixin(theme)), {}, {
     '& .MuiDrawer-paper': _objectSpread(_objectSpread({}, openedMixin(theme)), {}, {
