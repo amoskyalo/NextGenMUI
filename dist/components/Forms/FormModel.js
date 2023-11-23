@@ -48,7 +48,7 @@ const FormModel = _ref => {
     const schema = {};
     for (let key of Object.keys(constructInitialValues())) {
       if (key.toLowerCase().includes("email")) {
-        schema[key] = Yup.string().email("Invalid email address").required("This field required");
+        schema[key] = Yup.string().email("Invalid email address").required("This field is required");
       } else if (key.toLowerCase().includes("password")) {
         schema[key] = Yup.string().required("This field is required");
       } else {

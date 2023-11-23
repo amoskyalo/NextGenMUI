@@ -33,6 +33,12 @@ Object.defineProperty(exports, "PopoverModel", {
     return _PopoverModel.default;
   }
 });
+Object.defineProperty(exports, "SideBarModel", {
+  enumerable: true,
+  get: function get() {
+    return _SideBar.default;
+  }
+});
 Object.defineProperty(exports, "StepperFormModel", {
   enumerable: true,
   get: function get() {
@@ -45,4 +51,5 @@ var _FormModel = _interopRequireDefault(require("./components/Forms/FormModel"))
 var _GridModel = _interopRequireDefault(require("./components/Grids/GridModel"));
 var _StepperFormModel = _interopRequireDefault(require("./components/Forms/StepperFormModel"));
 var _PopoverModel = _interopRequireDefault(require("./components/Popovers/PopoverModel"));
+var _SideBar = _interopRequireDefault(require("./components/SideBar"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

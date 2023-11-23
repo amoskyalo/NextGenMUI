@@ -20,7 +20,7 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
 
     for (let key of Object.keys(constructInitialValues())) {
       if (key.toLowerCase().includes("email")) {
-        schema[key] = Yup.string().email("Invalid email address").required("This field required")
+        schema[key] = Yup.string().email("Invalid email address").required("This field is required")
       } else if (key.toLowerCase().includes("password")) {
         schema[key] = Yup.string().required("This field is required")
       } else {
@@ -29,7 +29,7 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
     }
 
     return Yup.object({
-      ...schema,
+      ...schema
     })
   }
 
