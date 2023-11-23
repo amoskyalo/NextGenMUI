@@ -4,10 +4,7 @@ import { Button, Dialog, Box, DialogActions, DialogContent, DialogContentText, D
 
 const AlertDialog = ({ dialogContentText, dialogTitle, open, size, onClose, onAction, }) => {
     return (
-        <Dialog
-            open={open}
-            maxWidth={size}
-            onClose={onClose}
+        <Dialog open={open} maxWidth={size} onClose={onClose}
         >
             <Box sx={{ paddingY: 1 }}>
                 <DialogTitle>{dialogTitle}</DialogTitle>
