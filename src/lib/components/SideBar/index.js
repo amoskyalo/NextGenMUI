@@ -31,17 +31,14 @@ const closedMixin = (theme) => ({
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-  ...theme.mixins.toolbar,
+  // alignItems: 'center',
+  // justifyContent: 'flex-end',
+  // ...theme.mixins.toolbar,
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open, backgroundColor, textColor }) => ({
     width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box',
     ...(open && {
       ...openedMixin(theme),
       '& .MuiDrawer-paper': {
@@ -59,6 +56,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         backgroundColor,
         color: textColor,
         padding: "0 16px",
+        border: "none",
       },
     }),
   }),
