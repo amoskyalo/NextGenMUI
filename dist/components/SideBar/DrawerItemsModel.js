@@ -20,7 +20,8 @@ const DrawerItemsModel = _ref => {
     listItems,
     activeTabBackgroundColor,
     textColor,
-    open
+    open,
+    options
   } = _ref;
   const navigation = (0, _reactRouterDom.useNavigate)();
   const [expanded, setExpanded] = (0, _react.useState)(null);
@@ -43,7 +44,8 @@ const DrawerItemsModel = _ref => {
       textColor: textColor,
       activeTabBackgroundColor: activeTabBackgroundColor,
       handleClick: handleClick,
-      setExpanded: setExpanded
+      setExpanded: setExpanded,
+      options: options
     });
   }
   return Array.isArray(listItems) ? getListModel(listItems) : listItems === null || listItems === void 0 || (_listItems$sections = listItems.sections) === null || _listItems$sections === void 0 ? void 0 : _listItems$sections.map((section, index) => {

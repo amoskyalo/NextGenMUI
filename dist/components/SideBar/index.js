@@ -88,7 +88,8 @@ const SideBarModel = _ref3 => {
     activeTabBackgroundColor,
     backgroundColor,
     textColor,
-    navigateItems
+    navigateItems,
+    options
   } = _ref3;
   const [open, setOpen] = (0, _react.useState)(false);
   const handleDrawerOpen = () => {
@@ -112,7 +113,8 @@ const SideBarModel = _ref3 => {
     listItems: navigateItems,
     activeTabBackgroundColor: activeTabBackgroundColor,
     textColor: textColor,
-    open: open || openHeader
+    open: open || openHeader,
+    options: options
   }));
 };
 SideBarModel.propTypes = {

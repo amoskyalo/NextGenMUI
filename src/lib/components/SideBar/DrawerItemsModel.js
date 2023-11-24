@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ListItemsModel from './ListItemsModel';
 import PropTypes from 'prop-types';
 
-const DrawerItemsModel = ({ listItems, activeTabBackgroundColor, textColor, open }) => {
+const DrawerItemsModel = ({ listItems, activeTabBackgroundColor, textColor, open, options }) => {
     const navigation = useNavigate();
     const [expanded, setExpanded] = useState(null);
 
@@ -30,6 +30,7 @@ const DrawerItemsModel = ({ listItems, activeTabBackgroundColor, textColor, open
                 activeTabBackgroundColor={activeTabBackgroundColor}
                 handleClick={handleClick}
                 setExpanded={setExpanded}
+                options={options}
             />
         )
     }

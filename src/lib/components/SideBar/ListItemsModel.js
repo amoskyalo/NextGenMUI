@@ -1,93 +1,96 @@
-import React from 'react'
+import React from 'react';
 import { ListItem, Fade, List, ListItemText, ListItemIcon, ListItemButton } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const ListItemsModel = ({ listItems, expanded, open, setExpanded, handleClick, textColor, activeTabBackgroundColor }) => {
+const ListItemsModel = ({ listItems, expanded, open, setExpanded, handleClick, textColor, activeTabBackgroundColor, options }) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const path = location.pathname;
+    const path = location.pathname.replace("%20", "-");
 
-    function getActiveTab(tab) {
-        let active = false;
+    const isActiveTab = (tab) => {
+        if (tab.subLinks) {
+            return tab.subLinks.some(link => link.path?.replace(" ", "-") === path);
+        }
+        return tab.path?.replace(" ", "-") === path;
+    };
 
-        if (path?.replace("%20", "-") === tab.path?.replace(" ", "-") && !tab.subLinks) { // for tabs without sublinks
-            active = true;
-        } else if (tab.subLinks) { // for tabs with sublinks
-            const sublinkWithCurrentPath = tab.subLinks.find(link => link.path?.replace(" ", "-") === path?.replace("%20", "-"));
-            if (sublinkWithCurrentPath) {
-                active = true;
+    const getStyle = (styleFunction, item) =>
+        typeof styleFunction === 'function' ? styleFunction({ ...item, open, isActiveTab: isActiveTab(item) }) : styleFunction;
+
+    const renderListItem = (item) => (
+        <ListItem
+            disablePadding
+            onClick={() => handleClick(item)}
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: isActiveTab(item) && activeTabBackgroundColor,
+                borderRadius: 1,
+                paddingY: 0,
+            }}
+        >
+            <ListItemButton
+                sx={{
+                    justifyContent: open ? 'initial' : 'center',
+                    ...getStyle(options?.listItemButton, item),
+                }}>
+                <ListItemIcon sx={{ minWidth: 0, mr: open ? 2 : 'auto', ml: open ? 0 : 0.5 }} >
+                    <item.icon sx={{ color: options?.getColor ? options.getColor({ ...item, open, isActiveTab: isActiveTab(item) }) : textColor }} />
+                </ListItemIcon>
+                <ListItemText
+                    primary={item.name}
+                    sx={{
+                        opacity: open ? 1 : 0,
+                        color: options?.getColor ? options.getColor({ ...item, open, isActiveTab: isActiveTab(item) }) : textColor,
+                        ...getStyle(options?.listItemText, item),
+                    }}
+                />
+                {item.subLinks && open && <ExpandMoreIcon sx={{ color: options?.getColor ? options.getColor({ ...item, open, isActiveTab: isActiveTab(item) }) : textColor }} onClick={() => setExpanded(item.name)} />}
+            </ListItemButton>
+        </ListItem>
+    );
+
+    const renderList = (item, additionalProps) => {
+        if (item.renderList) {
+            const renderedComponent = item.renderList({ ...item, ...additionalProps });
+            if (React.isValidElement(renderedComponent)) {
+                return renderedComponent;
             }
         }
-
-        return active;
-    }
-
-    function getActiveSubLink(tab) {
-        let active = false;
-
-        const sublinkWithCurrentPath = tab.subLinks.find(link => link.path === path);
-        if (sublinkWithCurrentPath) {
-            active = true;
-        }
-
-        return active;
-    }
+        return null;
+    };
 
     return (
-        <List>
+        <List sx={{ rowGap: 1, display: "flex", flexDirection: "column" }}>
             {listItems.map((item) => (
-                item.renderList && item.renderList({ ...item, open, isActiveTab: getActiveTab(item) }) ? item.renderList({ ...item, open, isActiveTab: getActiveTab(item) }) :
-                    <React.Fragment key={item?.name}>
-                        <ListItem
-                            disablePadding
-                            onClick={() => handleClick(item)}
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                backgroundColor: getActiveTab(item) && activeTabBackgroundColor,
-                                borderRadius: 1
-                            }}
-                        >
-                            <ListItemButton
-                                sx={{ justifyContent: open ? 'initial' : 'center' }}>
-                                <ListItemIcon sx={{ minWidth: 0, mr: open ? 2 : 'auto', ml: open ? 0 : 0.5 }} >
-                                    <item.icon sx={{ color: textColor }} />
-                                </ListItemIcon>
-                                <ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0 }} />
-                                {item.subLinks && open && <ExpandMoreIcon sx={{ color: textColor }} onClick={() => setExpanded(item.name)} />}
-                            </ListItemButton>
-                        </ListItem>
-
-                        {expanded === item.name && item.subLinks && open &&
-                            <Fade in={Boolean(expanded)} timeout={700}>
-                                <List sx={{ ml: 5, py: 0 }}>
-                                    {item.subLinks.map((link) => (
-                                        link.renderList &&
-                                            link.renderList({ ...link, open, parentTabActive: getActiveTab(item), isActive: getActiveSubLink(item) }) ?
-                                            link.renderList({ ...link, open, parentTabActive: getActiveTab(item), isActive: getActiveSubLink(item) }) :
-                                            <ListItem disablePadding key={link.name} onClick={() => navigate(link.path)}>
-                                                <ListItemButton sx={{ paddingY: 0.5 }}>
-                                                    {link.icon && <ListItemIcon
-                                                        sx={{ minWidth: 0, mr: 1.5 }}
-                                                    >
-                                                        <link.icon sx={{ color: textColor, fontSize: 18 }} />
-                                                    </ListItemIcon>
-                                                    }
-                                                    <ListItemText
-                                                        primary={link.name}
-                                                        sx={{ "& .MuiListItemText-primary": { fontSize: 14 } }}
-                                                    />
-                                                </ListItemButton>
-                                            </ListItem>
-                                    ))}
-                                </List>
-                            </Fade>}
-                    </React.Fragment>
+                renderList(item, { open, isActiveTab: isActiveTab(item) }) ||
+                <React.Fragment key={item?.name}>
+                    {renderListItem(item)}
+                    {expanded === item.name && item.subLinks && open &&
+                        <Fade in={Boolean(expanded)} timeout={700}>
+                            <List sx={{ ml: 5, py: 0 }}>
+                                {item.subLinks.map((link) => (
+                                    renderList(link, { open, parentTabActive: isActiveTab(item), isActive: isActiveTab(link) }) ||
+                                    <ListItem disablePadding key={link.name} onClick={() => navigate(link.path)}>
+                                        <ListItemButton sx={{ paddingY: 0.5 }}>
+                                            {link.icon && <ListItemIcon sx={{ minWidth: 0, mr: 1.5 }}>
+                                                <link.icon sx={{ color: options?.getColor ? options.getColor({ ...item, open, isActiveTab: isActiveTab(item) }) : textColor, fontSize: 18 }} />
+                                            </ListItemIcon>}
+                                            <ListItemText
+                                                primary={link.name}
+                                                sx={{ "& .MuiListItemText-primary": { fontSize: 14 } }}
+                                            />
+                                        </ListItemButton>
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </Fade>}
+                </React.Fragment>
             ))}
         </List>
-    )
-}
+    );
+};
 
-export default ListItemsModel
+export default ListItemsModel;
