@@ -46,12 +46,14 @@ const DrawerHeader = (0, _styles.styled)('div')(_ref => {
   let {
     theme
   } = _ref;
-  return _objectSpread({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end'
-  }, theme.mixins.toolbar);
+  return {
+    display: 'flex'
+    // alignItems: 'center',
+    // justifyContent: 'flex-end',
+    // ...theme.mixins.toolbar,
+  };
 });
+
 const Drawer = (0, _styles.styled)(_Drawer.default, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref2 => {
@@ -62,10 +64,7 @@ const Drawer = (0, _styles.styled)(_Drawer.default, {
     textColor
   } = _ref2;
   return _objectSpread(_objectSpread({
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    boxSizing: 'border-box'
+    width: drawerWidth
   }, open && _objectSpread(_objectSpread({}, openedMixin(theme)), {}, {
     '& .MuiDrawer-paper': _objectSpread(_objectSpread({}, openedMixin(theme)), {}, {
       backgroundColor,
@@ -77,7 +76,8 @@ const Drawer = (0, _styles.styled)(_Drawer.default, {
     '& .MuiDrawer-paper': _objectSpread(_objectSpread({}, closedMixin(theme)), {}, {
       backgroundColor,
       color: textColor,
-      padding: "0 16px"
+      padding: "0 16px",
+      border: "none"
     })
   }));
 });
