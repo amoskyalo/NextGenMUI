@@ -65,7 +65,7 @@ const GridModel = _ref => {
   return /*#__PURE__*/_react.default.createElement(_material.Box, null, showGridHeader && /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
     justifyContent: "space-between",
-    marginBottom: 6
+    marginBottom: 1
   }, /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
     columnGap: 3
