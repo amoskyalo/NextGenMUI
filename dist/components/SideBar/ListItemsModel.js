@@ -67,12 +67,12 @@ const ListItemsModel = _ref => {
       ml: open ? 0 : 0.5
     }
   }, /*#__PURE__*/_react.default.createElement(item.icon, {
-    sx: {
+    sx: _objectSpread(_objectSpread({}, getStyle(options === null || options === void 0 ? void 0 : options.listIcon, item)), {}, {
       color: options !== null && options !== void 0 && options.getColor ? options.getColor(_objectSpread(_objectSpread({}, item), {}, {
         open,
         isActiveTab: isActiveTab(item)
       })) : textColor
-    }
+    })
   })), /*#__PURE__*/_react.default.createElement(_material.ListItemText, {
     primary: item.name,
     sx: _objectSpread({

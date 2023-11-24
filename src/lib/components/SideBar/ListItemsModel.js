@@ -37,7 +37,11 @@ const ListItemsModel = ({ listItems, expanded, open, setExpanded, handleClick, t
                     ...getStyle(options?.listItemButton, item),
                 }}>
                 <ListItemIcon sx={{ minWidth: 0, mr: open ? 2 : 'auto', ml: open ? 0 : 0.5 }} >
-                    <item.icon sx={{ color: options?.getColor ? options.getColor({ ...item, open, isActiveTab: isActiveTab(item) }) : textColor }} />
+                    <item.icon
+                        sx={{
+                            ...getStyle(options?.listIcon, item),
+                            color: options?.getColor ? options.getColor({ ...item, open, isActiveTab: isActiveTab(item) }) : textColor
+                        }} />
                 </ListItemIcon>
                 <ListItemText
                     primary={item.name}

@@ -51,7 +51,7 @@ const GridModel = ({
     return (
         <Box>
             {showGridHeader &&
-                <Box display={"flex"} justifyContent={"space-between"} marginBottom={6}>
+                <Box display={"flex"} justifyContent={"space-between"} marginBottom={1}>
                     <Box display={"flex"} columnGap={3}>
                         {!disablePrint && <Button
                             sx={{ textTransform: "capitalize" }}
