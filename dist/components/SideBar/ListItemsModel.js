@@ -25,59 +25,41 @@ const ListItemsModel = _ref => {
     setExpanded,
     handleClick,
     textColor,
-    activeTabBackgroundColor
+    activeTabBackgroundColor,
+    options
   } = _ref;
   const location = (0, _reactRouterDom.useLocation)();
   const navigate = (0, _reactRouterDom.useNavigate)();
-  const path = location.pathname;
-  function getActiveTab(tab) {
+  const path = location.pathname.replace("%20", "-");
+  const isActiveTab = tab => {
     var _tab$path;
-    let active = false;
-    if ((path === null || path === void 0 ? void 0 : path.replace("%20", "-")) === ((_tab$path = tab.path) === null || _tab$path === void 0 ? void 0 : _tab$path.replace(" ", "-")) && !tab.subLinks) {
-      // for tabs without sublinks
-      active = true;
-    } else if (tab.subLinks) {
-      // for tabs with sublinks
-      const sublinkWithCurrentPath = tab.subLinks.find(link => {
+    if (tab.subLinks) {
+      return tab.subLinks.some(link => {
         var _link$path;
-        return ((_link$path = link.path) === null || _link$path === void 0 ? void 0 : _link$path.replace(" ", "-")) === (path === null || path === void 0 ? void 0 : path.replace("%20", "-"));
+        return ((_link$path = link.path) === null || _link$path === void 0 ? void 0 : _link$path.replace(" ", "-")) === path;
       });
-      if (sublinkWithCurrentPath) {
-        active = true;
-      }
     }
-    return active;
-  }
-  function getActiveSubLink(tab) {
-    let active = false;
-    const sublinkWithCurrentPath = tab.subLinks.find(link => link.path === path);
-    if (sublinkWithCurrentPath) {
-      active = true;
-    }
-    return active;
-  }
-  return /*#__PURE__*/_react.default.createElement(_material.List, null, listItems.map(item => item.renderList && item.renderList(_objectSpread(_objectSpread({}, item), {}, {
+    return ((_tab$path = tab.path) === null || _tab$path === void 0 ? void 0 : _tab$path.replace(" ", "-")) === path;
+  };
+  const getStyle = (styleFunction, item) => typeof styleFunction === 'function' ? styleFunction(_objectSpread(_objectSpread({}, item), {}, {
     open,
-    isActiveTab: getActiveTab(item)
-  })) ? item.renderList(_objectSpread(_objectSpread({}, item), {}, {
-    open,
-    isActiveTab: getActiveTab(item)
-  })) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, {
-    key: item === null || item === void 0 ? void 0 : item.name
-  }, /*#__PURE__*/_react.default.createElement(_material.ListItem, {
+    isActiveTab: isActiveTab(item)
+  })) : styleFunction;
+  const renderListItem = item => /*#__PURE__*/_react.default.createElement(_material.ListItem, {
     disablePadding: true,
     onClick: () => handleClick(item),
     sx: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: getActiveTab(item) && activeTabBackgroundColor,
-      borderRadius: 1
+      backgroundColor: isActiveTab(item) && activeTabBackgroundColor,
+      borderRadius: 1,
+      paddingY: 0
     }
   }, /*#__PURE__*/_react.default.createElement(_material.ListItemButton, {
-    sx: {
+    sx: _objectSpread({
       justifyContent: open ? 'initial' : 'center'
-    }
+    }, getStyle(options === null || options === void 0 ? void 0 : options.listItemButton, item))
   }, /*#__PURE__*/_react.default.createElement(_material.ListItemIcon, {
     sx: {
       minWidth: 0,
@@ -86,19 +68,50 @@ const ListItemsModel = _ref => {
     }
   }, /*#__PURE__*/_react.default.createElement(item.icon, {
     sx: {
-      color: textColor
+      color: options !== null && options !== void 0 && options.getColor ? options.getColor(_objectSpread(_objectSpread({}, item), {}, {
+        open,
+        isActiveTab: isActiveTab(item)
+      })) : textColor
     }
   })), /*#__PURE__*/_react.default.createElement(_material.ListItemText, {
     primary: item.name,
-    sx: {
-      opacity: open ? 1 : 0
-    }
+    sx: _objectSpread({
+      opacity: open ? 1 : 0,
+      color: options !== null && options !== void 0 && options.getColor ? options.getColor(_objectSpread(_objectSpread({}, item), {}, {
+        open,
+        isActiveTab: isActiveTab(item)
+      })) : textColor
+    }, getStyle(options === null || options === void 0 ? void 0 : options.listItemText, item))
   }), item.subLinks && open && /*#__PURE__*/_react.default.createElement(_ExpandMore.default, {
     sx: {
-      color: textColor
+      color: options !== null && options !== void 0 && options.getColor ? options.getColor(_objectSpread(_objectSpread({}, item), {}, {
+        open,
+        isActiveTab: isActiveTab(item)
+      })) : textColor
     },
     onClick: () => setExpanded(item.name)
-  }))), expanded === item.name && item.subLinks && open && /*#__PURE__*/_react.default.createElement(_material.Fade, {
+  })));
+  const renderList = (item, additionalProps) => {
+    if (item.renderList) {
+      const renderedComponent = item.renderList(_objectSpread(_objectSpread({}, item), additionalProps));
+      if ( /*#__PURE__*/_react.default.isValidElement(renderedComponent)) {
+        return renderedComponent;
+      }
+    }
+    return null;
+  };
+  return /*#__PURE__*/_react.default.createElement(_material.List, {
+    sx: {
+      rowGap: 1,
+      display: "flex",
+      flexDirection: "column"
+    }
+  }, listItems.map(item => renderList(item, {
+    open,
+    isActiveTab: isActiveTab(item)
+  }) || /*#__PURE__*/_react.default.createElement(_react.default.Fragment, {
+    key: item === null || item === void 0 ? void 0 : item.name
+  }, renderListItem(item), expanded === item.name && item.subLinks && open && /*#__PURE__*/_react.default.createElement(_material.Fade, {
     in: Boolean(expanded),
     timeout: 700
   }, /*#__PURE__*/_react.default.createElement(_material.List, {
@@ -106,15 +119,11 @@ const ListItemsModel = _ref => {
       ml: 5,
       py: 0
     }
-  }, item.subLinks.map(link => link.renderList && link.renderList(_objectSpread(_objectSpread({}, link), {}, {
+  }, item.subLinks.map(link => renderList(link, {
     open,
-    parentTabActive: getActiveTab(item),
-    isActive: getActiveSubLink(item)
-  })) ? link.renderList(_objectSpread(_objectSpread({}, link), {}, {
-    open,
-    parentTabActive: getActiveTab(item),
-    isActive: getActiveSubLink(item)
-  })) : /*#__PURE__*/_react.default.createElement(_material.ListItem, {
+    parentTabActive: isActiveTab(item),
+    isActive: isActiveTab(link)
+  }) || /*#__PURE__*/_react.default.createElement(_material.ListItem, {
     disablePadding: true,
     key: link.name,
     onClick: () => navigate(link.path)
@@ -129,7 +138,10 @@ const ListItemsModel = _ref => {
     }
   }, /*#__PURE__*/_react.default.createElement(link.icon, {
     sx: {
-      color: textColor,
+      color: options !== null && options !== void 0 && options.getColor ? options.getColor(_objectSpread(_objectSpread({}, item), {}, {
+        open,
+        isActiveTab: isActiveTab(item)
+      })) : textColor,
       fontSize: 18
     }
   })), /*#__PURE__*/_react.default.createElement(_material.ListItemText, {

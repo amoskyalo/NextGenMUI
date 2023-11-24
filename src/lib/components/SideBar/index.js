@@ -64,7 +64,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const SideBarModel = ({ NavHeader, openHeader, activeTabBackgroundColor, backgroundColor, textColor, navigateItems }) => {
+const SideBarModel = ({ NavHeader, openHeader, activeTabBackgroundColor, backgroundColor, textColor, navigateItems, options }) => {
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -91,6 +91,7 @@ const SideBarModel = ({ NavHeader, openHeader, activeTabBackgroundColor, backgro
         activeTabBackgroundColor={activeTabBackgroundColor}
         textColor={textColor}
         open={open || openHeader}
+        options={options}
       />
     </Drawer>
   )
