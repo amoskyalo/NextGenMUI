@@ -7,6 +7,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import TaskIcon from '@mui/icons-material/Task';
 import DataThresholdingIcon from '@mui/icons-material/DataThresholding';
 import Divider from "@mui/material/Divider";
+import GridModel from "./lib/components/Grids/GridModel";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -25,6 +26,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Box, IconButton, Typography } from "@mui/material";
 
 import logo from './Assets/logo3.png'
+import FormModel from "./lib/components/Forms/FormModel";
 
 function App() {
   const [open, setOpen] = useState(true)
@@ -69,9 +71,9 @@ function App() {
         {
           name: "User Data",
           icon: AccountBalanceIcon,
-          path: "/worklogs/user-data",
+          path: "/worklogs/user data",
           renderList: (params) => {
-            console.log(params)
+            // console.log(params)
             // return (
             //   <p>{params.name}</p>
             // )
@@ -91,29 +93,70 @@ function App() {
         title: "Overview",
         list: [...navigation],
       },
-      {
-        title: "Accounts",
-        list: [
-          {
-            name: "Chat",
-            icon: ChatBubbleIcon
-          },
-          {
-            name: "Settings",
-            icon: SettingsIcon
-          },
-          {
-            name: "Logout",
-            icon: LogoutIcon
-          }
-        ]
-      }
+      // {
+      //   title: "Accounts",
+      //   list: [
+      //     {
+      //       name: "Chat",
+      //       icon: ChatBubbleIcon
+      //     },
+      //     {
+      //       name: "Settings",
+      //       icon: SettingsIcon
+      //     },
+      //     {
+      //       name: "Logout",
+      //       icon: LogoutIcon
+      //     },
+      //     {
+      //       name: "Chat",
+      //       icon: ChatBubbleIcon
+      //     },
+      //     {
+      //       name: "Settings",
+      //       icon: SettingsIcon
+      //     },
+      //     {
+      //       name: "Logout",
+      //       icon: LogoutIcon
+      //     }
+      //   ]
+      // }
     ]
   }
 
+  const inputs = [
+    {
+      name: "username",
+      label: "Username",
+      type: "text",
+      value: "",
+    },
+    {
+      name: "password",
+      label: "Password",
+      type: "password",
+      value: "",
+    },
+    {
+      name: "isAdmin",
+      label: "Is Admin",
+      lookups: [{ title: "Yes", value: 0 }, { title: "No", value: 1 }],
+      value: "",
+    },
+    {
+      name: "roles",
+      label: "Roles",
+      lookups: [{ title: "Edit", value: 3 }, { title: "Delete", value: 6 }, { title: "Add", value: 12 }],
+      multiple: true,
+      value: [],
+    }
+  ]
+
+
   const NavHeader = () => {
     return (
-      <Box marginBottom={3} width={"100%"}>
+      <Box marginBottom={6} width={"100%"}>
         <Box display={"flex"} paddingY={2} justifyContent={open ? "space-between" : "center"} width={"100%"}>
           {open &&
             <Box display={"flex"} columnGap={1}>
@@ -142,15 +185,50 @@ function App() {
         activeTabBackgroundColor="#395759"
         backgroundColor="#001d25"
         textColor="#c8cecf"
+        options={{
+          // listItemButton: {
+          //   border: "1px solid red",
+          //   padding: .7
+          // }
+          listItemButton: (list) => (
+            {
+              // border: "1px solid red",
+              paddingY: list.isActiveTab ? 1 : 0
+            }
+          ),
+          // listItemText: {
+          //   color: "red"
+          // },
+          getColor: (params) => {
+            return params.isActiveTab ? "red" : "white"
+          }
+        }}
       />
 
       <Box sx={{
-        border: "1px solid red",
+        // border: "1px solid red",
         flex: 1
       }}>
         <Routes>
           <Route path="/"
-            element={<div>Dashboard</div>}
+            element={<div>
+              {/* <p>Hello</p>
+              <GridModel
+                rows={[{ name: "Amos" }]}
+                columns={[{ field: "name" }]}
+                pageSizeOptions={[2, 5, 10, 20, 50, 100]}
+                pagination
+                showSearchBar={false}
+                // onAdd={() => setAddUser(true)}
+                paginationMode={"client"}
+              /> */}
+              <FormModel
+                inputs={inputs} width={300} options={{ form: { margin: "auto" } }}
+                onSubmit={(values) => {
+                  console.log(values)
+                }}
+              />
+            </div>}
           />
         </Routes>
       </Box>
