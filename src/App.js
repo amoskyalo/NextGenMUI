@@ -8,6 +8,7 @@ import TaskIcon from '@mui/icons-material/Task';
 import DataThresholdingIcon from '@mui/icons-material/DataThresholding';
 import Divider from "@mui/material/Divider";
 import GridModel from "./lib/components/Grids/GridModel";
+import DialogModel from "./lib/components/Dialog/DialogModel";
 
 import { Route, Routes } from "react-router-dom";
 
@@ -212,22 +213,14 @@ function App() {
         <Routes>
           <Route path="/"
             element={<div>
-              {/* <p>Hello</p>
-              <GridModel
-                rows={[{ name: "Amos" }]}
-                columns={[{ field: "name" }]}
-                pageSizeOptions={[2, 5, 10, 20, 50, 100]}
-                pagination
-                showSearchBar={false}
-                // onAdd={() => setAddUser(true)}
-                paginationMode={"client"}
-              /> */}
-              <FormModel
-                inputs={inputs} width={300} options={{ form: { margin: "auto" } }}
-                onSubmit={(values) => {
-                  console.log(values)
-                }}
-              />
+              <DialogModel open={true} title={"Add Brand Form"}>
+                <FormModel
+                  inputs={inputs || []}
+                  width={400}
+                // isLoading={loading}
+                // onSubmit={handleSubmitProductBrand}
+                />
+              </DialogModel>
             </div>}
           />
         </Routes>

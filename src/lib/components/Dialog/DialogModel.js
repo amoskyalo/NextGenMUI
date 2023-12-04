@@ -13,16 +13,16 @@ const DialogModel = ({ onClose, open, title, fullWidth, maxWidth, children }) =>
         >
             {
                 title &&
-                <DialogTitle>
+                <DialogTitle sx={{ paddingBottom: 0 }}>
                     <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-                        <Typography variant="h6">{title}</Typography>
-                        <IconButton onClick={onClose} aria-label="close">
+                        <Typography variant="h6" sx={{ fontWeight: 600 }}>{title}</Typography>
+                        <IconButton onClick={onClose} aria-label="close" sx={{ marginRight: -1.5 }}>
                             <CloseIcon />
                         </IconButton>
                     </Box>
                 </DialogTitle>
             }
-            <DialogContent>
+            <DialogContent sx={{ paddingBottom: 4 }}>
                 {children}
             </DialogContent>
         </Dialog>
