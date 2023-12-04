@@ -23,16 +23,30 @@ const DialogModel = _ref => {
     onClose: onClose,
     fullWidth: fullWidth,
     maxWidth: maxWidth
-  }, title && /*#__PURE__*/_react.default.createElement(_material.DialogTitle, null, /*#__PURE__*/_react.default.createElement(_material.Box, {
+  }, title && /*#__PURE__*/_react.default.createElement(_material.DialogTitle, {
+    sx: {
+      paddingBottom: 0
+    }
+  }, /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center"
   }, /*#__PURE__*/_react.default.createElement(_material.Typography, {
-    variant: "h6"
+    variant: "h6",
+    sx: {
+      fontWeight: 600
+    }
   }, title), /*#__PURE__*/_react.default.createElement(_material.IconButton, {
     onClick: onClose,
-    "aria-label": "close"
-  }, /*#__PURE__*/_react.default.createElement(_Close.default, null)))), /*#__PURE__*/_react.default.createElement(_material.DialogContent, null, children));
+    "aria-label": "close",
+    sx: {
+      marginRight: -1.5
+    }
+  }, /*#__PURE__*/_react.default.createElement(_Close.default, null)))), /*#__PURE__*/_react.default.createElement(_material.DialogContent, {
+    sx: {
+      paddingBottom: 4
+    }
+  }, children));
 };
 DialogModel.propTypes = {
   onClose: _propTypes.default.func.isRequired,
