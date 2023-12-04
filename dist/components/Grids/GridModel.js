@@ -1,12 +1,12 @@
 "use strict";
 
-require("core-js/modules/es.object.assign.js");
 require("core-js/modules/es.weak-map.js");
 require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+require("core-js/modules/es.object.assign.js");
 var _react = _interopRequireDefault(require("react"));
 var _xDataGrid = require("@mui/x-data-grid");
 var _material = require("@mui/material");
@@ -23,13 +23,10 @@ var _ExitToApp = _interopRequireDefault(require("@mui/icons-material/ExitToApp")
 var _empty = _interopRequireDefault(require("../../Assets/empty.gif"));
 var loading = _interopRequireWildcard(require("../../Assets/loading.json"));
 var _reactLottie = _interopRequireDefault(require("react-lottie"));
-const _excluded = ["columns", "rows", "loading", "pageSizeOptions", "pagination", "paginationMode", "FilterComponent", "GridButtonsComponent", "onAdd", "onChangeStartDate", "onChangeEndDate", "disableAdd", "disablePrint", "disableExport", "showGridHeader", "showStartDateFilter", "showEndDateFilter", "showSearchBar", "defaultStartDate", "defaultEndDate"];
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 const defaultOptions = {
   loop: true,
   autoplay: true,
@@ -40,28 +37,28 @@ const defaultOptions = {
 };
 const GridModel = _ref => {
   let {
-      columns,
-      rows,
-      loading,
-      pageSizeOptions,
-      pagination,
-      paginationMode,
-      FilterComponent,
-      GridButtonsComponent,
-      onAdd,
-      onChangeStartDate,
-      onChangeEndDate,
-      disableAdd,
-      disablePrint,
-      disableExport,
-      showGridHeader,
-      showStartDateFilter,
-      showEndDateFilter,
-      showSearchBar,
-      defaultStartDate,
-      defaultEndDate
-    } = _ref,
-    props = _objectWithoutProperties(_ref, _excluded);
+    columns,
+    rows,
+    loading,
+    pageSizeOptions,
+    pagination,
+    paginationMode,
+    FilterComponent,
+    GridButtonsComponent,
+    onAdd,
+    onChangeStartDate,
+    onChangeEndDate,
+    disableAdd,
+    disablePrint,
+    disableExport,
+    showGridHeader,
+    showStartDateFilter,
+    showEndDateFilter,
+    showSearchBar,
+    defaultStartDate,
+    defaultEndDate,
+    gridProps
+  } = _ref;
   return /*#__PURE__*/_react.default.createElement(_material.Box, null, showGridHeader && /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
     justifyContent: "space-between",
@@ -169,41 +166,11 @@ const GridModel = _ref => {
   }, /*#__PURE__*/_react.default.createElement(_xDataGrid.DataGrid, _extends({
     rows: rows,
     columns: columns,
-    checkboxSelection: false,
-    disableRowSelectionOnClick: true,
-    autoHeight: true,
-    disableColumnMenu: true,
     loading: loading,
     pageSizeOptions: pageSizeOptions,
     paginationMode: paginationMode,
-    pagination: pagination,
-    getRowClassName: params => params.indexRelativeToCurrentPage % 2 === 0 ? "even-row" : "odd-row",
-    getRowId: row => row.name
-  }, props, {
-    sx: {
-      "&>.MuiDataGrid-main": {
-        "& .MuiDataGrid-columnHeaderTitle": {
-          // fontWeight: "900",
-          fontSize: 15
-        },
-        "& .MuiDataGrid-columnHeader:focus": {
-          outline: "none"
-          // border: "none",
-        },
-
-        "& .MuiDataGrid-columnHeader:focus-within": {
-          outline: "none !important"
-        }
-      },
-      "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-        outline: "none !important"
-      },
-      "& .odd-row": {
-        backgroundColor: "rgba(245,250,254, 0.9)"
-      },
-      borderColor: "transparent"
-    }
-  }))), loading && /*#__PURE__*/_react.default.createElement(_material.Box, {
+    pagination: pagination
+  }, gridProps))), loading && /*#__PURE__*/_react.default.createElement(_material.Box, {
     sx: {
       display: "flex",
       alignItems: "center",

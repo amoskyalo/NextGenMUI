@@ -45,7 +45,7 @@ const GridModel = ({
     showSearchBar,
     defaultStartDate,
     defaultEndDate,
-    ...props
+    gridProps
 }) => {
 
     return (
@@ -172,39 +172,11 @@ const GridModel = ({
                     <DataGrid
                         rows={rows}
                         columns={columns}
-                        checkboxSelection={false}
-                        disableRowSelectionOnClick
-                        autoHeight={true}
-                        disableColumnMenu={true}
                         loading={loading}
                         pageSizeOptions={pageSizeOptions}
                         paginationMode={paginationMode}
                         pagination={pagination}
-                        getRowClassName={(params) => params.indexRelativeToCurrentPage % 2 === 0 ? "even-row" : "odd-row"}
-                        getRowId={row => row.name}
-                        {...props}
-                        sx={{
-                            "&>.MuiDataGrid-main": {
-                                "& .MuiDataGrid-columnHeaderTitle": {
-                                    // fontWeight: "900",
-                                    fontSize: 15,
-                                },
-                                "& .MuiDataGrid-columnHeader:focus": {
-                                    outline: "none",
-                                    // border: "none",
-                                },
-                                "& .MuiDataGrid-columnHeader:focus-within": {
-                                    outline: "none !important",
-                                },
-                            },
-                            "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-                                outline: "none !important",
-                            },
-                            "& .odd-row": {
-                                backgroundColor: "rgba(245,250,254, 0.9)",
-                            },
-                            borderColor: "transparent",
-                        }}
+                        {...gridProps}
                     />
                 </div>}
 
