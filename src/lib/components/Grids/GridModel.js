@@ -45,7 +45,7 @@ const GridModel = ({
     showSearchBar,
     defaultStartDate,
     defaultEndDate,
-    gridProps
+    ...otherGridProps
 }) => {
 
     return (
@@ -176,7 +176,7 @@ const GridModel = ({
                         pageSizeOptions={pageSizeOptions}
                         paginationMode={paginationMode}
                         pagination={pagination}
-                        {...gridProps}
+                        {...otherGridProps}
                     />
                 </div>}
 
