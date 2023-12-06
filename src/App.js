@@ -9,7 +9,7 @@ import DataThresholdingIcon from '@mui/icons-material/DataThresholding';
 import Divider from "@mui/material/Divider";
 import GridModel from "./lib/components/Grids/GridModel";
 import DialogModel from "./lib/components/Dialog/DialogModel";
-
+import CalenderModel from "./lib/components/Calender";
 import { Route, Routes } from "react-router-dom";
 
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
@@ -24,7 +24,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 import MenuIcon from '@mui/icons-material/Menu';
 
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 
 import logo from './Assets/logo3.png'
 import FormModel from "./lib/components/Forms/FormModel";
@@ -177,6 +177,22 @@ function App() {
     )
   }
 
+  const columns = [
+    { field: "name", flex: 1 },
+    { field: "age", flex: 1 },
+    { field: "gender", flex: 1 },
+    { field: "class", flex: 1 },
+    { field: "color", flex: 1 },
+  ]
+
+  const rows = [
+    { name: "Amos", age: 21, gender: "male", class: "C", color: "black" }
+  ]
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const openC = Boolean(anchorEl);
+
   return (
     <Box display={"flex"} columnGap={4}>
       <SideBarModel
@@ -212,15 +228,38 @@ function App() {
       }}>
         <Routes>
           <Route path="/"
-            element={<div>
-              <DialogModel open={true} title={"Add Brand Form"}>
+            element={<div style={{ padding: 16 }}>
+              {/* <DialogModel open={true} title={"Add Brand Form"}>
                 <FormModel
                   inputs={inputs || []}
                   width={400}
                 // isLoading={loading}
                 // onSubmit={handleSubmitProductBrand}
                 />
-              </DialogModel>
+              </DialogModel> */}
+              {/* <Button >Open</Button>
+              <CalenderModel anchorEl={anchorEl} open={openC} /> */}
+              <GridModel columns={columns} rows={rows} getRowId={(rows) => rows.name} pageSizeOptions={[5, 10, 20, 50, 100]} sx={{
+                "&>.MuiDataGrid-main": {
+                  "& .MuiDataGrid-columnHeaderTitle": {
+                    fontSize: 15,
+                    fontWeight: 900,
+                  },
+                  "& .MuiDataGrid-columnHeader:focus": {
+                    outline: "none",
+                  },
+                  "& .MuiDataGrid-columnHeader:focus-within": {
+                    outline: "none !important",
+                  },
+                },
+                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+                  outline: "none !important",
+                },
+                "& .odd-row": {
+                  backgroundColor: "rgba(245,250,254, 0.9)",
+                },
+                borderColor: "transparent",
+              }} />
             </div>}
           />
         </Routes>

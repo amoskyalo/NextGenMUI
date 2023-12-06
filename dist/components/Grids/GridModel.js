@@ -2,31 +2,31 @@
 
 require("core-js/modules/es.object.assign.js");
 require("core-js/modules/es.weak-map.js");
-require("core-js/modules/web.dom-collections.iterator.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _react = _interopRequireDefault(require("react"));
+require("core-js/modules/web.dom-collections.iterator.js");
+var _react = _interopRequireWildcard(require("react"));
 var _xDataGrid = require("@mui/x-data-grid");
 var _material = require("@mui/material");
 var _Utils = require("../../Utils/Utils");
-var _AdapterDayjs = require("@mui/x-date-pickers/AdapterDayjs");
-var _LocalizationProvider = require("@mui/x-date-pickers/LocalizationProvider");
-var _DatePicker = require("@mui/x-date-pickers/DatePicker");
+var _CalendarMonth = _interopRequireDefault(require("@mui/icons-material/CalendarMonth"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var _dayjs = _interopRequireDefault(require("dayjs"));
 var _Search = _interopRequireDefault(require("@mui/icons-material/Search"));
+var _Refresh = _interopRequireDefault(require("@mui/icons-material/Refresh"));
 var _Add = _interopRequireDefault(require("@mui/icons-material/Add"));
 var _Print = _interopRequireDefault(require("@mui/icons-material/Print"));
 var _ExitToApp = _interopRequireDefault(require("@mui/icons-material/ExitToApp"));
 var _empty = _interopRequireDefault(require("../../Assets/empty.gif"));
 var loading = _interopRequireWildcard(require("../../Assets/loading.json"));
 var _reactLottie = _interopRequireDefault(require("react-lottie"));
+var _Calender = _interopRequireDefault(require("../Calender"));
 const _excluded = ["columns", "rows", "loading", "pageSizeOptions", "pagination", "paginationMode", "FilterComponent", "GridButtonsComponent", "onAdd", "onChangeStartDate", "onChangeEndDate", "disableAdd", "disablePrint", "disableExport", "showGridHeader", "showStartDateFilter", "showEndDateFilter", "showSearchBar", "defaultStartDate", "defaultEndDate"];
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
@@ -62,6 +62,8 @@ const GridModel = _ref => {
       defaultEndDate
     } = _ref,
     otherGridProps = _objectWithoutProperties(_ref, _excluded);
+  const [anchorEl, setAnchorEl] = (0, _react.useState)(null);
+  const open = Boolean(anchorEl);
   return /*#__PURE__*/_react.default.createElement(_material.Box, null, showGridHeader && /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
     justifyContent: "space-between",
@@ -74,93 +76,44 @@ const GridModel = _ref => {
       textTransform: "capitalize"
     },
     startIcon: /*#__PURE__*/_react.default.createElement(_Print.default, null),
-    variant: "contained",
-    size: "small",
+    variant: "contained"
+    // size="small"
+    ,
     onClick: _Utils.handlePrint
   }, "Print"), !disableExport && /*#__PURE__*/_react.default.createElement(_material.Button, {
     sx: {
       textTransform: "capitalize"
     },
     startIcon: /*#__PURE__*/_react.default.createElement(_ExitToApp.default, null),
-    variant: "contained",
-    size: "small",
+    variant: "contained"
+    // size="small"
+    ,
     onClick: () => (0, _Utils.handleExportToExcel)(columns, rows)
-  }, "Export to Excel")), /*#__PURE__*/_react.default.createElement(_material.Box, {
+  }, "Export")), /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
     columnGap: 3
-  }, showSearchBar && /*#__PURE__*/_react.default.createElement(_material.Box, {
+  }, /*#__PURE__*/_react.default.createElement(_material.IconButton, null, /*#__PURE__*/_react.default.createElement(_Refresh.default, null)), /*#__PURE__*/_react.default.createElement(_material.Button, {
+    startIcon: /*#__PURE__*/_react.default.createElement(_CalendarMonth.default, null),
+    variant: "contained",
+    onClick: event => setAnchorEl(event.currentTarget)
+    // size="small"
+    ,
     sx: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "space-between",
-      border: "1px solid gray",
-      borderRadius: 1,
-      paddingX: 1,
-      minWidth: 300
+      textTransform: "capitalize",
+      backgroundColor: "#eff4f8",
+      boxShadow: 0,
+      color: "#495c6c"
     }
-  }, /*#__PURE__*/_react.default.createElement(_material.TextField, {
-    placeholder: "Search",
-    fullWidth: true,
-    sx: {
-      "& .MuiInputBase-input": {
-        height: 36,
-        padding: 0,
-        flex: 1
-      },
-      "& .MuiOutlinedInput-root": {
-        "&.Mui-focused fieldset": {
-          borderColor: "transparent"
-        },
-        "& fieldset": {
-          borderColor: "transparent"
-        },
-        "&:hover fieldset": {
-          borderColor: "transparent"
-        }
-      },
-      "& .MuiOutlinedInput-input": {
-        "&:focus": {
-          outline: "none"
-        }
-      }
-    }
-  }), /*#__PURE__*/_react.default.createElement(_Search.default, {
-    sx: {
-      color: "gray"
-    }
-  })), /*#__PURE__*/_react.default.createElement(_LocalizationProvider.LocalizationProvider, {
-    dateAdapter: _AdapterDayjs.AdapterDayjs
-  }, showStartDateFilter && /*#__PURE__*/_react.default.createElement(_DatePicker.DatePicker, {
-    label: "From",
-    value: (0, _dayjs.default)(defaultStartDate),
-    onChange: onChangeStartDate,
-    sx: {
-      "& .MuiOutlinedInput-root": {
-        height: 38,
-        width: 175
-      },
-      "& .MuiFormLabel-root": {
-        top: -7
-      }
-    }
-  }), showEndDateFilter && /*#__PURE__*/_react.default.createElement(_DatePicker.DatePicker, {
-    label: "To",
-    value: (0, _dayjs.default)(defaultEndDate),
-    onChange: onChangeEndDate,
-    sx: {
-      "& .MuiOutlinedInput-root": {
-        height: 38,
-        width: 175
-      },
-      "& .MuiFormLabel-root": {
-        top: -7
-      }
-    }
-  })), FilterComponent && /*#__PURE__*/_react.default.createElement(FilterComponent, null), !disableAdd && /*#__PURE__*/_react.default.createElement(_material.Button, {
+  }, "Last 30 days"), /*#__PURE__*/_react.default.createElement(_Calender.default, {
+    anchorEl: anchorEl,
+    open: open,
+    onClose: () => setAnchorEl(null)
+  }), FilterComponent && /*#__PURE__*/_react.default.createElement(FilterComponent, null), !disableAdd && /*#__PURE__*/_react.default.createElement(_material.Button, {
     startIcon: /*#__PURE__*/_react.default.createElement(_Add.default, null),
     onClick: onAdd,
-    variant: "contained",
-    size: "small",
+    variant: "contained"
+    // size="small"
+    ,
     sx: {
       textTransform: "capitalize"
     }
@@ -198,8 +151,9 @@ const GridModel = _ref => {
     className: "h-48"
   }), /*#__PURE__*/_react.default.createElement(_material.Typography, null, "Looks like you dont have any data"), !disableAdd && /*#__PURE__*/_react.default.createElement(_material.Button, {
     onClick: onAdd,
-    variant: "contained",
-    size: "small",
+    variant: "contained"
+    // size="small"
+    ,
     sx: {
       textTransform: 'capitalize',
       width: 300,
