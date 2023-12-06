@@ -1,19 +1,20 @@
 import React from "react";
+import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button, Box, TextField, Typography } from "@mui/material";
+import { Button, Box, TextField, Typography, IconButton } from "@mui/material";
 import { handleExportToExcel, handlePrint, fromDate, toDate } from "../../Utils/Utils";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PropTypes from 'prop-types'
 import dayjs from 'dayjs';
 import SearchIcon from "@mui/icons-material/Search";
+import RefreshIcon from '@mui/icons-material/Refresh';
 import AddIcon from '@mui/icons-material/Add';
 import PrintIcon from '@mui/icons-material/Print';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import empty from '../../Assets/empty.gif'
 import * as loading from '../../Assets/loading.json'
 import Lottie from 'react-lottie'
+import CalenderModel from "../Calender";
 
 const defaultOptions = {
     loop: true,
@@ -48,6 +49,9 @@ const GridModel = ({
     ...otherGridProps
 }) => {
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
     return (
         <Box>
             {showGridHeader &&
@@ -57,7 +61,7 @@ const GridModel = ({
                             sx={{ textTransform: "capitalize" }}
                             startIcon={<PrintIcon />}
                             variant="contained"
-                            size="small"
+                            // size="small"
                             onClick={handlePrint}
                         >
                             Print
@@ -66,89 +70,28 @@ const GridModel = ({
                             sx={{ textTransform: "capitalize" }}
                             startIcon={<ExitToAppIcon />}
                             variant="contained"
-                            size="small"
+                            // size="small"
                             onClick={() => handleExportToExcel(columns, rows)}
                         >
-                            Export to Excel
+                            Export
                         </Button>}
                     </Box>
 
                     <Box display={"flex"} columnGap={3}>
-                        {showSearchBar && <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                border: "1px solid gray",
-                                borderRadius: 1,
-                                paddingX: 1,
-                                minWidth: 300,
-                            }}
-                        >
-                            <TextField
-                                placeholder="Search"
-                                fullWidth
-                                sx={{
-                                    "& .MuiInputBase-input": {
-                                        height: 36,
-                                        padding: 0,
-                                        flex: 1,
-                                    },
-                                    "& .MuiOutlinedInput-root": {
-                                        "&.Mui-focused fieldset": {
-                                            borderColor: "transparent",
-                                        },
-                                        "& fieldset": {
-                                            borderColor: "transparent",
-                                        },
-                                        "&:hover fieldset": {
-                                            borderColor: "transparent",
-                                        },
-                                    },
-                                    "& .MuiOutlinedInput-input": {
-                                        "&:focus": {
-                                            outline: "none",
-                                        }
-                                    }
-                                }}
-                            />
+                        <IconButton>
+                            <RefreshIcon />
+                        </IconButton>
 
-                            <SearchIcon sx={{ color: "gray" }} />
-                        </Box>}
+                        <Button
+                            startIcon={<CalendarMonthIcon />}
+                            variant="contained"
+                            onClick={event => setAnchorEl(event.currentTarget)}
+                            // size="small"
+                            sx={{ textTransform: "capitalize", backgroundColor: "#eff4f8", boxShadow: 0, color: "#495c6c" }}>
+                            Last 30 days
+                        </Button>
 
-
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            {showStartDateFilter && <DatePicker
-                                label="From"
-                                value={dayjs(defaultStartDate)}
-                                onChange={onChangeStartDate}
-                                sx={{
-                                    "& .MuiOutlinedInput-root": {
-                                        height: 38,
-                                        width: 175
-                                    },
-                                    "& .MuiFormLabel-root": {
-                                        top: -7,
-                                    },
-                                }}
-                            />}
-
-                            {showEndDateFilter && <DatePicker
-                                label="To"
-                                value={dayjs(defaultEndDate)}
-                                onChange={onChangeEndDate}
-                                sx={{
-                                    "& .MuiOutlinedInput-root": {
-                                        height: 38,
-                                        width: 175
-                                    },
-                                    "& .MuiFormLabel-root": {
-                                        top: -7,
-                                    }
-                                }}
-                            />}
-                        </LocalizationProvider>
-
+                        <CalenderModel anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)} />
 
                         {FilterComponent && <FilterComponent />}
 
@@ -157,7 +100,7 @@ const GridModel = ({
                                 startIcon={<AddIcon />}
                                 onClick={onAdd}
                                 variant="contained"
-                                size="small"
+                                // size="small"
                                 sx={{ textTransform: "capitalize" }}>
                                 New
                             </Button>
@@ -209,7 +152,7 @@ const GridModel = ({
                     {!disableAdd && <Button
                         onClick={onAdd}
                         variant="contained"
-                        size="small"
+                        // size="small"
                         sx={{ textTransform: 'capitalize', width: 300, mt: 1 }}
                         startIcon={<AddIcon />}
                     >
