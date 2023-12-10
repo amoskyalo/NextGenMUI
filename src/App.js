@@ -13,6 +13,7 @@ import CalenderModel from "./lib/components/Calender";
 import { Route, Routes } from "react-router-dom";
 
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import PopoverModel from "./lib/components/Popovers/PopoverModel";
 import AssessmentIcon from '@mui/icons-material/Assessment';
 
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -154,6 +155,9 @@ function App() {
     }
   ]
 
+  const options = [
+    { name: "Hey", onItemClick: (e) => { console.log(e) } }
+  ];
 
   const NavHeader = () => {
     return (
@@ -239,7 +243,7 @@ function App() {
               </DialogModel> */}
               {/* <Button >Open</Button>
               <CalenderModel anchorEl={anchorEl} open={openC} /> */}
-              <GridModel columns={columns} rows={rows} getRowId={(rows) => rows.name} pageSizeOptions={[5, 10, 20, 50, 100]} sx={{
+              {/* <GridModel columns={columns} rows={rows} getRowId={(rows) => rows.name} pageSizeOptions={[5, 10, 20, 50, 100]} sx={{
                 "&>.MuiDataGrid-main": {
                   "& .MuiDataGrid-columnHeaderTitle": {
                     fontSize: 15,
@@ -259,7 +263,8 @@ function App() {
                   backgroundColor: "rgba(245,250,254, 0.9)",
                 },
                 borderColor: "transparent",
-              }} />
+              }} /> */}
+              <PopoverModel popoverItems={options} open={true} />
             </div>}
           />
         </Routes>

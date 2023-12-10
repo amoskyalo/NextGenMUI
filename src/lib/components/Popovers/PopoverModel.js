@@ -59,7 +59,7 @@ const PopoverModel = ({ popoverItems, open, anchorEl, onClose }) => {
         >
             {popoverItems?.map((a, i) => (
                 <MenuItem
-                    onClick={(a) => { a.onItemClick(a); onClose(); }}
+                    onClick={() => { a.onItemClick(a); onClose(); }}
                     disableRipple
                     key={i}
                 >
