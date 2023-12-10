@@ -64,7 +64,7 @@ const PopoverModel = _ref2 => {
     open: open,
     onClose: onClose
   }, popoverItems === null || popoverItems === void 0 ? void 0 : popoverItems.map((a, i) => /*#__PURE__*/_react.default.createElement(_material.MenuItem, {
-    onClick: a => {
+    onClick: () => {
       a.onItemClick(a);
       onClose();
     },
