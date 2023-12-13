@@ -237,8 +237,8 @@ function App() {
                 <FormModel
                   inputs={inputs || []}
                   width={400}
-                // isLoading={loading}
-                // onSubmit={handleSubmitProductBrand}
+                  // isLoading={loading}
+                  onSubmit={values => console.log(values)}
                 />
               </DialogModel>
               {/* <Button >Open</Button>
