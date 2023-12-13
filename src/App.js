@@ -151,7 +151,7 @@ function App() {
       label: "Roles",
       lookups: [{ title: "Edit", value: 3 }, { title: "Delete", value: 6 }, { title: "Add", value: 12 }],
       multiple: true,
-      value: [{ title: "Edit", value: 3 }],
+      value: [{ title: "Edit", value: 3 }, { title: "Delete", value: 6 }],
     }
   ]
 
