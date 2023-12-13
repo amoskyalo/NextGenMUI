@@ -151,7 +151,7 @@ function App() {
       label: "Roles",
       lookups: [{ title: "Edit", value: 3 }, { title: "Delete", value: 6 }, { title: "Add", value: 12 }],
       multiple: true,
-      value: [],
+      value: [{ title: "Edit", value: 3 }],
     }
   ]
 
@@ -233,14 +233,14 @@ function App() {
         <Routes>
           <Route path="/"
             element={<div style={{ padding: 16 }}>
-              {/* <DialogModel open={true} title={"Add Brand Form"}>
+              <DialogModel open={true} title={"Add Brand Form"}>
                 <FormModel
                   inputs={inputs || []}
                   width={400}
                 // isLoading={loading}
                 // onSubmit={handleSubmitProductBrand}
                 />
-              </DialogModel> */}
+              </DialogModel>
               {/* <Button >Open</Button>
               <CalenderModel anchorEl={anchorEl} open={openC} /> */}
               {/* <GridModel columns={columns} rows={rows} getRowId={(rows) => rows.name} pageSizeOptions={[5, 10, 20, 50, 100]} sx={{
@@ -264,7 +264,7 @@ function App() {
                 },
                 borderColor: "transparent",
               }} /> */}
-              <PopoverModel popoverItems={options} open={true} />
+              {/* <PopoverModel popoverItems={options} open={true} /> */}
             </div>}
           />
         </Routes>

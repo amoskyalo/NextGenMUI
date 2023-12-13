@@ -77,6 +77,7 @@ const FormModel = _ref => {
         key: input.name,
         multiple: true,
         id: input.name,
+        value: input.value,
         options: input.lookups,
         getOptionLabel: option => option.title,
         size: "small",
