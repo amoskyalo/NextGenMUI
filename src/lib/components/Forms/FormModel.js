@@ -56,6 +56,7 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
             key={input.name}
             multiple
             id={input.name}
+            value={input.value}
             options={input.lookups}
             getOptionLabel={(option) => option.title}
             size='small'
