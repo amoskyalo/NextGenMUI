@@ -17,8 +17,20 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
   }
 
   const constructInitialValues = () => {
-    return inputs.reduce((values, input) => ({ ...values, [input.name]: input.value }), {});
-  }
+    let initialValues = {};
+
+    for (let input of inputs) {
+      if (input.multiple) {
+        const valuesArray = Array.isArray(input.value) ? input.value : [];
+        initialValues[input.name] = valuesArray.map(item => item.value);
+      } else {
+        initialValues[input.name] = input.value !== undefined ? input.value : '';
+      }
+    }
+
+    return initialValues;
+  };
+
 
   const getDefaultValidationSchema = () => {
     const schema = inputs.reduce((schemaAcc, input) => {
@@ -56,13 +68,15 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
             key={input.name}
             multiple
             id={input.name}
-            defaultValue={input.value || " "}
+            defaultValue={input.value}
             options={input.lookups}
             getOptionLabel={(option) => option.title}
             size='small'
             onChange={(__, newValue) => {
-              formik.setFieldValue(input.name, newValue.map(item => item.value));
+              const newValues = newValue.map(item => item.value);
+              formik.setFieldValue(input.name, newValues);
             }}
+
             renderInput={(params) => (
               <TextField
                 {...params}
