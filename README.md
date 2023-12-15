@@ -100,15 +100,175 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
          inputs={inputs || []}
          width={400}
          onSubmit={(values) => console.log(values)}
+         //other props
        />
      );
    };
    ```
 
 4. **StepperFormModel**: combines Material-UI's Stepper with form functionalities, providing a step-by-step user experience for complex form processes. It's perfect for scenarios like registrations or multi-stage data entries, offering customizable step labels, input fields, and navigation buttons.
+
+   **Usage**
+
+   ```javascript
+   import { StepperFormModel } from "next-gen-mui";
+
+   const App = () => {
+     const steps = [
+       {
+         label: "Step 1",
+         inputs: [
+           {
+             name: "username",
+             label: "Username",
+             type: "text",
+             value: "",
+           },
+           {
+             name: "password",
+             label: "Password",
+             type: "password",
+             value: "",
+           },
+         ],
+       },
+       {
+         label: "Step 2",
+         inputs: [
+           {
+             name: "isAdmin",
+             label: "Is Admin",
+             lookups: [
+               { title: "Yes", value: 0 },
+               { title: "No", value: 1 },
+             ],
+             value: "",
+           },
+           {
+             name: "roles",
+             label: "Roles",
+             lookups: [
+               { title: "Edit", value: 3 },
+               { title: "Delete", value: 6 },
+               { title: "Add", value: 12 },
+             ],
+             multiple: true,
+             value: [
+               { title: "Edit", value: 3 },
+               { title: "Delete", value: 6 },
+             ],
+           },
+         ],
+       },
+     ];
+
+     return (
+       <StepperFormModel
+         steps={steps || []}
+         width={400}
+         onSubmit={(values) => console.log(values)}
+         //other props
+       />
+     );
+   };
+   ```
+
 5. **GridModel**: an advanced and highly customizable data grid solution, seamlessly integrated with Material-UI. Designed for flexibility and ease of use, it supports features like dynamic data rendering, printing, and exporting functionalities. The component includes interactive elements such as a calendar for date filtering, custom button actions, and an option to add new data entries, making it suitable for a wide range of data management tasks.
+
+   **Usage**
+
+   ```javascript
+   import { GridModel } from "next-gen-mui";
+
+   const App = () => {
+     const columns = [
+       { field: "name", flex: 1 },
+       { field: "age", flex: 1 },
+       { field: "gender", flex: 1 },
+       { field: "class", flex: 1 },
+       { field: "color", flex: 1 },
+     ];
+
+     const rows = [
+       { name: "Amos", age: 21, gender: "male", class: "C", color: "black" },
+     ];
+
+     <GridModel
+       columns={columns}
+       rows={rows}
+       getRowId={(rows) => rows.name}
+       pageSizeOptions={[5, 10, 20, 50, 100]}
+       onDateChange={({ startDate, endDate }) =>
+         console.log(startDate, endDate)
+       }
+       sx={{
+         "&>.MuiDataGrid-main": {
+           "& .MuiDataGrid-columnHeaderTitle": {
+             fontSize: 15,
+             fontWeight: 900,
+           },
+           "& .MuiDataGrid-columnHeader:focus": {
+             outline: "none",
+           },
+           "& .MuiDataGrid-columnHeader:focus-within": {
+             outline: "none !important",
+           },
+         },
+         "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
+           outline: "none !important",
+         },
+         "& .odd-row": {
+           backgroundColor: "rgba(245,250,254, 0.9)",
+         },
+         borderColor: "rgba(0, 0, 0, 0.2)",
+       }}
+     />;
+   };
+   ```
+
 6. **SideBarModel**: a sleek, responsive sidebar navigation system designed to enhance Material-UI applications. It features a collapsible drawer with customizable width, color themes, and icon-based navigation items. This model is composed of DrawerItemsModel and ListItemsModel, which collectively handle the rendering of navigation items, including support for nested sub-links and sections. The sidebar's functionality is augmented with React Router for seamless navigation and route management. Users can expand or collapse the sidebar, offering a space-efficient way to access various parts of an application. The SideBarModel is an ideal solution for applications requiring a robust, aesthetically pleasing navigation system with adaptable features and a user-friendly interface.
+
 7. **PopoverModel**: Enriches Material-UI applications with a stylish, customizable menu, featuring a sleek dropdown design. It allows for dynamic menu item rendering, each with optional icons and individual click handlers. This model elegantly integrates with Material-UI's Menu component, offering a visually appealing and user-friendly interface. It's ideal for adding context-sensitive menus to enhance user interaction in modern web applications.
+
+   **Usage**
+
+   ```javascript
+   const App = () => {
+    const [anchorEL, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEL);
+
+     const options = [
+       {
+         name: "Add",
+         icon: //icon ( optional ),
+         onItemClick: (e) => {
+           console.log(e);
+         },
+       },
+        {
+         name: "Delete",
+             icon: //icon ( optional ),
+         onItemClick: (e) => {
+           console.log(e);
+         },
+       },
+        {
+         name: "Share",
+             icon: //icon ( optional ),
+         onItemClick: (e) => {
+           console.log(e);
+         },
+       }
+     ];
+
+     return (
+        <div>
+            <button onClick={(e) => setAnchorEL(e.currentTarget)}>open menu</button>
+            <PopoverModel popoverItems={options} open={open} />
+        </div>
+     )
+   };
+   ```
 
 ## Upcoming Enhancements
 
@@ -125,3 +285,7 @@ Designed with ease of use in mind, NextGenMUI integrates seamlessly into your ex
 ## Stay Tuned
 
 As NextGenMUI continues to grow, we are committed to introducing more components and features. Stay tuned for updates and enhancements that will further empower your web development journey with Material-UI.
+
+```
+
+```
