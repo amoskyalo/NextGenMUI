@@ -415,14 +415,14 @@ Clone the forked repository to your local machine. This step allows you to work 
 
 3. ### Install Dependencies
 
-   ```bash
+   ```javascript
     cd YOUR-REPOSITORY
     yarn install
    ```
 
 4. ### Create a New Branch
 
-   ```bash
+   ```javascript
    git checkout -b your-branch-name
    ```
 
@@ -435,15 +435,15 @@ Clone the forked repository to your local machine. This step allows you to work 
 
 After you've added your component, run the following command to add the new component to the `Dist` folder:
 
-   ```bash
-   yarn build
-   ```
+    ```javascript
+    yarn build
+    ```
 
 7. ### Commit and Push Your Changes
 
 Commit your changes with a clear commit message. Push the changes to your forked repository.
 
-    ```bash
+    ```javascript
     git commit -m "Add a brief description of your changes"
     git push origin your-branch-name
     ```
