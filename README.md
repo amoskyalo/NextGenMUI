@@ -429,13 +429,13 @@ Clone the forked repository to your local machine. This step allows you to work 
 5. ### Develop Your Component
 
 - Create your new component within the lib folder. This folder contains all the components of the library.
-- Test your component by importing and using it in `app.js``. This file is our testing ground for components.
+- Test your component by importing and using it in `app.js`. This file is our testing ground for components.
 
 6. ### Build the Library
 
 After you've added your component, run the following command to add the new component to the `Dist` folder:
 
-    ```javascript
+    ```bash
     yarn build
     ```
 
@@ -443,7 +443,7 @@ After you've added your component, run the following command to add the new comp
 
 Commit your changes with a clear commit message. Push the changes to your forked repository.
 
-    ```javascript
+    ```bash
     git commit -m "Add a brief description of your changes"
     git push origin your-branch-name
     ```
