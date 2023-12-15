@@ -435,7 +435,7 @@ Clone the forked repository to your local machine. This step allows you to work 
 
 After you've added your component, run the following command to add the new component to the `Dist` folder:
 
-    ```bash
+    ```javascript
     yarn build
     ```
 
@@ -443,7 +443,7 @@ After you've added your component, run the following command to add the new comp
 
 Commit your changes with a clear commit message. Push the changes to your forked repository.
 
-    ```bash
+    ```javascript
     git commit -m "Add a brief description of your changes"
     git push origin your-branch-name
     ```
