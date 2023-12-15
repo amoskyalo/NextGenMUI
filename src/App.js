@@ -95,35 +95,23 @@ function App() {
         title: "Overview",
         list: [...navigation],
       },
-      // {
-      //   title: "Accounts",
-      //   list: [
-      //     {
-      //       name: "Chat",
-      //       icon: ChatBubbleIcon
-      //     },
-      //     {
-      //       name: "Settings",
-      //       icon: SettingsIcon
-      //     },
-      //     {
-      //       name: "Logout",
-      //       icon: LogoutIcon
-      //     },
-      //     {
-      //       name: "Chat",
-      //       icon: ChatBubbleIcon
-      //     },
-      //     {
-      //       name: "Settings",
-      //       icon: SettingsIcon
-      //     },
-      //     {
-      //       name: "Logout",
-      //       icon: LogoutIcon
-      //     }
-      //   ]
-      // }
+      {
+        title: "Accounts",
+        list: [
+          {
+            name: "Chat",
+            icon: ChatBubbleIcon
+          },
+          {
+            name: "Settings",
+            icon: SettingsIcon
+          },
+          {
+            name: "Logout",
+            icon: LogoutIcon
+          }
+        ]
+      }
     ]
   }
 
@@ -161,7 +149,7 @@ function App() {
 
   const NavHeader = () => {
     return (
-      <Box marginBottom={6} width={"100%"}>
+      <Box marginBottom={3} width={"100%"}>
         <Box display={"flex"} paddingY={2} justifyContent={open ? "space-between" : "center"} width={"100%"}>
           {open &&
             <Box display={"flex"} columnGap={1}>
@@ -233,37 +221,43 @@ function App() {
         <Routes>
           <Route path="/"
             element={<div style={{ padding: 16 }}>
-              <DialogModel open={true} title={"Add Brand Form"}>
+              {/* <DialogModel open={true} title={"Add Brand Form"}>
                 <FormModel
                   inputs={inputs || []}
                   width={400}
                   // isLoading={loading}
                   onSubmit={values => console.log(values)}
                 />
-              </DialogModel>
+              </DialogModel> */}
               {/* <Button >Open</Button>
               <CalenderModel anchorEl={anchorEl} open={openC} /> */}
-              {/* <GridModel columns={columns} rows={rows} getRowId={(rows) => rows.name} pageSizeOptions={[5, 10, 20, 50, 100]} sx={{
-                "&>.MuiDataGrid-main": {
-                  "& .MuiDataGrid-columnHeaderTitle": {
-                    fontSize: 15,
-                    fontWeight: 900,
+              <GridModel
+                columns={columns}
+                rows={rows}
+                getRowId={(rows) => rows.name}
+                pageSizeOptions={[5, 10, 20, 50, 100]}
+                onDateChange={({ startDate, endDate }) => console.log(startDate, endDate)}
+                sx={{
+                  "&>.MuiDataGrid-main": {
+                    "& .MuiDataGrid-columnHeaderTitle": {
+                      fontSize: 15,
+                      fontWeight: 900,
+                    },
+                    "& .MuiDataGrid-columnHeader:focus": {
+                      outline: "none",
+                    },
+                    "& .MuiDataGrid-columnHeader:focus-within": {
+                      outline: "none !important",
+                    },
                   },
-                  "& .MuiDataGrid-columnHeader:focus": {
-                    outline: "none",
-                  },
-                  "& .MuiDataGrid-columnHeader:focus-within": {
+                  "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
                     outline: "none !important",
                   },
-                },
-                "&.MuiDataGrid-root .MuiDataGrid-cell:focus-within": {
-                  outline: "none !important",
-                },
-                "& .odd-row": {
-                  backgroundColor: "rgba(245,250,254, 0.9)",
-                },
-                borderColor: "transparent",
-              }} /> */}
+                  "& .odd-row": {
+                    backgroundColor: "rgba(245,250,254, 0.9)",
+                  },
+                  borderColor: "rgba(0, 0, 0, 0.2)"
+                }} />
               {/* <PopoverModel popoverItems={options} open={true} /> */}
             </div>}
           />

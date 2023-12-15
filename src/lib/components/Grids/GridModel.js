@@ -1,164 +1,133 @@
-import React from "react";
-import { useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import { Button, Box, TextField, Typography, IconButton } from "@mui/material";
-import { handleExportToExcel, handlePrint, fromDate, toDate } from "../../Utils/Utils";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { Box, Button, Typography } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import PropTypes from 'prop-types'
-import dayjs from 'dayjs';
-import SearchIcon from "@mui/icons-material/Search";
-import RefreshIcon from '@mui/icons-material/Refresh';
-import AddIcon from '@mui/icons-material/Add';
 import PrintIcon from '@mui/icons-material/Print';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import empty from '../../Assets/empty.gif'
-import * as loading from '../../Assets/loading.json'
-import Lottie from 'react-lottie'
-import CalenderModel from "../Calender";
+import AddIcon from '@mui/icons-material/Add';
+import { DataGrid } from '@mui/x-data-grid';
+import Lottie from 'react-lottie';
+import emptyImage from '../../Assets/empty.gif';
+import loadingAnimation from '../../Assets/loading.json';
+import CalenderModel from '../Calender';
+import { handleExportToExcel, handlePrint, dateObject, monthsOfTheYear } from '../../Utils/Utils';
 
-const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: loading,
-    rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
-    }
-};
+const buttonStyle = { textTransform: 'capitalize' };
 
-const GridModel = ({
-    columns,
-    rows,
-    loading,
-    pageSizeOptions,
-    pagination,
-    paginationMode,
-    FilterComponent,
-    GridButtonsComponent,
-    onAdd,
-    onChangeStartDate,
-    onChangeEndDate,
-    disableAdd,
-    disablePrint,
-    disableExport,
-    showGridHeader,
-    showStartDateFilter,
-    showEndDateFilter,
-    showSearchBar,
-    defaultStartDate,
-    defaultEndDate,
-    ...otherGridProps
-}) => {
+const LoadingIndicator = ({ options }) => (
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+        <Lottie options={options} height={300} width={300} />
+    </Box>
+);
 
+const NoDataIndicator = ({ onAdd, disableAdd }) => (
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1, py: 4 }}>
+        <img src={emptyImage} alt="No data" className="h-48" />
+        <Typography>Looks like you don't have any data</Typography>
+        {!disableAdd && (
+            <Button onClick={onAdd} variant="contained" sx={{ ...buttonStyle, width: 300, mt: 1 }} startIcon={<AddIcon />}>
+                New
+            </Button>
+        )}
+    </Box>
+);
+
+const GridModel = ({ columns, rows, loading, FilterComponent, GridButtonsComponent, onAdd, disableAdd, disablePrint, disableExport, showGridHeader, onDateChange, onApplyDateChanges, ...gridProps }) => {
+    const [dates, setDates] = useState({ startDate: dateObject, endDate: dateObject });
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
+    const handleChangeDates = (type, value) => {
+        setDates({ ...dates, [type]: value });
+    };
+
+    useEffect(() => {
+        if (onDateChange) {
+            onDateChange(dates);
+        }
+    }, [dates]);
+
+    const { startDate: { $D: startDay, $M: startMonth }, endDate: { $D: endDay, $M: endMonth } } = dates;
+
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: loadingAnimation,
+        rendererSettings: {
+            preserveAspectRatio: 'xMidYMid slice'
+        }
+    };
+
     return (
         <Box>
-            {showGridHeader &&
-                <Box display={"flex"} justifyContent={"space-between"} marginBottom={1}>
-                    <Box display={"flex"} columnGap={3}>
-                        {!disablePrint && <Button
-                            sx={{ textTransform: "capitalize" }}
-                            startIcon={<PrintIcon />}
-                            variant="contained"
-                            // size="small"
-                            onClick={handlePrint}
-                        >
-                            Print
-                        </Button>}
-                        {!disableExport && <Button
-                            sx={{ textTransform: "capitalize" }}
-                            startIcon={<ExitToAppIcon />}
-                            variant="contained"
-                            // size="small"
-                            onClick={() => handleExportToExcel(columns, rows)}
-                        >
-                            Export
-                        </Button>}
-                    </Box>
-
-                    <Box display={"flex"} columnGap={3}>
-                        <IconButton>
-                            <RefreshIcon />
-                        </IconButton>
-
-                        <Button
-                            startIcon={<CalendarMonthIcon />}
-                            variant="contained"
-                            onClick={event => setAnchorEl(event.currentTarget)}
-                            // size="small"
-                            sx={{ textTransform: "capitalize", backgroundColor: "#eff4f8", boxShadow: 0, color: "#495c6c" }}>
-                            Last 30 days
-                        </Button>
-
-                        <CalenderModel anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)} />
-
-                        {FilterComponent && <FilterComponent />}
-
-                        {!disableAdd && (
+            {showGridHeader && (
+                <Box>
+                    <Box display="flex" justifyContent="space-between" mb={1}>
+                        <Box display="flex" gap={3}>
+                            {/* Search */}
+                        </Box>
+                        <Box display="flex" gap={3}>
                             <Button
-                                startIcon={<AddIcon />}
-                                onClick={onAdd}
+                                startIcon={<CalendarMonthIcon />}
                                 variant="contained"
-                                // size="small"
-                                sx={{ textTransform: "capitalize" }}>
-                                New
+                                onClick={event => setAnchorEl(event.currentTarget)}
+                                sx={buttonStyle}
+                            >
+                                {monthsOfTheYear[startMonth]} {startDay} -  {monthsOfTheYear[endMonth]} {endDay}
                             </Button>
-                        )}
+                            {!disablePrint && (
+                                <Button
+                                    sx={buttonStyle}
+                                    startIcon={<PrintIcon />}
+                                    variant="contained"
+                                    onClick={handlePrint}
+                                >
+                                    Print
+                                </Button>
+                            )}
+                            {!disableExport && (
+                                <Button
+                                    sx={buttonStyle}
+                                    startIcon={<ExitToAppIcon />}
+                                    variant="contained"
+                                    onClick={() => handleExportToExcel(columns, rows)}
+                                >
+                                    Export
+                                </Button>
+                            )}
+                            <CalenderModel onChange={handleChangeDates} onApplyDateChanges={onApplyDateChanges} anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)} />
+                            {FilterComponent && <FilterComponent />}
+                            {!disableAdd && (
+                                <Button
+                                    startIcon={<AddIcon />}
+                                    onClick={onAdd}
+                                    variant="contained"
+                                    sx={buttonStyle}
+                                >
+                                    New
+                                </Button>
+                            )}
+                        </Box>
                     </Box>
-                </Box>}
+                </Box>
+            )}
 
             {GridButtonsComponent && <GridButtonsComponent />}
 
-            {rows.length > 0 && !loading &&
+            {rows.length > 0 && !loading ? (
                 <div id="printTable">
                     <DataGrid
                         rows={rows}
                         columns={columns}
                         loading={loading}
-                        pageSizeOptions={pageSizeOptions}
-                        paginationMode={paginationMode}
-                        pagination={pagination}
-                        {...otherGridProps}
+                        {...gridProps}
                     />
-                </div>}
-
-            {
-                loading &&
-                <Box sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flex: 1
-                }}>
-                    <Lottie options={defaultOptions}
-                        height={300}
-                        width={300}
-                    />
-                </Box>
-            }
-
-            {!loading && rows.length === 0 &&
-                <Box sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flex: 1,
-                    paddingY: 4
-                }}>
-                    <img src={empty} className="h-48" />
-                    <Typography>Looks like you dont have any data</Typography>
-                    {!disableAdd && <Button
-                        onClick={onAdd}
-                        variant="contained"
-                        // size="small"
-                        sx={{ textTransform: 'capitalize', width: 300, mt: 1 }}
-                        startIcon={<AddIcon />}
-                    >
-                        New
-                    </Button>}
-                </Box>}
+                </div>
+            ) : loading ? (
+                <LoadingIndicator options={defaultOptions} />
+            ) : (
+                <NoDataIndicator onAdd={onAdd} disableAdd={disableAdd} />
+            )}
         </Box>
     );
 };
@@ -172,27 +141,17 @@ GridModel.propTypes = {
     FilterComponent: PropTypes.node,
     GridButtonsComponent: PropTypes.node,
     onAdd: PropTypes.func,
-    onChangeStartDate: PropTypes.func,
-    onChangeEndDate: PropTypes.func,
-    showGridHeader: PropTypes.bool,
-    showSearchBar: PropTypes.bool,
     disableAdd: PropTypes.bool,
     disablePrint: PropTypes.bool,
     disableExport: PropTypes.bool,
-    defaultStartDate: PropTypes.string,
-    defaultEndDate: PropTypes.string
+    showGridHeader: PropTypes.bool
 };
 
 GridModel.defaultProps = {
     disableAdd: false,
     disableExport: false,
     disablePrint: false,
-    showGridHeader: true,
-    showStartDateFilter: true,
-    showEndDateFilter: true,
-    showSearchBar: true,
-    defaultStartDate: fromDate,
-    defaultEndDate: toDate
-}
+    showGridHeader: true
+};
 
 export default GridModel;
