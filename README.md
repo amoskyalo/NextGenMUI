@@ -435,9 +435,9 @@ Clone the forked repository to your local machine. This step allows you to work 
 
 After you've added your component, run the following command to add the new component to the `Dist` folder:
 
-    ```bash
-    yarn build
-    ```
+   ```bash
+   yarn build
+   ```
 
 7. ### Commit and Push Your Changes
 
