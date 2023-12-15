@@ -230,12 +230,127 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
 
 6. **SideBarModel**: a sleek, responsive sidebar navigation system designed to enhance Material-UI applications. It features a collapsible drawer with customizable width, color themes, and icon-based navigation items. This model is composed of DrawerItemsModel and ListItemsModel, which collectively handle the rendering of navigation items, including support for nested sub-links and sections. The sidebar's functionality is augmented with React Router for seamless navigation and route management. Users can expand or collapse the sidebar, offering a space-efficient way to access various parts of an application. The SideBarModel is an ideal solution for applications requiring a robust, aesthetically pleasing navigation system with adaptable features and a user-friendly interface.
 
+   **Usage**
+   SideBarModel can have sections or just a plain sidebar navigation.
+
+   ```javascript
+   import { SideBarModel } from "next-gen-mui";
+
+   const App = () => {
+        const NavHeader = () => {
+            return (
+                {** nav header component here**}
+            )
+        }
+
+    //for splain sidebar
+     const navigation = [
+       {
+         name: "Dashboard",
+         icon: DashboardIcon,
+         path: "/",
+         renderList: (params) => {
+           // console.log(params)
+           // return (
+           //   <p>{params.name}</p>
+           // )
+         },
+       },
+       {
+         name: "Clients",
+         icon: GroupIcon,
+         path: "/dashboard/clients",
+       },
+       {
+         name: "Worklogs",
+         icon: DataThresholdingIcon,
+         path: "/worklogs",
+         subLinks: [
+           {
+             name: "User Data",
+             icon: AccountBalanceIcon,
+             path: "/worklogs/user data",
+             renderList: (params) => {
+               // console.log(params)
+               // return (
+               //   <p>{params.name}</p>
+               // )
+             },
+           },
+           {
+             name: "Client Statistics",
+             icon: ManageHistoryIcon,
+           },
+         ],
+       },
+     ];
+
+     //for sidebar with sections
+    const nav = {
+    sections: [
+      {
+        title: "Overview",
+        list: [...navigation],
+      },
+      {
+        title: "Accounts",
+        list: [
+          {
+            name: "Chat",
+            icon: ChatBubbleIcon
+          },
+          {
+            name: "Settings",
+            icon: SettingsIcon
+          },
+          {
+            name: "Logout",
+            icon: LogoutIcon
+          }
+        ]
+      }
+    ]
+   }
+
+     return (
+        <SideBarModel
+            navigateItems=//if it has section, nav, else navigation
+            NavHeader={NavHeader}
+            openHeader={open}
+            activeTabBackgroundColor="#395759"
+            backgroundColor="#001d25"
+            textColor="#c8cecf"
+            options={{
+            listItemButton: {
+                border: "1px solid red",
+                padding: .7
+            }
+            listItemButton: (list) => (
+                {
+                border: "1px solid red",
+                paddingY: list.isActiveTab ? 1 : 0
+                }
+            ),
+            listItemText: {
+                color: "red"
+            },
+            getColor: (params) => {
+                return params.isActiveTab ? "red" : "white"
+            }
+            }}
+        />
+     )
+   };
+   ```
+
 7. **PopoverModel**: Enriches Material-UI applications with a stylish, customizable menu, featuring a sleek dropdown design. It allows for dynamic menu item rendering, each with optional icons and individual click handlers. This model elegantly integrates with Material-UI's Menu component, offering a visually appealing and user-friendly interface. It's ideal for adding context-sensitive menus to enhance user interaction in modern web applications.
 
    **Usage**
 
    ```javascript
-   const App = () => {
+    import { PopoverModel } from "next-gen-mui";
+
+    const App = () => {
     const [anchorEL, setAnchorEl] = useState(null);
     const open = Boolean(anchorEL);
 
@@ -249,14 +364,14 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
        },
         {
          name: "Delete",
-             icon: //icon ( optional ),
+         icon: //icon ( optional ),
          onItemClick: (e) => {
            console.log(e);
          },
        },
         {
          name: "Share",
-             icon: //icon ( optional ),
+         icon: //icon ( optional ),
          onItemClick: (e) => {
            console.log(e);
          },
