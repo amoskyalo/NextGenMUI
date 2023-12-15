@@ -7,160 +7,178 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 require("core-js/modules/web.dom-collections.iterator.js");
+require("core-js/modules/es.symbol.description.js");
 var _react = _interopRequireWildcard(require("react"));
-var _xDataGrid = require("@mui/x-data-grid");
-var _material = require("@mui/material");
-var _Utils = require("../../Utils/Utils");
-var _CalendarMonth = _interopRequireDefault(require("@mui/icons-material/CalendarMonth"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
-var _dayjs = _interopRequireDefault(require("dayjs"));
-var _Search = _interopRequireDefault(require("@mui/icons-material/Search"));
-var _Refresh = _interopRequireDefault(require("@mui/icons-material/Refresh"));
-var _Add = _interopRequireDefault(require("@mui/icons-material/Add"));
+var _material = require("@mui/material");
+var _CalendarMonth = _interopRequireDefault(require("@mui/icons-material/CalendarMonth"));
 var _Print = _interopRequireDefault(require("@mui/icons-material/Print"));
 var _ExitToApp = _interopRequireDefault(require("@mui/icons-material/ExitToApp"));
-var _empty = _interopRequireDefault(require("../../Assets/empty.gif"));
-var loading = _interopRequireWildcard(require("../../Assets/loading.json"));
+var _Add = _interopRequireDefault(require("@mui/icons-material/Add"));
+var _xDataGrid = require("@mui/x-data-grid");
 var _reactLottie = _interopRequireDefault(require("react-lottie"));
+var _empty = _interopRequireDefault(require("../../Assets/empty.gif"));
+var _loading = _interopRequireDefault(require("../../Assets/loading.json"));
 var _Calender = _interopRequireDefault(require("../Calender"));
-const _excluded = ["columns", "rows", "loading", "pageSizeOptions", "pagination", "paginationMode", "FilterComponent", "GridButtonsComponent", "onAdd", "onChangeStartDate", "onChangeEndDate", "disableAdd", "disablePrint", "disableExport", "showGridHeader", "showStartDateFilter", "showEndDateFilter", "showSearchBar", "defaultStartDate", "defaultEndDate"];
+var _Utils = require("../../Utils/Utils");
+const _excluded = ["columns", "rows", "loading", "FilterComponent", "GridButtonsComponent", "onAdd", "disableAdd", "disablePrint", "disableExport", "showGridHeader", "onDateChange", "onApplyDateChanges"];
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: loading,
-  rendererSettings: {
-    preserveAspectRatio: 'xMidYMid slice'
-  }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+const buttonStyle = {
+  textTransform: 'capitalize'
 };
-const GridModel = _ref => {
+const LoadingIndicator = _ref => {
+  let {
+    options
+  } = _ref;
+  return /*#__PURE__*/_react.default.createElement(_material.Box, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1
+    }
+  }, /*#__PURE__*/_react.default.createElement(_reactLottie.default, {
+    options: options,
+    height: 300,
+    width: 300
+  }));
+};
+const NoDataIndicator = _ref2 => {
+  let {
+    onAdd,
+    disableAdd
+  } = _ref2;
+  return /*#__PURE__*/_react.default.createElement(_material.Box, {
+    sx: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1,
+      py: 4
+    }
+  }, /*#__PURE__*/_react.default.createElement("img", {
+    src: _empty.default,
+    alt: "No data",
+    className: "h-48"
+  }), /*#__PURE__*/_react.default.createElement(_material.Typography, null, "Looks like you don't have any data"), !disableAdd && /*#__PURE__*/_react.default.createElement(_material.Button, {
+    onClick: onAdd,
+    variant: "contained",
+    sx: _objectSpread(_objectSpread({}, buttonStyle), {}, {
+      width: 300,
+      mt: 1
+    }),
+    startIcon: /*#__PURE__*/_react.default.createElement(_Add.default, null)
+  }, "New"));
+};
+const GridModel = _ref3 => {
   let {
       columns,
       rows,
       loading,
-      pageSizeOptions,
-      pagination,
-      paginationMode,
       FilterComponent,
       GridButtonsComponent,
       onAdd,
-      onChangeStartDate,
-      onChangeEndDate,
       disableAdd,
       disablePrint,
       disableExport,
       showGridHeader,
-      showStartDateFilter,
-      showEndDateFilter,
-      showSearchBar,
-      defaultStartDate,
-      defaultEndDate
-    } = _ref,
-    otherGridProps = _objectWithoutProperties(_ref, _excluded);
+      onDateChange,
+      onApplyDateChanges
+    } = _ref3,
+    gridProps = _objectWithoutProperties(_ref3, _excluded);
+  const [dates, setDates] = (0, _react.useState)({
+    startDate: _Utils.dateObject,
+    endDate: _Utils.dateObject
+  });
   const [anchorEl, setAnchorEl] = (0, _react.useState)(null);
   const open = Boolean(anchorEl);
-  return /*#__PURE__*/_react.default.createElement(_material.Box, null, showGridHeader && /*#__PURE__*/_react.default.createElement(_material.Box, {
+  const handleChangeDates = (type, value) => {
+    setDates(_objectSpread(_objectSpread({}, dates), {}, {
+      [type]: value
+    }));
+  };
+  (0, _react.useEffect)(() => {
+    if (onDateChange) {
+      onDateChange(dates);
+    }
+  }, [dates]);
+  const {
+    startDate: {
+      $D: startDay,
+      $M: startMonth
+    },
+    endDate: {
+      $D: endDay,
+      $M: endMonth
+    }
+  } = dates;
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: _loading.default,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
+  return /*#__PURE__*/_react.default.createElement(_material.Box, null, showGridHeader && /*#__PURE__*/_react.default.createElement(_material.Box, null, /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
     justifyContent: "space-between",
-    marginBottom: 1
+    mb: 1
   }, /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
-    columnGap: 3
-  }, !disablePrint && /*#__PURE__*/_react.default.createElement(_material.Button, {
-    sx: {
-      textTransform: "capitalize"
-    },
-    startIcon: /*#__PURE__*/_react.default.createElement(_Print.default, null),
-    variant: "contained"
-    // size="small"
-    ,
-    onClick: _Utils.handlePrint
-  }, "Print"), !disableExport && /*#__PURE__*/_react.default.createElement(_material.Button, {
-    sx: {
-      textTransform: "capitalize"
-    },
-    startIcon: /*#__PURE__*/_react.default.createElement(_ExitToApp.default, null),
-    variant: "contained"
-    // size="small"
-    ,
-    onClick: () => (0, _Utils.handleExportToExcel)(columns, rows)
-  }, "Export")), /*#__PURE__*/_react.default.createElement(_material.Box, {
+    gap: 3
+  }), /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
-    columnGap: 3
-  }, /*#__PURE__*/_react.default.createElement(_material.IconButton, null, /*#__PURE__*/_react.default.createElement(_Refresh.default, null)), /*#__PURE__*/_react.default.createElement(_material.Button, {
+    gap: 3
+  }, /*#__PURE__*/_react.default.createElement(_material.Button, {
     startIcon: /*#__PURE__*/_react.default.createElement(_CalendarMonth.default, null),
     variant: "contained",
-    onClick: event => setAnchorEl(event.currentTarget)
-    // size="small"
-    ,
-    sx: {
-      textTransform: "capitalize",
-      backgroundColor: "#eff4f8",
-      boxShadow: 0,
-      color: "#495c6c"
-    }
-  }, "Last 30 days"), /*#__PURE__*/_react.default.createElement(_Calender.default, {
+    onClick: event => setAnchorEl(event.currentTarget),
+    sx: buttonStyle
+  }, _Utils.monthsOfTheYear[startMonth], " ", startDay, " -  ", _Utils.monthsOfTheYear[endMonth], " ", endDay), !disablePrint && /*#__PURE__*/_react.default.createElement(_material.Button, {
+    sx: buttonStyle,
+    startIcon: /*#__PURE__*/_react.default.createElement(_Print.default, null),
+    variant: "contained",
+    onClick: _Utils.handlePrint
+  }, "Print"), !disableExport && /*#__PURE__*/_react.default.createElement(_material.Button, {
+    sx: buttonStyle,
+    startIcon: /*#__PURE__*/_react.default.createElement(_ExitToApp.default, null),
+    variant: "contained",
+    onClick: () => (0, _Utils.handleExportToExcel)(columns, rows)
+  }, "Export"), /*#__PURE__*/_react.default.createElement(_Calender.default, {
+    onChange: handleChangeDates,
+    onApplyDateChanges: onApplyDateChanges,
     anchorEl: anchorEl,
     open: open,
     onClose: () => setAnchorEl(null)
   }), FilterComponent && /*#__PURE__*/_react.default.createElement(FilterComponent, null), !disableAdd && /*#__PURE__*/_react.default.createElement(_material.Button, {
     startIcon: /*#__PURE__*/_react.default.createElement(_Add.default, null),
     onClick: onAdd,
-    variant: "contained"
-    // size="small"
-    ,
-    sx: {
-      textTransform: "capitalize"
-    }
-  }, "New"))), GridButtonsComponent && /*#__PURE__*/_react.default.createElement(GridButtonsComponent, null), rows.length > 0 && !loading && /*#__PURE__*/_react.default.createElement("div", {
+    variant: "contained",
+    sx: buttonStyle
+  }, "New"))), /*#__PURE__*/_react.default.createElement(_material.Divider, null)), GridButtonsComponent && /*#__PURE__*/_react.default.createElement(GridButtonsComponent, null), rows.length > 0 && !loading ? /*#__PURE__*/_react.default.createElement("div", {
     id: "printTable"
   }, /*#__PURE__*/_react.default.createElement(_xDataGrid.DataGrid, _extends({
     rows: rows,
     columns: columns,
-    loading: loading,
-    pageSizeOptions: pageSizeOptions,
-    paginationMode: paginationMode,
-    pagination: pagination
-  }, otherGridProps))), loading && /*#__PURE__*/_react.default.createElement(_material.Box, {
-    sx: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      flex: 1
-    }
-  }, /*#__PURE__*/_react.default.createElement(_reactLottie.default, {
-    options: defaultOptions,
-    height: 300,
-    width: 300
-  })), !loading && rows.length === 0 && /*#__PURE__*/_react.default.createElement(_material.Box, {
-    sx: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      flex: 1,
-      paddingY: 4
-    }
-  }, /*#__PURE__*/_react.default.createElement("img", {
-    src: _empty.default,
-    className: "h-48"
-  }), /*#__PURE__*/_react.default.createElement(_material.Typography, null, "Looks like you dont have any data"), !disableAdd && /*#__PURE__*/_react.default.createElement(_material.Button, {
-    onClick: onAdd,
-    variant: "contained"
-    // size="small"
-    ,
-    sx: {
-      textTransform: 'capitalize',
-      width: 300,
-      mt: 1
-    },
-    startIcon: /*#__PURE__*/_react.default.createElement(_Add.default, null)
-  }, "New")));
+    loading: loading
+  }, gridProps))) : loading ? /*#__PURE__*/_react.default.createElement(LoadingIndicator, {
+    options: defaultOptions
+  }) : /*#__PURE__*/_react.default.createElement(NoDataIndicator, {
+    onAdd: onAdd,
+    disableAdd: disableAdd
+  }));
 };
 GridModel.propTypes = {
   columns: _propTypes.default.array.isRequired,
@@ -171,25 +189,15 @@ GridModel.propTypes = {
   FilterComponent: _propTypes.default.node,
   GridButtonsComponent: _propTypes.default.node,
   onAdd: _propTypes.default.func,
-  onChangeStartDate: _propTypes.default.func,
-  onChangeEndDate: _propTypes.default.func,
-  showGridHeader: _propTypes.default.bool,
-  showSearchBar: _propTypes.default.bool,
   disableAdd: _propTypes.default.bool,
   disablePrint: _propTypes.default.bool,
   disableExport: _propTypes.default.bool,
-  defaultStartDate: _propTypes.default.string,
-  defaultEndDate: _propTypes.default.string
+  showGridHeader: _propTypes.default.bool
 };
 GridModel.defaultProps = {
   disableAdd: false,
   disableExport: false,
   disablePrint: false,
-  showGridHeader: true,
-  showStartDateFilter: true,
-  showEndDateFilter: true,
-  showSearchBar: true,
-  defaultStartDate: _Utils.fromDate,
-  defaultEndDate: _Utils.toDate
+  showGridHeader: true
 };
 var _default = exports.default = GridModel;

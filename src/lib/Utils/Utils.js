@@ -1,6 +1,6 @@
 import * as XLSX from "xlsx";
 
-const today = new Date();
+const date = new Date();
 
 export const handleExportToExcel = (columns, handleSearch) => {
     const headers = columns.map((column) => column.headerName);
@@ -23,6 +23,20 @@ export const handlePrint = () => {
     window.print();
 };
 
-export const fromDate = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+export const dateObject = {
+    '$D': date.getDate(),
+    '$H': date.getHours(),
+    '$L': "en",
+    '$M': date.getMonth(),
+    '$W': date.getDay(),
+    '$d': date,
+    '$isDayjsObject': true,
+    '$m': date.getMinutes(),
+    '$ms': date.getMilliseconds(),
+    '$s': date.getSeconds(),
+    '$u': undefined,
+    '$x': {},
+    '$y': date.getFullYear()
+};
 
-export const toDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+export const monthsOfTheYear = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
