@@ -153,10 +153,7 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
                { title: "Add", value: 12 },
              ],
              multiple: true,
-             value: [
-               { title: "Edit", value: 3 },
-               { title: "Delete", value: 6 },
-             ],
+             value: [{ title: "Edit", value: 3 }], //will be passed as the default values for this input,
            },
          ],
        },
@@ -229,6 +226,7 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
 6. **SideBarModel**: a sleek, responsive sidebar navigation system designed to enhance Material-UI applications. It features a collapsible drawer with customizable width, color themes, and icon-based navigation items. This model is composed of DrawerItemsModel and ListItemsModel, which collectively handle the rendering of navigation items, including support for nested sub-links and sections. The sidebar's functionality is augmented with React Router for seamless navigation and route management. Users can expand or collapse the sidebar, offering a space-efficient way to access various parts of an application. The SideBarModel is an ideal solution for applications requiring a robust, aesthetically pleasing navigation system with adaptable features and a user-friendly interface.
 
    **Usage**
+
    SideBarModel can have sections or just a plain sidebar navigation.
 
    ```javascript
@@ -401,6 +399,55 @@ Designed with ease of use in mind, NextGenMUI integrates seamlessly into your ex
 
 As NextGenMUI continues to grow, we are committed to introducing more components and features. Stay tuned for updates and enhancements that will further empower your web development journey with Material-UI.
 
-```
+## Contribution Guidelines
 
-```
+We welcome contributions to our component library! Whether you're fixing a bug, adding a feature, or improving documentation, here's how you can contribute:
+
+1. ### Fork the Repository
+
+Begin by forking the repository to your own GitHub account. This creates a copy where you can make your changes.
+
+2. ### Clone the Forked Repository
+
+Clone the forked repository to your local machine. This step allows you to work on the codebase locally.
+
+3. ### Install Dependencies
+
+   ```bash
+    cd YOUR-REPOSITORY
+    yarn install
+   ```
+
+4. ### Create a New Branch
+
+   ```bash
+   git checkout -b your-branch-name
+   ```
+
+5. ### Develop Your Component
+
+- Create your new component within the lib folder. This folder contains all the components of the library.
+- Test your component by importing and using it in `app.js``. This file is our testing ground for components.
+
+6. ### Build the Library
+
+After you've added your component, run the following command to add the new component to the `Dist` folder:
+
+    ```bash
+    yarn build
+    ```
+
+7. ### Commit and Push Your Changes
+
+Commit your changes with a clear commit message. Push the changes to your forked repository.
+
+    ```bash
+    git commit -m "Add a brief description of your changes"
+    git push origin your-branch-name
+    ```
+
+8. ### Open a Pull Request
+
+Go to your forked repository on GitHub and open a pull request to the original repository. Describe your changes and why they should be merged.
+
+Please ensure your code adheres to our coding standards and include any necessary tests. We look forward to your contributions! 🌟
