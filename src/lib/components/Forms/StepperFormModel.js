@@ -1,11 +1,16 @@
 import React from 'react';
 import FormModel from './FormModel';
 import PropTypes from 'prop-types'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Step, Stepper, Box, StepLabel, Button } from '@mui/material';
 
-const StepperFormModel = ({ steps, onFieldChange, isLoading, onSubmit, width, buttonLabel, submitButtonWidth, gridColumnsCount, options, CustomSubmitButton }) => {
+const StepperFormModel = ({ getActiveStep, steps, onFieldChange, isLoading, onSubmit, width, buttonLabel, submitButtonWidth, gridColumnsCount, options, CustomSubmitButton }) => {
     const [activeStep, setActiveStep] = useState(0);
+
+    useEffect(() => {
+        getActiveStep(activeStep)
+    }, [activeStep]);
+
     const totalSteps = () => {
         return steps.length;
     };

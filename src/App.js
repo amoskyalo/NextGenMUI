@@ -57,6 +57,7 @@ function App() {
       width={400}
       onSubmit={(values) => console.log(values)}
       CustomSubmitButton={CustomSubmitButton}
+      getActiveStep={step => console.log(step)}
     //other props
     />
   );
