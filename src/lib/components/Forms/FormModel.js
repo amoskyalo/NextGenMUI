@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Formik } from 'formik';
 import { InputAdornment, IconButton, TextField, Select, MenuItem, FormControl, Button, CircularProgress, OutlinedInput, InputLabel, Typography, Box, Autocomplete } from "@mui/material";
 
-const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, options, gridColumnsCount, submitButtonWidth, buttonLabel, CustomTitle }) => {
+const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, options, gridColumnsCount, submitButtonWidth, buttonLabel, CustomTitle, showButton, CustomSubmitButton }) => {
   const [visiblePasswordFields, setVisiblePasswordFields] = useState([]);
 
   const toggleVisibility = (fieldName) => {
@@ -30,7 +30,6 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
 
     return initialValues;
   };
-
 
   const getDefaultValidationSchema = () => {
     const schema = inputs.reduce((schemaAcc, input) => {
@@ -71,6 +70,7 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
             defaultValue={input.value}
             options={input.lookups}
             getOptionLabel={(option) => option.title}
+            disabled={input.disabled}
             size='small'
             onChange={(__, newValue) => {
               const newValues = newValue.map(item => item.value);
@@ -97,6 +97,7 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
             id={input.name}
             label={input.label}
             name={input.name}
+            disabled={input.disabled}
             error={formik.touched[input.name] && Boolean(formik.errors[input.name])}
             helperText={formik.touched[input.name] && formik.errors[input.name]}
             {...formik.getFieldProps(input.name)}
@@ -178,7 +179,7 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
             }}
           >
             {inputs.map(input => renderInput(input, formik))}
-            <Button
+            {showButton && !CustomSubmitButton && <Button
               type='submit'
               variant="contained"
               sx={{ textTransform: "capitalize", width: submitButtonWidth, gridColumn: `span ${gridColumnsCount}` }}
@@ -186,7 +187,9 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
               disabled={isLoading}
             >
               {isLoading ? <CircularProgress color="inherit" size={20} /> : buttonLabel}
-            </Button>
+            </Button>}
+
+            {CustomSubmitButton && showButton && <CustomSubmitButton />}
           </Box>
         </form>
       )}

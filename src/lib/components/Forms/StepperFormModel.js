@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { useState } from 'react';
 import { Step, Stepper, Box, StepLabel, Button } from '@mui/material';
 
-const StepperFormModel = ({ steps, onFieldChange, isLoading, onSubmit, width, buttonLabel, submitButtonWidth, gridColumnsCount, options }) => {
+const StepperFormModel = ({ steps, onFieldChange, isLoading, onSubmit, width, buttonLabel, submitButtonWidth, gridColumnsCount, options, CustomSubmitButton }) => {
     const [activeStep, setActiveStep] = useState(0);
     const totalSteps = () => {
         return steps.length;
@@ -36,12 +36,14 @@ const StepperFormModel = ({ steps, onFieldChange, isLoading, onSubmit, width, bu
             <FormModel
                 onFieldChange={onFieldChange}
                 inputs={steps[activeStep]?.inputs}
-                buttonLabel={!isLastStep() ? "Proceed" : buttonLabel}
+                // buttonLabel={!isLastStep() ? "Proceed" : buttonLabel}
                 isLoading={isLoading}
-                onSubmit={!isLastStep() ? handleNext : onSubmit}
+                onSubmit={onSubmit}
+                showButton={isLastStep()}
                 submitButtonWidth={submitButtonWidth}
                 gridColumnsCount={gridColumnsCount}
                 options={options}
+                CustomSubmitButton={CustomSubmitButton}
             />
 
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
