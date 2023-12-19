@@ -450,6 +450,6 @@ Commit your changes with a clear commit message. Push the changes to your forked
 
 8. ### Open a Pull Request
 
-Go to your forked repository on GitHub and open a pull request to the original repository. Describe your changes and why they should be merged.
+Go to your forked repository on GitHub and open a pull request to the original repository. Provide a detailed description your changes and reference any related issues. Give a reason too of why they should be merged.
 
 Please ensure your code adheres to our coding standards and include any necessary tests. We look forward to your contributions! 🌟
