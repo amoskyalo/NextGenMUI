@@ -405,50 +405,50 @@ As NextGenMUI continues to grow, we are committed to introducing more components
 
 We welcome contributions to our component library! Whether you're fixing a bug, adding a feature, or improving documentation, here's how you can contribute:
 
-1. ### Fork the Repository
+### 1. Fork the Repository
 
 Begin by forking the repository to your own GitHub account. This creates a copy where you can make your changes.
 
-2. ### Clone the Forked Repository
+### 2. Clone the Forked Repository
 
 Clone the forked repository to your local machine. This step allows you to work on the codebase locally.
 
-3. ### Install Dependencies
+### 3. Install Dependencies
+  
+```shell
+cd YOUR-REPOSITORY
+yarn install
+```
+  
+### 4. Create a New Branch
 
-   ```javascript
-    cd YOUR-REPOSITORY
-    yarn install
-   ```
+```shell
+git checkout -b your-branch-name
+```
 
-4. ### Create a New Branch
-
-   ```javascript
-   git checkout -b your-branch-name
-   ```
-
-5. ### Develop Your Component
+### 5. Develop Your Component
 
 - Create your new component within the lib folder. This folder contains all the components of the library.
 - Test your component by importing and using it in `app.js`. This file is our testing ground for components.
 
-6. ### Build the Library
+### 6. Build the Library
 
 After you've added your component, run the following command to add the new component to the `Dist` folder:
 
-    ```javascript
-    yarn build
-    ```
+```shell
+yarn build
+```
 
-7. ### Commit and Push Your Changes
+### 7. Commit and Push Your Changes
 
 Commit your changes with a clear commit message. Push the changes to your forked repository.
 
-    ```javascript
-    git commit -m "Add a brief description of your changes"
-    git push origin your-branch-name
-    ```
+```shell
+git commit -m "Add a brief description of your changes"
+git push origin your-branch-name
+```
 
-8. ### Open a Pull Request
+### 8. Open a Pull Request
 
 Go to your forked repository on GitHub and open a pull request to the original repository. Provide a detailed description your changes and reference any related issues. Give a reason too of why they should be merged.
 
