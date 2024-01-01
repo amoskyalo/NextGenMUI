@@ -8,7 +8,9 @@ const StepperFormModel = ({ getActiveStep, steps, onFieldChange, isLoading, onSu
     const [activeStep, setActiveStep] = useState(0);
 
     useEffect(() => {
-        getActiveStep(activeStep)
+        if (typeof getActiveStep === 'function') {
+            getActiveStep(activeStep)
+        }
     }, [activeStep]);
 
     const totalSteps = () => {

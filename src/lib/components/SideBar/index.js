@@ -5,8 +5,9 @@ import MuiDrawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import DrawerItemsModel from './DrawerItemsModel'
+import { Box, Divider } from '@mui/material';
 
-const drawerWidth = 250;
+const drawerWidth = 270;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -31,9 +32,9 @@ const closedMixin = (theme) => ({
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
-  // alignItems: 'center',
-  // justifyContent: 'flex-end',
-  // ...theme.mixins.toolbar,
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  ...theme.mixins.toolbar,
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -61,9 +62,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
   }),
 );
-
-const SideBarModel = ({ NavHeader, openHeader, activeTabBackgroundColor, backgroundColor, textColor, navigateItems, options }) => {
-  const [open, setOpen] = useState(false);
+const SideBarModel = ({ NavHeader, openHeader, activeTabBackgroundColor, backgroundColor, textColor, navigateItems, options, NavFooter }) => {
+  const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -75,22 +75,29 @@ const SideBarModel = ({ NavHeader, openHeader, activeTabBackgroundColor, backgro
 
   return (
     <Drawer variant="permanent" open={openHeader || open} backgroundColor={backgroundColor} textColor={textColor}>
-      <DrawerHeader>
-        {
-          NavHeader ? <NavHeader /> :
-            <IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
-              <MenuIcon sx={{ color: textColor }} />
-            </IconButton>
-        }
-      </DrawerHeader>
+      <Box height={"100vh"} overflowY={"hidden"} display={"flex"} flexDirection={"column"}>
+        <DrawerHeader>
+          {
+            NavHeader ? <NavHeader /> :
+              <IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
+                <MenuIcon sx={{ color: textColor }} />
+              </IconButton>
+          }
+        </DrawerHeader>
 
-      <DrawerItemsModel
-        listItems={navigateItems}
-        activeTabBackgroundColor={activeTabBackgroundColor}
-        textColor={textColor}
-        open={open || openHeader}
-        options={options}
-      />
+        <Box flex={1} overflow={"auto"} paddingX={2}>
+          <DrawerItemsModel
+            listItems={navigateItems}
+            activeTabBackgroundColor={activeTabBackgroundColor}
+            textColor={textColor}
+            open={open || openHeader}
+            options={options}
+          />
+        </Box>
+
+        <Divider color={"gray"} />
+        {NavFooter && <NavFooter />}
+      </Box>
     </Drawer>
   )
 }
