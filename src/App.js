@@ -18,6 +18,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import ListIcon from '@mui/icons-material/List';
 import MapIcon from '@mui/icons-material/Map';
 import GridModel from "./lib/components/Grids/GridModel";
+import FormModel from "./lib/components/Forms/FormModel";
 
 function App() {
   const routes = {
@@ -108,6 +109,41 @@ function App() {
     { field: "Email" }
   ]
 
+  const inputs = [
+    {
+      name: "name",
+      label: "User Name",
+      type: "text",
+      value: null
+    },
+    {
+      name: "email",
+      label: "User Email",
+      type: "email",
+      value: null
+    },
+    {
+      name: "type",
+      label: "User Type",
+      lookups: [{ title: "Yes", value: 0 }, { title: "No", value: 1 }],
+      value: null
+    },
+    {
+      name: "roles",
+      label: "Roles",
+      lookups: [{ title: "Admin", value: 0 }, { title: "Employee", value: 1 }],
+      multiple: true,
+      value: []
+    },
+    {
+      name: "isMale",
+      label: "Is Male",
+      isBoolean: true,
+      booleanOptions: [{ value: 1, label: "Yes" }, { value: 2, label: "No" }],
+      value: null
+    }
+  ];
+
   // const NavFooter = () => (
   //   <Box borderBottom={"4px solid white"} paddingY={1.5} display={"flex"} justifyContent={"center"} columnGap={2}>
   //     {[SettingsIcon, HelpIcon, PowerSettingsNewIcon].map((El) => (
@@ -128,24 +164,12 @@ function App() {
   // );
 
   return (
-    // <StepperFormModel
-    //   steps={steps || []}
-    //   width={400}
-    //   onSubmit={(values) => console.log(values)}
-    //   CustomSubmitButton={CustomSubmitButton}
-    //   getActiveStep={step => console.log(step)}
-    // //other props
-    // />
-    <GridModel columns={columns} rows={[]} />
-    // <SideBarModel
-    //   navigateItems={routes}
-    //   backgroundColor={"#111633"}
-    //   textColor={"rgba(255, 255, 255, 0.5)"}
-    //   options={{
-    //     listIcon: { fontSize: 20 },
-    //     listItemButton: { padding: .5 }
-    //   }}
-    // />
+    <Box>
+      <GridModel columns={columns} rows={[]} />
+      <Box sx={{ width: 400, mx: "auto" }}>
+        <FormModel inputs={inputs} onSubmit={val => console.log(val)} />
+      </Box>
+    </Box>
   );
 }
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as Yup from 'yup';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import * as Yup from 'yup';
 import { useState } from 'react';
 import { Formik } from 'formik';
-import { InputAdornment, IconButton, TextField, Select, MenuItem, FormControl, Button, CircularProgress, OutlinedInput, InputLabel, Typography, Box, Autocomplete } from "@mui/material";
+import { Checkbox, InputAdornment, IconButton, TextField, Select, MenuItem, FormControl, Button, CircularProgress, OutlinedInput, InputLabel, Typography, Box, Autocomplete } from "@mui/material";
 
 const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, options, gridColumnsCount, submitButtonWidth, buttonLabel, CustomTitle, showButton, CustomSubmitButton }) => {
   const [visiblePasswordFields, setVisiblePasswordFields] = useState([]);
@@ -118,6 +118,34 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
           {formik.touched[input.name] && formik.errors[input.name] && <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>{formik.errors[input.name]}</Typography>}
         </FormControl>
       );
+    } else if (input.isBoolean) {
+      return (
+        <FormControl>
+          <Typography sx={{ opacity: "70%" }}>{input.label}</Typography>
+          <Box sx={{ display: "flex", columnGap: 4, flexWrap: "wrap" }}>
+            {input.booleanOptions.map((option) => (
+              <Box key={option.value} sx={{ display: "flex", alignItems: "center", columnGap: 1 }}>
+                <Checkbox
+                  sx={{ m: 0, px: 0 }}
+                  name={input.name}
+                  value={option.value}
+                  checked={formik.values[input.name] === option.value}
+                  onChange={(event) => {
+                    const newValue = event.target.checked ? option.value : null;
+                    formik.setFieldValue(input.name, newValue, true);
+                  }}
+                />
+                <Typography sx={{ opacity: "70%" }}>{option.label}</Typography>
+              </Box>
+            ))}
+          </Box>
+          {formik.touched[input.name] && formik.errors[input.name] && (
+            <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>
+              {formik.errors[input.name]}
+            </Typography>
+          )}
+        </FormControl>
+      )
     } else {
       return (
         <FormControl sx={{ width: "100%" }} size="small" key={input.name}>
@@ -212,7 +240,7 @@ FormModel.propTypes = {
       PropTypes.bool
     ]),
     lookups: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
       value: PropTypes.oneOfType([
         PropTypes.string.isRequired,
         PropTypes.number.isRequired,
@@ -220,6 +248,15 @@ FormModel.propTypes = {
       ]),
     })),
     multiselect: PropTypes.bool,
+    isBoolean: PropTypes.bool,
+    booleanOptions: PropTypes.arrayOf(PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([
+        PropTypes.string.isRequired,
+        PropTypes.number.isRequired,
+        PropTypes.array.isRequired
+      ]),
+    })),
     disabled: PropTypes.bool
   })).isRequired,
   width: PropTypes.string,
@@ -235,7 +272,8 @@ FormModel.defaultProps = {
   gridColumnsCount: 1,
   submitButtonWidth: "100%",
   buttonLabel: "Submit",
-  isLoading: false
+  isLoading: false,
+  showButton: true
 };
 
 export default FormModel;

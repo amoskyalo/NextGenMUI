@@ -13,9 +13,9 @@ require("core-js/modules/es.string.includes.js");
 require("core-js/modules/es.array.reduce.js");
 var _react = _interopRequireWildcard(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
-var Yup = _interopRequireWildcard(require("yup"));
 var _Visibility = _interopRequireDefault(require("@mui/icons-material/Visibility"));
 var _VisibilityOff = _interopRequireDefault(require("@mui/icons-material/VisibilityOff"));
+var Yup = _interopRequireWildcard(require("yup"));
 var _formik = require("formik");
 var _material = require("@mui/material");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -140,6 +140,47 @@ const FormModel = _ref => {
           mt: 1
         }
       }, formik.errors[input.name]));
+    } else if (input.isBoolean) {
+      return /*#__PURE__*/_react.default.createElement(_material.FormControl, null, /*#__PURE__*/_react.default.createElement(_material.Typography, {
+        sx: {
+          opacity: "70%"
+        }
+      }, input.label), /*#__PURE__*/_react.default.createElement(_material.Box, {
+        sx: {
+          display: "flex",
+          columnGap: 4,
+          flexWrap: "wrap"
+        }
+      }, input.booleanOptions.map(option => /*#__PURE__*/_react.default.createElement(_material.Box, {
+        key: option.value,
+        sx: {
+          display: "flex",
+          alignItems: "center",
+          columnGap: 1
+        }
+      }, /*#__PURE__*/_react.default.createElement(_material.Checkbox, {
+        sx: {
+          m: 0,
+          px: 0
+        },
+        name: input.name,
+        value: option.value,
+        checked: formik.values[input.name] === option.value,
+        onChange: event => {
+          const newValue = event.target.checked ? option.value : null;
+          formik.setFieldValue(input.name, newValue, true);
+        }
+      }), /*#__PURE__*/_react.default.createElement(_material.Typography, {
+        sx: {
+          opacity: "70%"
+        }
+      }, option.label)))), formik.touched[input.name] && formik.errors[input.name] && /*#__PURE__*/_react.default.createElement(_material.Typography, {
+        sx: {
+          fontSize: 12,
+          color: "red",
+          mt: 1
+        }
+      }, formik.errors[input.name]));
     } else {
       return /*#__PURE__*/_react.default.createElement(_material.FormControl, {
         sx: {
@@ -227,10 +268,15 @@ FormModel.propTypes = {
     required: _propTypes.default.bool.isRequired,
     value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool]),
     lookups: _propTypes.default.arrayOf(_propTypes.default.shape({
-      name: _propTypes.default.string.isRequired,
+      title: _propTypes.default.string.isRequired,
       value: _propTypes.default.oneOfType([_propTypes.default.string.isRequired, _propTypes.default.number.isRequired, _propTypes.default.array.isRequired])
     })),
     multiselect: _propTypes.default.bool,
+    isBoolean: _propTypes.default.bool,
+    booleanOptions: _propTypes.default.arrayOf(_propTypes.default.shape({
+      label: _propTypes.default.string.isRequired,
+      value: _propTypes.default.oneOfType([_propTypes.default.string.isRequired, _propTypes.default.number.isRequired, _propTypes.default.array.isRequired])
+    })),
     disabled: _propTypes.default.bool
   })).isRequired,
   width: _propTypes.default.string,
@@ -245,6 +291,7 @@ FormModel.defaultProps = {
   gridColumnsCount: 1,
   submitButtonWidth: "100%",
   buttonLabel: "Submit",
-  isLoading: false
+  isLoading: false,
+  showButton: true
 };
 var _default = exports.default = FormModel;
