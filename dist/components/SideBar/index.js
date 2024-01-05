@@ -82,6 +82,7 @@ const Drawer = (0, _styles.styled)(_Drawer.default, {
 });
 const SideBarModel = _ref3 => {
   let {
+    listConatinerClassName,
     NavHeader,
     openHeader,
     activeTabBackgroundColor,
@@ -115,6 +116,7 @@ const SideBarModel = _ref3 => {
       color: textColor
     }
   }))), /*#__PURE__*/_react.default.createElement(_material.Box, {
+    className: listConatinerClassName,
     flex: 1,
     overflow: "auto",
     overflowX: "hidden",
@@ -135,6 +137,7 @@ SideBarModel.propTypes = {
   activeTabBackgroundColor: _propTypes.default.string.isRequired,
   backgroundColor: _propTypes.default.string.isRequired,
   textColor: _propTypes.default.string.isRequired,
+  listConatinerClassName: _propTypes.default.string,
   navigateItems: _propTypes.default.arrayOf(_propTypes.default.shape({
     name: _propTypes.default.string.isRequired,
     icon: _propTypes.default.node.isRequired,
