@@ -21,7 +21,7 @@ const StyledMenu = (0, _styles.styled)(props => /*#__PURE__*/_react.default.crea
   },
   transformOrigin: {
     vertical: "top",
-    horizontal: "right"
+    horgitizontal: "right"
   }
 }, props)))(_ref => {
   let {
