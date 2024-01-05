@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Typography } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PrintIcon from '@mui/icons-material/Print';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AddIcon from '@mui/icons-material/Add';
-import { DataGrid } from '@mui/x-data-grid';
 import Lottie from 'react-lottie';
 import emptyImage from '../../Assets/empty.gif';
 import loadingAnimation from '../../Assets/loading.json';
 import CalenderModel from '../Calender';
+import { useEffect, useState } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 import { handleExportToExcel, handlePrint, dateObject, monthsOfTheYear } from '../../Utils/Utils';
 
 const buttonStyle = { textTransform: 'capitalize' };
@@ -32,8 +33,13 @@ const NoDataIndicator = ({ onAdd, disableAdd }) => (
     </Box>
 );
 
-const GridModel = ({ columns, rows, loading, FilterComponent, GridButtonsComponent, onAdd, disableAdd, disablePrint, disableExport, showGridHeader, onDateChange, onApplyDateChanges, ...gridProps }) => {
-    const [dates, setDates] = useState({ startDate: dateObject, endDate: dateObject });
+const date = new Date();
+
+const GridModel = ({ columns, rows, loading, FilterComponent, GridButtonsComponent, onAdd, disableAdd, disablePrint, disableExport, showGridHeader, onDateChange, onApplyDateChanges, disableDates, ...gridProps }) => {
+    const [dates, setDates] = useState({
+        startDate: { ...dateObject, '$M': date.getMonth() === 0 ? 11 : date.getMonth() - 1 },
+        endDate: { ...dateObject, '$M': date.getMonth() }
+    });
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -48,6 +54,11 @@ const GridModel = ({ columns, rows, loading, FilterComponent, GridButtonsCompone
     }, [dates]);
 
     const { startDate: { $D: startDay, $M: startMonth }, endDate: { $D: endDay, $M: endMonth } } = dates;
+
+    const defaultDates = {
+        start: `${date.getFullYear()}-${(startMonth + 1).toString().padStart(2, "0")}-${startDay.toString().padStart(2, "0")}`,
+        end: `${date.getFullYear()}-${(endMonth + 1).toString().padStart(2, "0")}-${endDay.toString().padStart(2, "0")}`
+    };
 
     const defaultOptions = {
         loop: true,
@@ -64,17 +75,6 @@ const GridModel = ({ columns, rows, loading, FilterComponent, GridButtonsCompone
                 <Box>
                     <Box display="flex" justifyContent="space-between" mb={1}>
                         <Box display="flex" gap={3}>
-                            {/* Search */}
-                        </Box>
-                        <Box display="flex" gap={3}>
-                            <Button
-                                startIcon={<CalendarMonthIcon />}
-                                variant="contained"
-                                onClick={event => setAnchorEl(event.currentTarget)}
-                                sx={buttonStyle}
-                            >
-                                {monthsOfTheYear[startMonth]} {startDay} -  {monthsOfTheYear[endMonth]} {endDay}
-                            </Button>
                             {!disablePrint && (
                                 <Button
                                     sx={buttonStyle}
@@ -95,7 +95,24 @@ const GridModel = ({ columns, rows, loading, FilterComponent, GridButtonsCompone
                                     Export
                                 </Button>
                             )}
-                            <CalenderModel onChange={handleChangeDates} onApplyDateChanges={onApplyDateChanges} anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)} />
+                        </Box>
+                        <Box display="flex" gap={3}>
+                            {/* Search */}
+                        </Box>
+                        <Box display="flex" gap={3}>
+                            {!disableDates && (
+                                <Button
+                                    startIcon={<CalendarMonthIcon />}
+                                    variant="contained"
+                                    onClick={event => setAnchorEl(event.currentTarget)}
+                                    sx={buttonStyle}
+                                >
+                                    {monthsOfTheYear[startMonth]} {startDay} -  {monthsOfTheYear[endMonth]} {endDay}
+                                </Button>
+                            )}
+
+                            <CalenderModel defaultDates={defaultDates} onChange={handleChangeDates} onApplyDateChanges={onApplyDateChanges} anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)} />
+
                             {FilterComponent && <FilterComponent />}
                             {!disableAdd && (
                                 <Button
@@ -151,6 +168,7 @@ GridModel.defaultProps = {
     disableAdd: false,
     disableExport: false,
     disablePrint: false,
+    disableDates: false,
     showGridHeader: true
 };
 

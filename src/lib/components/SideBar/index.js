@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { styled } from '@mui/material/styles';
+import { Box, Divider } from '@mui/material';
 import PropTypes from 'prop-types';
 import MuiDrawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import DrawerItemsModel from './DrawerItemsModel'
-import { Box, Divider } from '@mui/material';
 
 const drawerWidth = 270;
 
@@ -85,7 +85,7 @@ const SideBarModel = ({ NavHeader, openHeader, activeTabBackgroundColor, backgro
           }
         </DrawerHeader>
 
-        <Box flex={1} overflow={"auto"} paddingX={2}>
+        <Box flex={1} overflow={"auto"} overflowX={"hidden"} paddingX={1} border={"1px solid red"}>
           <DrawerItemsModel
             listItems={navigateItems}
             activeTabBackgroundColor={activeTabBackgroundColor}
@@ -96,7 +96,7 @@ const SideBarModel = ({ NavHeader, openHeader, activeTabBackgroundColor, backgro
         </Box>
 
         <Divider color={"gray"} />
-        {NavFooter && <NavFooter />}
+        {NavFooter && open && <NavFooter />}
       </Box>
     </Drawer>
   )

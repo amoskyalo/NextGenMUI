@@ -1,4 +1,5 @@
 import React from 'react';
+import dayjs from 'dayjs';
 import { Box, Divider, Button, Menu } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DateCalendar } from '@mui/x-date-pickers';
@@ -20,20 +21,20 @@ const StyledMenu = styled((props) => (
     },
 }));
 
-const CalendarComponent = ({ onChange }) => (
+const CalendarComponent = ({ onChange, value }) => (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DateCalendar onChange={value => onChange(value)} />
+        <DateCalendar value={dayjs(value)} onChange={value => onChange(value)} />
     </LocalizationProvider>
 );
 
-const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges }) => {
+const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, defaultDates }) => {
     return (
         <StyledMenu anchorEl={anchorEl} open={open} onClose={onClose} id="calender-range">
             <Box sx={{ backgroundColor: "white", pt: 2, px: 3, borderRadius: 3, width: "max-content" }}>
                 <Box display="flex">
                     <Box sx={{ display: "flex" }}>
-                        <CalendarComponent onChange={value => onChange("startDate", value)} />
-                        <CalendarComponent onChange={value => onChange("endDate", value)} />
+                        <CalendarComponent value={defaultDates.start} onChange={value => onChange("startDate", value)} />
+                        <CalendarComponent value={defaultDates.end} onChange={value => onChange("endDate", value)} />
                     </Box>
                 </Box>
 
@@ -41,7 +42,7 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges }
 
                 <Box sx={{ display: "flex", justifyContent: "right", py: 2.5, gap: 2 }}>
                     <Button size="small" sx={{ textTransform: "capitalize" }} variant="outlined" onClick={onClose}>Cancel</Button>
-                    <Button size="small" sx={{ textTransform: "capitalize" }} variant="contained" onClick={onApplyDateChanges}>Apply dates</Button>
+                    <Button size="small" sx={{ textTransform: "capitalize" }} variant="contained" onClick={() => { onApplyDateChanges(); onClose() }}>Apply dates</Button>
                 </Box>
             </Box>
         </StyledMenu>

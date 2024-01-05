@@ -1,0 +1,142 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+require("core-js/modules/web.dom-collections.iterator.js");
+require("core-js/modules/es.symbol.description.js");
+var _react = require("react");
+var _styles = require("@mui/material/styles");
+var _material = require("@mui/material");
+var _propTypes = _interopRequireDefault(require("prop-types"));
+var _Drawer = _interopRequireDefault(require("@mui/material/Drawer"));
+var _IconButton = _interopRequireDefault(require("@mui/material/IconButton"));
+var _Menu = _interopRequireDefault(require("@mui/icons-material/Menu"));
+var _DrawerItemsModel = _interopRequireDefault(require("./DrawerItemsModel"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+const drawerWidth = 270;
+const openedMixin = theme => ({
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen
+  }),
+  overflowX: 'hidden'
+});
+const closedMixin = theme => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
+  overflowX: 'hidden',
+  width: "calc(".concat(theme.spacing(7), " + 1px)"),
+  [theme.breakpoints.up('sm')]: {
+    width: "calc(".concat(theme.spacing(8), " + 1px)")
+  }
+});
+const DrawerHeader = (0, _styles.styled)('div')(_ref => {
+  let {
+    theme
+  } = _ref;
+  return _objectSpread({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end'
+  }, theme.mixins.toolbar);
+});
+const Drawer = (0, _styles.styled)(_Drawer.default, {
+  shouldForwardProp: prop => prop !== 'open'
+})(_ref2 => {
+  let {
+    theme,
+    open,
+    backgroundColor,
+    textColor
+  } = _ref2;
+  return _objectSpread(_objectSpread({
+    width: drawerWidth
+  }, open && _objectSpread(_objectSpread({}, openedMixin(theme)), {}, {
+    '& .MuiDrawer-paper': _objectSpread(_objectSpread({}, openedMixin(theme)), {}, {
+      backgroundColor,
+      color: textColor,
+      padding: "0 16px",
+      border: "none"
+    })
+  })), !open && _objectSpread(_objectSpread({}, closedMixin(theme)), {}, {
+    '& .MuiDrawer-paper': _objectSpread(_objectSpread({}, closedMixin(theme)), {}, {
+      backgroundColor,
+      color: textColor,
+      padding: "0 16px",
+      border: "none"
+    })
+  }));
+});
+const SideBarModel = _ref3 => {
+  let {
+    NavHeader,
+    openHeader,
+    activeTabBackgroundColor,
+    backgroundColor,
+    textColor,
+    navigateItems,
+    options,
+    NavFooter
+  } = _ref3;
+  const [open, setOpen] = (0, _react.useState)(true);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+  return /*#__PURE__*/React.createElement(Drawer, {
+    variant: "permanent",
+    open: openHeader || open,
+    backgroundColor: backgroundColor,
+    textColor: textColor
+  }, /*#__PURE__*/React.createElement(_material.Box, {
+    height: "100vh",
+    overflowY: "hidden",
+    display: "flex",
+    flexDirection: "column"
+  }, /*#__PURE__*/React.createElement(DrawerHeader, null, NavHeader ? /*#__PURE__*/React.createElement(NavHeader, null) : /*#__PURE__*/React.createElement(_IconButton.default, {
+    onClick: open ? handleDrawerClose : handleDrawerOpen
+  }, /*#__PURE__*/React.createElement(_Menu.default, {
+    sx: {
+      color: textColor
+    }
+  }))), /*#__PURE__*/React.createElement(_material.Box, {
+    flex: 1,
+    overflow: "auto",
+    overflowX: "hidden",
+    paddingX: 1,
+    border: "1px solid red"
+  }, /*#__PURE__*/React.createElement(_DrawerItemsModel.default, {
+    listItems: navigateItems,
+    activeTabBackgroundColor: activeTabBackgroundColor,
+    textColor: textColor,
+    open: open || openHeader,
+    options: options
+  })), /*#__PURE__*/React.createElement(_material.Divider, {
+    color: "gray"
+  }), NavFooter && open && /*#__PURE__*/React.createElement(NavFooter, null)));
+};
+SideBarModel.propTypes = {
+  NavHeader: _propTypes.default.node,
+  openHeader: _propTypes.default.bool,
+  activeTabBackgroundColor: _propTypes.default.string.isRequired,
+  backgroundColor: _propTypes.default.string.isRequired,
+  textColor: _propTypes.default.string.isRequired,
+  navigateItems: _propTypes.default.arrayOf(_propTypes.default.shape({
+    name: _propTypes.default.string.isRequired,
+    icon: _propTypes.default.node.isRequired,
+    renderList: _propTypes.default.func
+  }))
+};
+var _default = exports.default = SideBarModel;

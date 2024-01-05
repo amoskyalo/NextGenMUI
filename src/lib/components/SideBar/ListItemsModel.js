@@ -1,7 +1,7 @@
 import React from 'react';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ListItem, Fade, List, ListItemText, ListItemIcon, ListItemButton } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const ListItemsModel = ({ listItems, expanded, open, setExpanded, handleClick, textColor, activeTabBackgroundColor, options }) => {
     const location = useLocation();
@@ -28,7 +28,7 @@ const ListItemsModel = ({ listItems, expanded, open, setExpanded, handleClick, t
                 alignItems: 'center',
                 backgroundColor: isActiveTab(item) && activeTabBackgroundColor,
                 borderRadius: 1,
-                paddingY: 0,
+                paddingY: 0
             }}
         >
             <ListItemButton
