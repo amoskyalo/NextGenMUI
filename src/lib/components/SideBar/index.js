@@ -63,7 +63,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
   }),
 );
-const SideBarModel = ({ NavHeader, openHeader, activeTabBackgroundColor, backgroundColor, textColor, navigateItems, options, NavFooter }) => {
+const SideBarModel = ({ listConatinerClassName, NavHeader, openHeader, activeTabBackgroundColor, backgroundColor, textColor, navigateItems, options, NavFooter }) => {
   const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
@@ -86,7 +86,13 @@ const SideBarModel = ({ NavHeader, openHeader, activeTabBackgroundColor, backgro
           }
         </DrawerHeader>
 
-        <Box flex={1} overflow={"auto"} overflowX={"hidden"} paddingX={1} >
+        <Box
+          className={listConatinerClassName}
+          flex={1}
+          overflow={"auto"}
+          overflowX={"hidden"}
+          paddingX={1}
+        >
           <DrawerItemsModel
             listItems={navigateItems}
             activeTabBackgroundColor={activeTabBackgroundColor}
@@ -109,6 +115,7 @@ SideBarModel.propTypes = {
   activeTabBackgroundColor: PropTypes.string.isRequired,
   backgroundColor: PropTypes.string.isRequired,
   textColor: PropTypes.string.isRequired,
+  listConatinerClassName: PropTypes.string,
   navigateItems: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     icon: PropTypes.node.isRequired,

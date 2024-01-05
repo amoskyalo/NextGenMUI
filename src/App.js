@@ -19,6 +19,7 @@ import ListIcon from '@mui/icons-material/List';
 import MapIcon from '@mui/icons-material/Map';
 import GridModel from "./lib/components/Grids/GridModel";
 import FormModel from "./lib/components/Forms/FormModel";
+import './App.css'
 
 function App() {
   const routes = {
@@ -165,10 +166,12 @@ function App() {
 
   return (
     <Box>
-      <GridModel columns={columns} rows={[]} />
+      {/* <GridModel columns={columns} rows={[]} />
       <Box sx={{ width: 400, mx: "auto" }}>
         <FormModel inputs={inputs} onSubmit={val => console.log(val)} />
-      </Box>
+      </Box> */}
+
+      <SideBarModel listConatinerClassName="bar" navigateItems={routes} />
     </Box>
   );
 }
