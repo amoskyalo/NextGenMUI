@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Box, IconButton, Button } from "@mui/material";
 import StepperFormModel from "./lib/components/Forms/StepperFormModel";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -17,8 +17,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import GroupIcon from '@mui/icons-material/Group';
 import ListIcon from '@mui/icons-material/List';
 import MapIcon from '@mui/icons-material/Map';
-import { Box, IconButton } from "@mui/material";
-
+import GridModel from "./lib/components/Grids/GridModel";
 
 function App() {
   const routes = {
@@ -103,6 +102,11 @@ function App() {
     ]
   }
 
+  const columns = [
+    { field: "name" },
+    { field: "Age" },
+    { field: "Email" }
+  ]
 
   // const NavFooter = () => (
   //   <Box borderBottom={"4px solid white"} paddingY={1.5} display={"flex"} justifyContent={"center"} columnGap={2}>
@@ -132,17 +136,16 @@ function App() {
     //   getActiveStep={step => console.log(step)}
     // //other props
     // />
-    <SideBarModel
-      navigateItems={routes}
-      backgroundColor={"#111633"}
-      textColor={"rgba(255, 255, 255, 0.5)"}
-      // NavHeader={NavHeader}
-      // NavFooter={NavFooter}
-      options={{
-        listIcon: { fontSize: 20 },
-        listItemButton: { padding: .5 }
-      }}
-    />
+    <GridModel columns={columns} rows={[]} />
+    // <SideBarModel
+    //   navigateItems={routes}
+    //   backgroundColor={"#111633"}
+    //   textColor={"rgba(255, 255, 255, 0.5)"}
+    //   options={{
+    //     listIcon: { fontSize: 20 },
+    //     listItemButton: { padding: .5 }
+    //   }}
+    // />
   );
 }
 

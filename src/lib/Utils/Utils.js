@@ -39,4 +39,8 @@ export const dateObject = {
     '$y': date.getFullYear()
 };
 
+export const startDate = {
+    '$M': date.getMonth() - 1
+};
+
 export const monthsOfTheYear = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
