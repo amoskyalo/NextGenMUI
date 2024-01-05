@@ -86,7 +86,7 @@ const SideBarModel = ({ NavHeader, openHeader, activeTabBackgroundColor, backgro
           }
         </DrawerHeader>
 
-        <Box flex={1} overflow={"auto"} overflowX={"hidden"} paddingX={1} border={"1px solid red"}>
+        <Box flex={1} overflow={"auto"} overflowX={"hidden"} paddingX={1} >
           <DrawerItemsModel
             listItems={navigateItems}
             activeTabBackgroundColor={activeTabBackgroundColor}
