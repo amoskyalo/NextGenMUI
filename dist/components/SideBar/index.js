@@ -118,8 +118,7 @@ const SideBarModel = _ref3 => {
     flex: 1,
     overflow: "auto",
     overflowX: "hidden",
-    paddingX: 1,
-    border: "1px solid red"
+    paddingX: 1
   }, /*#__PURE__*/_react.default.createElement(_DrawerItemsModel.default, {
     listItems: navigateItems,
     activeTabBackgroundColor: activeTabBackgroundColor,
