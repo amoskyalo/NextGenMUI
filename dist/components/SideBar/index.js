@@ -1,12 +1,13 @@
 "use strict";
 
+require("core-js/modules/es.weak-map.js");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
 require("core-js/modules/web.dom-collections.iterator.js");
 require("core-js/modules/es.symbol.description.js");
-var _react = require("react");
+var _react = _interopRequireWildcard(require("react"));
 var _styles = require("@mui/material/styles");
 var _material = require("@mui/material");
 var _propTypes = _interopRequireDefault(require("prop-types"));
@@ -15,6 +16,8 @@ var _IconButton = _interopRequireDefault(require("@mui/material/IconButton"));
 var _Menu = _interopRequireDefault(require("@mui/icons-material/Menu"));
 var _DrawerItemsModel = _interopRequireDefault(require("./DrawerItemsModel"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -95,37 +98,37 @@ const SideBarModel = _ref3 => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  return /*#__PURE__*/React.createElement(Drawer, {
+  return /*#__PURE__*/_react.default.createElement(Drawer, {
     variant: "permanent",
     open: openHeader || open,
     backgroundColor: backgroundColor,
     textColor: textColor
-  }, /*#__PURE__*/React.createElement(_material.Box, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Box, {
     height: "100vh",
     overflowY: "hidden",
     display: "flex",
     flexDirection: "column"
-  }, /*#__PURE__*/React.createElement(DrawerHeader, null, NavHeader ? /*#__PURE__*/React.createElement(NavHeader, null) : /*#__PURE__*/React.createElement(_IconButton.default, {
+  }, /*#__PURE__*/_react.default.createElement(DrawerHeader, null, NavHeader ? /*#__PURE__*/_react.default.createElement(NavHeader, null) : /*#__PURE__*/_react.default.createElement(_IconButton.default, {
     onClick: open ? handleDrawerClose : handleDrawerOpen
-  }, /*#__PURE__*/React.createElement(_Menu.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Menu.default, {
     sx: {
       color: textColor
     }
-  }))), /*#__PURE__*/React.createElement(_material.Box, {
+  }))), /*#__PURE__*/_react.default.createElement(_material.Box, {
     flex: 1,
     overflow: "auto",
     overflowX: "hidden",
     paddingX: 1,
     border: "1px solid red"
-  }, /*#__PURE__*/React.createElement(_DrawerItemsModel.default, {
+  }, /*#__PURE__*/_react.default.createElement(_DrawerItemsModel.default, {
     listItems: navigateItems,
     activeTabBackgroundColor: activeTabBackgroundColor,
     textColor: textColor,
     open: open || openHeader,
     options: options
-  })), /*#__PURE__*/React.createElement(_material.Divider, {
+  })), /*#__PURE__*/_react.default.createElement(_material.Divider, {
     color: "gray"
-  }), NavFooter && open && /*#__PURE__*/React.createElement(NavFooter, null)));
+  }), NavFooter && open && /*#__PURE__*/_react.default.createElement(NavFooter, null)));
 };
 SideBarModel.propTypes = {
   NavHeader: _propTypes.default.node,
