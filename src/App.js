@@ -166,12 +166,17 @@ function App() {
 
   return (
     <Box>
-      {/* <GridModel columns={columns} rows={[]} />
-      <Box sx={{ width: 400, mx: "auto" }}>
-        <FormModel inputs={inputs} onSubmit={val => console.log(val)} />
+      <GridModel columns={columns} rows={[]} />
+      {/* <Box sx={{ width: 400, mx: "auto" }}>
+        <FormModel inputs={inputs} onSubmit={val => console.log(val)} options={{
+          form: {
+            backgroundColor: "red",
+            padding: 10
+          }
+        }} />
       </Box> */}
 
-      <SideBarModel listConatinerClassName="bar" navigateItems={routes} />
+      {/* <SideBarModel listConatinerClassName="bar" navigateItems={routes} /> */}
     </Box>
   );
 }

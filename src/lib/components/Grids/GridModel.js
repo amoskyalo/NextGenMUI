@@ -79,7 +79,7 @@ const GridModel = ({ columns, rows, loading, FilterComponent, GridButtonsCompone
                                 <Button
                                     sx={buttonStyle}
                                     startIcon={<PrintIcon />}
-                                    variant="contained"
+                                    variant="outlined"
                                     onClick={handlePrint}
                                 >
                                     Print
@@ -89,7 +89,7 @@ const GridModel = ({ columns, rows, loading, FilterComponent, GridButtonsCompone
                                 <Button
                                     sx={buttonStyle}
                                     startIcon={<ExitToAppIcon />}
-                                    variant="contained"
+                                    variant="outlined"
                                     onClick={() => handleExportToExcel(columns, rows)}
                                 >
                                     Export
