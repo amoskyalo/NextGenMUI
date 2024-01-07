@@ -152,12 +152,12 @@ const GridModel = _ref3 => {
   }, !disablePrint && /*#__PURE__*/_react.default.createElement(_material.Button, {
     sx: buttonStyle,
     startIcon: /*#__PURE__*/_react.default.createElement(_Print.default, null),
-    variant: "contained",
+    variant: "outlined",
     onClick: _Utils.handlePrint
   }, "Print"), !disableExport && /*#__PURE__*/_react.default.createElement(_material.Button, {
     sx: buttonStyle,
     startIcon: /*#__PURE__*/_react.default.createElement(_ExitToApp.default, null),
-    variant: "contained",
+    variant: "outlined",
     onClick: () => (0, _Utils.handleExportToExcel)(columns, rows)
   }, "Export")), /*#__PURE__*/_react.default.createElement(_material.Box, {
     display: "flex",
