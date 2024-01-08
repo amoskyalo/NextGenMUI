@@ -68,14 +68,6 @@ const GridModel = ({
         }
     }, [dates]);
 
-    const handleApplyDates = () => {
-        if (onDateChange) {
-            return onDateChange(dates);
-        } else {
-            return onApplyDateChanges(dates);
-        }
-    };
-
     const { startDate: { $D: startDay, $M: startMonth }, endDate: { $D: endDay, $M: endMonth } } = dates;
 
     const defaultDates = {
@@ -130,14 +122,14 @@ const GridModel = ({
                                     onClick={event => setAnchorEl(event.currentTarget)}
                                     sx={buttonStyle}
                                 >
-                                    {monthsOfTheYear[startMonth]} {startDay} -  {monthsOfTheYear[endMonth]} {endDay}
+                                    {monthsOfTheYear[startMonth]} {startDay.toString().padStart(2, "0")} -  {monthsOfTheYear[endMonth]} {endDay.toString().padStart(2, "0")}
                                 </Button>
                             )}
 
                             <CalenderModel
                                 defaultDates={defaultDates}
                                 onChange={handleChangeDates}
-                                onApplyDateChanges={handleApplyDates}
+                                onApplyDateChanges={() => onApplyDateChanges(dates)}
                                 anchorEl={anchorEl}
                                 open={open}
                                 onClose={() => setAnchorEl(null)}
