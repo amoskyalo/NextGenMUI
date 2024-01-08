@@ -96,7 +96,7 @@ const GridModel = _ref3 => {
       disableExport,
       showGridHeader,
       onDateChange,
-      onApplyDateChanges,
+      onApplyDateChanges: _onApplyDateChanges,
       disableDates
     } = _ref3,
     gridProps = _objectWithoutProperties(_ref3, _excluded);
@@ -170,10 +170,10 @@ const GridModel = _ref3 => {
     variant: "contained",
     onClick: event => setAnchorEl(event.currentTarget),
     sx: buttonStyle
-  }, _Utils.monthsOfTheYear[startMonth], " ", startDay, " -  ", _Utils.monthsOfTheYear[endMonth], " ", endDay), /*#__PURE__*/_react.default.createElement(_Calender.default, {
+  }, _Utils.monthsOfTheYear[startMonth], " ", startDay.toString().padStart(2, "0"), " -  ", _Utils.monthsOfTheYear[endMonth], " ", endDay.toString().padStart(2, "0")), /*#__PURE__*/_react.default.createElement(_Calender.default, {
     defaultDates: defaultDates,
     onChange: handleChangeDates,
-    onApplyDateChanges: onApplyDateChanges,
+    onApplyDateChanges: () => _onApplyDateChanges(dates),
     anchorEl: anchorEl,
     open: open,
     onClose: () => setAnchorEl(null)
