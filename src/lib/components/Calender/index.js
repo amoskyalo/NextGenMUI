@@ -23,7 +23,10 @@ const StyledMenu = styled((props) => (
 
 const CalendarComponent = ({ onChange, value, ...props }) => (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DateCalendar value={dayjs(value)} onChange={value => onChange(value)} {...props} />
+        <DateCalendar
+            onChange={value => onChange(value)}
+            {...props}
+        />
     </LocalizationProvider>
 );
 
@@ -33,9 +36,12 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, 
             <Box sx={{ backgroundColor: "white", pt: 2, px: 3, borderRadius: 3, width: "max-content" }}>
                 <Box display="flex">
                     <Box sx={{ display: "flex" }}>
-                        <CalendarComponent value={defaultDates.start} onChange={value => onChange("startDate", value)} />
                         <CalendarComponent
-                            value={defaultDates.end}
+                            // value={defaultDates.start}
+                            onChange={value => onChange("startDate", value)}
+                        />
+                        <CalendarComponent
+                            // value={defaultDates.end}
                             onChange={value => onChange("endDate", value)}
                             disableFuture={true}
                         />
