@@ -25,6 +25,7 @@ const CalendarComponent = ({ onChange, value, ...props }) => (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
             onChange={value => onChange(value)}
+            disableFuture={true}
             {...props}
         />
     </LocalizationProvider>
@@ -36,15 +37,8 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, 
             <Box sx={{ backgroundColor: "white", pt: 2, px: 3, borderRadius: 3, width: "max-content" }}>
                 <Box display="flex">
                     <Box sx={{ display: "flex" }}>
-                        <CalendarComponent
-                            // value={defaultDates.start}
-                            onChange={value => onChange("startDate", value)}
-                        />
-                        <CalendarComponent
-                            // value={defaultDates.end}
-                            onChange={value => onChange("endDate", value)}
-                            disableFuture={true}
-                        />
+                        <CalendarComponent onChange={value => onChange("startDate", value)} />
+                        <CalendarComponent onChange={value => onChange("endDate", value)} />
                     </Box>
                 </Box>
 

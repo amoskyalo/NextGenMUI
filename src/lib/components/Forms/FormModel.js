@@ -34,7 +34,11 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
   const getDefaultValidationSchema = () => {
     const schema = inputs.reduce((schemaAcc, input) => {
       const key = input.name;
-      let validator = Yup.string().required("This field is required");
+      let validator = Yup.string().nullable(true);
+
+      if (input.isRequired) {
+        validator = validator.required("This field is required");
+      }
 
       if (key.toLowerCase().includes("email")) {
         validator = validator.email("Invalid email address");
@@ -49,15 +53,19 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
       } else if (Array.isArray(input.value)) {
         validator = Yup.array()
           .of(Yup.string().required("This field is required"))
-          .min(1, "At least one value is required")
-          .required("This field is required");
+          .min(1, "At least one value is required");
+
+        if (input.isRequired) {
+          validator = validator.required("This field is required");
+        }
       }
       schemaAcc[key] = validator;
       return schemaAcc;
     }, {});
 
     return Yup.object().shape(schema);
-  }
+  };
+
 
   const renderInput = (input, formik) => {
     if (Array.isArray(input.lookups)) {
@@ -76,7 +84,6 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
               const newValues = newValue.map(item => item.value);
               formik.setFieldValue(input.name, newValues);
             }}
-
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -100,7 +107,13 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
             disabled={input.disabled}
             error={formik.touched[input.name] && Boolean(formik.errors[input.name])}
             helperText={formik.touched[input.name] && formik.errors[input.name]}
-            {...formik.getFieldProps(input.name)}
+            value={input.value}
+            onChange={e => {
+              formik.setFieldValue(input.name, e.target.value, input.isRequired);
+              if (input.onChange) {
+                input.onChange(e);
+              }
+            }}
             input={<OutlinedInput label={input.label} />}
             MenuProps={{
               PaperProps: {
@@ -133,6 +146,9 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
                   onChange={(event) => {
                     const newValue = event.target.checked ? option.value : null;
                     formik.setFieldValue(input.name, newValue, true);
+                    if (input.onChange) {
+                      input.onChange(event);
+                    }
                   }}
                 />
                 <Typography sx={{ opacity: "70%" }}>{option.label}</Typography>
@@ -162,7 +178,12 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
             autoFocus={!!input.value}
             variant="outlined"
             size="small"
-            {...formik.getFieldProps(input.name)}
+            onChange={e => {
+              formik.setFieldValue(input.name, e.target.value, input.isRequired);
+              if (input.onChange) {
+                input.onChange(e);
+              }
+            }}
             endAdornment={
               input.type === "password" &&
               <InputAdornment position="end">

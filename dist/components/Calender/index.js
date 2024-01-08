@@ -48,7 +48,8 @@ const CalendarComponent = _ref2 => {
   return /*#__PURE__*/_react.default.createElement(_xDatePickers.LocalizationProvider, {
     dateAdapter: _AdapterDayjs.AdapterDayjs
   }, /*#__PURE__*/_react.default.createElement(_xDatePickers.DateCalendar, _extends({
-    onChange: value => _onChange(value)
+    onChange: value => _onChange(value),
+    disableFuture: true
   }, props)));
 };
 const CalenderModel = _ref3 => {
@@ -79,15 +80,10 @@ const CalenderModel = _ref3 => {
     sx: {
       display: "flex"
     }
-  }, /*#__PURE__*/_react.default.createElement(CalendarComponent
-  // value={defaultDates.start}
-  , {
+  }, /*#__PURE__*/_react.default.createElement(CalendarComponent, {
     onChange: value => _onChange2("startDate", value)
-  }), /*#__PURE__*/_react.default.createElement(CalendarComponent
-  // value={defaultDates.end}
-  , {
-    onChange: value => _onChange2("endDate", value),
-    disableFuture: true
+  }), /*#__PURE__*/_react.default.createElement(CalendarComponent, {
+    onChange: value => _onChange2("endDate", value)
   }))), /*#__PURE__*/_react.default.createElement(_material.Divider, null), /*#__PURE__*/_react.default.createElement(_material.Box, {
     sx: {
       display: "flex",

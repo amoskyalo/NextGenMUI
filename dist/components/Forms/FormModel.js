@@ -61,13 +61,19 @@ const FormModel = _ref => {
   const getDefaultValidationSchema = () => {
     const schema = inputs.reduce((schemaAcc, input) => {
       const key = input.name;
-      let validator = Yup.string().required("This field is required");
+      let validator = Yup.string().nullable(true);
+      if (input.isRequired) {
+        validator = validator.required("This field is required");
+      }
       if (key.toLowerCase().includes("email")) {
         validator = validator.email("Invalid email address");
       } else if (key.toLowerCase().includes("password")) {
         validator = validator.min(8, "Password must be at least 8 characters long").matches(/[a-zA-Z]/, "Password must contain at least one letter").matches(/[A-Z]/, "Password must contain at least one uppercase letter").matches(/[a-z]/, "Password must contain at least one lowercase letter").matches(/\d/, "Password must contain at least one number").matches(/[\W_]/, "Password must contain at least one special character");
       } else if (Array.isArray(input.value)) {
-        validator = Yup.array().of(Yup.string().required("This field is required")).min(1, "At least one value is required").required("This field is required");
+        validator = Yup.array().of(Yup.string().required("This field is required")).min(1, "At least one value is required");
+        if (input.isRequired) {
+          validator = validator.required("This field is required");
+        }
       }
       schemaAcc[key] = validator;
       return schemaAcc;
@@ -110,15 +116,21 @@ const FormModel = _ref => {
         key: input.label
       }, /*#__PURE__*/_react.default.createElement(_material.InputLabel, {
         id: "".concat(input.name, "-label")
-      }, input.label), /*#__PURE__*/_react.default.createElement(_material.Select, _extends({
+      }, input.label), /*#__PURE__*/_react.default.createElement(_material.Select, {
         labelId: "".concat(input.name, "-label"),
         id: input.name,
         label: input.label,
         name: input.name,
         disabled: input.disabled,
         error: formik.touched[input.name] && Boolean(formik.errors[input.name]),
-        helperText: formik.touched[input.name] && formik.errors[input.name]
-      }, formik.getFieldProps(input.name), {
+        helperText: formik.touched[input.name] && formik.errors[input.name],
+        value: input.value,
+        onChange: e => {
+          formik.setFieldValue(input.name, e.target.value, input.isRequired);
+          if (input.onChange) {
+            input.onChange(e);
+          }
+        },
         input: /*#__PURE__*/_react.default.createElement(_material.OutlinedInput, {
           label: input.label
         }),
@@ -130,7 +142,7 @@ const FormModel = _ref => {
             }
           }
         }
-      }), input === null || input === void 0 ? void 0 : input.lookups.map((lookup, __) => /*#__PURE__*/_react.default.createElement(_material.MenuItem, {
+      }, input === null || input === void 0 ? void 0 : input.lookups.map((lookup, __) => /*#__PURE__*/_react.default.createElement(_material.MenuItem, {
         key: lookup.title,
         value: lookup === null || lookup === void 0 ? void 0 : lookup.value
       }, lookup === null || lookup === void 0 ? void 0 : lookup.title))), formik.touched[input.name] && formik.errors[input.name] && /*#__PURE__*/_react.default.createElement(_material.Typography, {
@@ -169,6 +181,9 @@ const FormModel = _ref => {
         onChange: event => {
           const newValue = event.target.checked ? option.value : null;
           formik.setFieldValue(input.name, newValue, true);
+          if (input.onChange) {
+            input.onChange(event);
+          }
         }
       }), /*#__PURE__*/_react.default.createElement(_material.Typography, {
         sx: {
@@ -190,7 +205,7 @@ const FormModel = _ref => {
         key: input.name
       }, /*#__PURE__*/_react.default.createElement(_material.InputLabel, {
         htmlFor: input.name
-      }, input.label), /*#__PURE__*/_react.default.createElement(_material.OutlinedInput, _extends({
+      }, input.label), /*#__PURE__*/_react.default.createElement(_material.OutlinedInput, {
         id: input.name,
         fullWidth: true,
         label: input.label,
@@ -201,8 +216,13 @@ const FormModel = _ref => {
         disabled: input === null || input === void 0 ? void 0 : input.disabled,
         autoFocus: !!input.value,
         variant: "outlined",
-        size: "small"
-      }, formik.getFieldProps(input.name), {
+        size: "small",
+        onChange: e => {
+          formik.setFieldValue(input.name, e.target.value, input.isRequired);
+          if (input.onChange) {
+            input.onChange(e);
+          }
+        },
         endAdornment: input.type === "password" && /*#__PURE__*/_react.default.createElement(_material.InputAdornment, {
           position: "end"
         }, /*#__PURE__*/_react.default.createElement(_material.IconButton, {
@@ -210,7 +230,7 @@ const FormModel = _ref => {
           onClick: () => toggleVisibility(input.name),
           edge: "end"
         }, visiblePasswordFields.includes(input.name) ? /*#__PURE__*/_react.default.createElement(_VisibilityOff.default, null) : /*#__PURE__*/_react.default.createElement(_Visibility.default, null)))
-      })), formik.touched[input.name] && formik.errors[input.name] && /*#__PURE__*/_react.default.createElement(_material.Typography, {
+      }), formik.touched[input.name] && formik.errors[input.name] && /*#__PURE__*/_react.default.createElement(_material.Typography, {
         sx: {
           fontSize: 12,
           color: "red",
