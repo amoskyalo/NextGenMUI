@@ -35,7 +35,22 @@ const NoDataIndicator = ({ onAdd, disableAdd }) => (
 
 const date = new Date();
 
-const GridModel = ({ columns, rows, loading, FilterComponent, GridButtonsComponent, onAdd, disableAdd, disablePrint, disableExport, showGridHeader, onDateChange, onApplyDateChanges, disableDates, ...gridProps }) => {
+const GridModel = ({
+    columns,
+    rows,
+    loading,
+    FilterComponent,
+    GridButtonsComponent,
+    onAdd,
+    disableAdd,
+    disablePrint,
+    disableExport,
+    showGridHeader,
+    onDateChange,
+    onApplyDateChanges,
+    disableDates,
+    ...gridProps
+}) => {
     const [dates, setDates] = useState({
         startDate: { ...dateObject, '$M': date.getMonth() === 0 ? 11 : date.getMonth() - 1 },
         endDate: { ...dateObject, '$M': date.getMonth() }
@@ -52,6 +67,14 @@ const GridModel = ({ columns, rows, loading, FilterComponent, GridButtonsCompone
             onDateChange(dates);
         }
     }, [dates]);
+
+    const handleApplyDates = () => {
+        if (onDateChange) {
+            return onDateChange(dates);
+        } else {
+            return onApplyDateChanges(dates);
+        }
+    };
 
     const { startDate: { $D: startDay, $M: startMonth }, endDate: { $D: endDay, $M: endMonth } } = dates;
 
@@ -111,7 +134,14 @@ const GridModel = ({ columns, rows, loading, FilterComponent, GridButtonsCompone
                                 </Button>
                             )}
 
-                            <CalenderModel defaultDates={defaultDates} onChange={handleChangeDates} onApplyDateChanges={onApplyDateChanges} anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)} />
+                            <CalenderModel
+                                defaultDates={defaultDates}
+                                onChange={handleChangeDates}
+                                onApplyDateChanges={handleApplyDates}
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={() => setAnchorEl(null)}
+                            />
 
                             {FilterComponent && <FilterComponent />}
                             {!disableAdd && (

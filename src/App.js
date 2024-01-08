@@ -166,7 +166,11 @@ function App() {
 
   return (
     <Box>
-      <GridModel columns={columns} rows={[]} />
+      <GridModel
+        columns={columns}
+        rows={[]}
+        onApplyDateChanges={dates => console.log(dates)}
+      />
       {/* <Box sx={{ width: 400, mx: "auto" }}>
         <FormModel inputs={inputs} onSubmit={val => console.log(val)} options={{
           form: {
