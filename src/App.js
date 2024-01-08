@@ -115,33 +115,23 @@ function App() {
       name: "name",
       label: "User Name",
       type: "text",
-      value: null
+      value: null,
+      onChange: val => console.log(val),
+      isRequired: false
     },
     {
       name: "email",
       label: "User Email",
       type: "email",
-      value: null
+      value: null,
+      isRequired: true
     },
     {
-      name: "type",
-      label: "User Type",
-      lookups: [{ title: "Yes", value: 0 }, { title: "No", value: 1 }],
-      value: null
-    },
-    {
-      name: "roles",
-      label: "Roles",
-      lookups: [{ title: "Admin", value: 0 }, { title: "Employee", value: 1 }],
-      multiple: true,
-      value: []
-    },
-    {
-      name: "isMale",
-      label: "Is Male",
-      isBoolean: true,
-      booleanOptions: [{ value: 1, label: "Yes" }, { value: 2, label: "No" }],
-      value: null
+      name: "role",
+      label: "Role",
+      isRequired: true,
+      lookups: [{ title: "Manager", value: 0 }, { title: "Admin", value: 1 }],
+      onChange: val => console.log(val)
     }
   ];
 
@@ -171,14 +161,14 @@ function App() {
         rows={[]}
         onApplyDateChanges={dates => console.log(dates)}
       />
-      {/* <Box sx={{ width: 400, mx: "auto" }}>
+      <Box sx={{ width: 400, mx: "auto" }}>
         <FormModel inputs={inputs} onSubmit={val => console.log(val)} options={{
           form: {
-            backgroundColor: "red",
+            // backgroundColor: "red",
             padding: 10
           }
         }} />
-      </Box> */}
+      </Box>
 
       {/* <SideBarModel listConatinerClassName="bar" navigateItems={routes} /> */}
     </Box>

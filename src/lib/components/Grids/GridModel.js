@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Box, Button, Typography } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PrintIcon from '@mui/icons-material/Print';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AddIcon from '@mui/icons-material/Add';
 import Lottie from 'react-lottie';
+
 import emptyImage from '../../Assets/empty.gif';
 import loadingAnimation from '../../Assets/loading.json';
 import CalenderModel from '../Calender';
-import { useEffect, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
 import { handleExportToExcel, handlePrint, dateObject, monthsOfTheYear } from '../../Utils/Utils';
 
 const buttonStyle = { textTransform: 'capitalize' };
@@ -33,8 +33,6 @@ const NoDataIndicator = ({ onAdd, disableAdd }) => (
     </Box>
 );
 
-const date = new Date();
-
 const GridModel = ({
     columns,
     rows,
@@ -51,6 +49,7 @@ const GridModel = ({
     disableDates,
     ...gridProps
 }) => {
+    const date = new Date();
     const [dates, setDates] = useState({
         startDate: { ...dateObject, '$M': date.getMonth() === 0 ? 11 : date.getMonth() - 1 },
         endDate: { ...dateObject, '$M': date.getMonth() }

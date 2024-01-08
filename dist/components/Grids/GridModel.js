@@ -11,6 +11,8 @@ require("core-js/modules/es.regexp.to-string.js");
 require("core-js/modules/es.symbol.description.js");
 var _react = _interopRequireWildcard(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
+var _material = require("@mui/material");
+var _xDataGrid = require("@mui/x-data-grid");
 var _CalendarMonth = _interopRequireDefault(require("@mui/icons-material/CalendarMonth"));
 var _Print = _interopRequireDefault(require("@mui/icons-material/Print"));
 var _ExitToApp = _interopRequireDefault(require("@mui/icons-material/ExitToApp"));
@@ -19,8 +21,6 @@ var _reactLottie = _interopRequireDefault(require("react-lottie"));
 var _empty = _interopRequireDefault(require("../../Assets/empty.gif"));
 var _loading = _interopRequireDefault(require("../../Assets/loading.json"));
 var _Calender = _interopRequireDefault(require("../Calender"));
-var _material = require("@mui/material");
-var _xDataGrid = require("@mui/x-data-grid");
 var _Utils = require("../../Utils/Utils");
 const _excluded = ["columns", "rows", "loading", "FilterComponent", "GridButtonsComponent", "onAdd", "disableAdd", "disablePrint", "disableExport", "showGridHeader", "onDateChange", "onApplyDateChanges", "disableDates"];
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -82,7 +82,6 @@ const NoDataIndicator = _ref2 => {
     startIcon: /*#__PURE__*/_react.default.createElement(_Add.default, null)
   }, "New"));
 };
-const date = new Date();
 const GridModel = _ref3 => {
   let {
       columns,
@@ -100,6 +99,7 @@ const GridModel = _ref3 => {
       disableDates
     } = _ref3,
     gridProps = _objectWithoutProperties(_ref3, _excluded);
+  const date = new Date();
   const [dates, setDates] = (0, _react.useState)({
     startDate: _objectSpread(_objectSpread({}, _Utils.dateObject), {}, {
       '$M': date.getMonth() === 0 ? 11 : date.getMonth() - 1
