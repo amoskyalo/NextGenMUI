@@ -95,7 +95,8 @@ const TextField = _ref2 => {
     size: "small",
     key: name
   }, /*#__PURE__*/_react.default.createElement(_material.InputLabel, {
-    htmlFor: name
+    htmlFor: name,
+    error: formik.touched[name] && Boolean(formik.errors[name])
   }, label), renderTextField(_objectSpread({
     formik,
     name,
@@ -107,7 +108,7 @@ const TextField = _ref2 => {
   }, otherProps)), formik.touched[name] && formik.errors[name] && /*#__PURE__*/_react.default.createElement(_material.Typography, {
     sx: {
       fontSize: 12,
-      color: "red",
+      color: "#d33247",
       mt: 1
     }
   }, formik.errors[name]));

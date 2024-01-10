@@ -4,3 +4,7 @@
 /* .bar {
     background-color: red;
 } */
+
+body {
+    overflow-x: hidden !important;
+}

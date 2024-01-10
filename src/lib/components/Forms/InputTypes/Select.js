@@ -38,9 +38,9 @@ const SelectField = ({ formik, input: { name, label, onChange, lookups, renderFi
     const content = typeof renderField === "function" && React.isValidElement(renderField(inputProps)) ?
         renderField(inputProps) : (
             <FormControl sx={{ width: "100%" }} size='small' key={label}>
-                <InputLabel id={`${name}-label`}>{label}</InputLabel>
+                <InputLabel error={formik.touched[name] && Boolean(formik.errors[name])} id={`${name}-label`}>{label}</InputLabel>
                 {renderSelect({ formik, name, label, onChange, lookups, ...otherProps })}
-                {formik.touched[name] && formik.errors[name] && <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>{formik.errors[name]}</Typography>}
+                {formik.touched[name] && formik.errors[name] && <Typography sx={{ fontSize: 12, color: "#d33247", mt: 1 }}>{formik.errors[name]}</Typography>}
             </FormControl>
         );
 

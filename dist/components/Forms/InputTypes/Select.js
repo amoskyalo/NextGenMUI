@@ -85,6 +85,7 @@ const SelectField = _ref2 => {
     size: "small",
     key: label
   }, /*#__PURE__*/_react.default.createElement(_material.InputLabel, {
+    error: formik.touched[name] && Boolean(formik.errors[name]),
     id: "".concat(name, "-label")
   }, label), renderSelect(_objectSpread({
     formik,
@@ -95,7 +96,7 @@ const SelectField = _ref2 => {
   }, otherProps)), formik.touched[name] && formik.errors[name] && /*#__PURE__*/_react.default.createElement(_material.Typography, {
     sx: {
       fontSize: 12,
-      color: "red",
+      color: "#d33247",
       mt: 1
     }
   }, formik.errors[name]));

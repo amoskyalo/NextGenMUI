@@ -38,8 +38,31 @@ const FormModel = ({
   };
 
   const getDefaultValidationSchema = () => {
-    const schema = inputs.reduce((schemaAcc, input) => {
+    const schema = inputs?.reduce((schemaAcc, input) => {
       const key = input.name;
+
+      if (input.multiple) {
+        let validator = Yup.array().of(Yup.string()).nullable(true);
+
+        if (input.isRequired) {
+          validator = validator.required("This field is required").min(1, "At least one item must be selected");
+        }
+
+        schemaAcc[key] = validator;
+        return schemaAcc;
+      }
+
+      if (input.isBoolean) {
+        let validator = Yup.string().nullable(true);
+
+        if (input.isRequired) {
+          validator = validator.required("At least one choice must be selected")
+        }
+
+        schemaAcc[key] = validator;
+        return schemaAcc;
+      }
+
       let validator = Yup.string().nullable(true);
 
       if (input.isRequired) {
@@ -56,21 +79,16 @@ const FormModel = ({
           .matches(/[a-z]/, "Password must contain at least one lowercase letter")
           .matches(/\d/, "Password must contain at least one number")
           .matches(/[\W_]/, "Password must contain at least one special character");
-      } else if (Array.isArray(input.value)) {
-        validator = Yup.array()
-          .of(Yup.string().required("This field is required"))
-          .min(1, "At least one value is required");
-
-        if (input.isRequired) {
-          validator = validator.required("This field is required");
-        }
       }
+
       schemaAcc[key] = validator;
       return schemaAcc;
     }, {});
 
     return Yup.object().shape(schema);
   };
+
+
 
   const getInputType = (input) => {
     if (Array.isArray(input.lookups)) {
