@@ -1,21 +1,27 @@
 import React from 'react';
+import AutoCompleteField from './InputTypes/AutoComplete';
+import SelectField from './InputTypes/Select';
+import TextField from './InputTypes/TextField';
+import BooleanField from './InputTypes/Boolean';
 import PropTypes from 'prop-types';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import * as Yup from 'yup';
-import { useState } from 'react';
 import { Formik } from 'formik';
-import { Checkbox, InputAdornment, IconButton, TextField, Select, MenuItem, FormControl, Button, CircularProgress, OutlinedInput, InputLabel, Typography, Box, Autocomplete } from "@mui/material";
+import { Button, CircularProgress, Box } from "@mui/material";
 
-const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, options, gridColumnsCount, submitButtonWidth, buttonLabel, CustomTitle, showButton, CustomSubmitButton }) => {
-  const [visiblePasswordFields, setVisiblePasswordFields] = useState([]);
-
-  const toggleVisibility = (fieldName) => {
-    setVisiblePasswordFields(prev => (
-      prev.includes(fieldName) ? prev.filter(name => name !== fieldName) : [...prev, fieldName]
-    ));
-  }
-
+const FormModel = ({
+  validationSchema,
+  onSubmit,
+  isLoading,
+  inputs,
+  width,
+  options,
+  gridColumnsCount,
+  submitButtonWidth,
+  buttonLabel,
+  CustomTitle,
+  showButton,
+  CustomSubmitButton
+}) => {
   const constructInitialValues = () => {
     let initialValues = {};
 
@@ -66,144 +72,27 @@ const FormModel = ({ validationSchema, onSubmit, isLoading, inputs, width, optio
     return Yup.object().shape(schema);
   };
 
+  const getInputType = (input) => {
+    if (Array.isArray(input.lookups)) {
+      return input.multiple ? 'multipleAutocomplete' : 'select';
+    } else if (input.isBoolean) {
+      return 'boolean';
+    } else {
+      return 'text';
+    }
+  };
 
   const renderInput = (input, formik) => {
-    if (Array.isArray(input.lookups)) {
-      return input.multiple ? (
-        <FormControl sx={{ width: "100%" }} size="small" key={input.label}>
-          <Autocomplete
-            key={input.name}
-            multiple
-            id={input.name}
-            defaultValue={input.value}
-            options={input.lookups}
-            getOptionLabel={(option) => option.title}
-            disabled={input.disabled}
-            size='small'
-            onChange={(__, newValue) => {
-              const newValues = newValue.map(item => item.value);
-              formik.setFieldValue(input.name, newValues);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                error={formik.touched[input.name] && Boolean(formik.errors[input.name])}
-                helperText={formik.touched[input.name] && formik.errors[input.name]}
-                label={input.label}
-                size='small'
-                fullWidth
-              />
-            )}
-          />
-        </FormControl>
-      ) : (
-        <FormControl sx={{ width: "100%" }} size="small" key={input.label}>
-          <InputLabel id={`${input.name}-label`}>{input.label}</InputLabel>
-          <Select
-            labelId={`${input.name}-label`}
-            id={input.name}
-            label={input.label}
-            name={input.name}
-            disabled={input.disabled}
-            error={formik.touched[input.name] && Boolean(formik.errors[input.name])}
-            helperText={formik.touched[input.name] && formik.errors[input.name]}
-            value={input.value}
-            onChange={e => {
-              formik.setFieldValue(input.name, e.target.value, input.isRequired);
-              if (input.onChange) {
-                input.onChange(e);
-              }
-            }}
-            input={<OutlinedInput label={input.label} />}
-            MenuProps={{
-              PaperProps: {
-                style: {
-                  maxHeight: 300,
-                  overflowY: 'auto',
-                },
-              },
-            }}
-          >
-            {input?.lookups.map((lookup, __) => (
-              <MenuItem key={lookup.title} value={lookup?.value}>{lookup?.title}</MenuItem>
-            ))}
-          </Select>
-          {formik.touched[input.name] && formik.errors[input.name] && <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>{formik.errors[input.name]}</Typography>}
-        </FormControl>
-      );
-    } else if (input.isBoolean) {
-      return (
-        <FormControl>
-          <Typography sx={{ opacity: "70%" }}>{input.label}</Typography>
-          <Box sx={{ display: "flex", columnGap: 4, flexWrap: "wrap" }}>
-            {input.booleanOptions.map((option) => (
-              <Box key={option.value} sx={{ display: "flex", alignItems: "center", columnGap: 1 }}>
-                <Checkbox
-                  sx={{ m: 0, px: 0 }}
-                  name={input.name}
-                  value={option.value}
-                  checked={formik.values[input.name] === option.value}
-                  onChange={(event) => {
-                    const newValue = event.target.checked ? option.value : null;
-                    formik.setFieldValue(input.name, newValue, true);
-                    if (input.onChange) {
-                      input.onChange(event);
-                    }
-                  }}
-                />
-                <Typography sx={{ opacity: "70%" }}>{option.label}</Typography>
-              </Box>
-            ))}
-          </Box>
-          {formik.touched[input.name] && formik.errors[input.name] && (
-            <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>
-              {formik.errors[input.name]}
-            </Typography>
-          )}
-        </FormControl>
-      )
-    } else {
-      return (
-        <FormControl sx={{ width: "100%" }} size="small" key={input.name}>
-          <InputLabel htmlFor={input.name}>{input.label}</InputLabel>
-          <OutlinedInput
-            id={input.name}
-            fullWidth
-            label={input.label}
-            name={input.name}
-            error={formik.touched[input.name] && Boolean(formik.errors[input.name])}
-            helperText={formik.touched[input.name] && formik.errors[input.name]}
-            type={input.type === "password" && visiblePasswordFields.includes(input.name) ? "text" : input.type}
-            disabled={input?.disabled}
-            autoFocus={!!input.value}
-            variant="outlined"
-            size="small"
-            onChange={e => {
-              formik.setFieldValue(input.name, e.target.value, input.isRequired);
-              if (input.onChange) {
-                input.onChange(e);
-              }
-            }}
-            endAdornment={
-              input.type === "password" &&
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={() => toggleVisibility(input.name)}
-                  edge="end"
-                >
-                  {visiblePasswordFields.includes(input.name) ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-          {formik.touched[input.name] && formik.errors[input.name] && (
-            <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>
-              {formik.errors[input.name]}
-            </Typography>
-          )}
-        </FormControl>
-      );
+    switch (getInputType(input)) {
+      case 'multipleAutocomplete':
+        return <AutoCompleteField formik={formik} input={input} />;
+      case 'select':
+        return <SelectField formik={formik} input={input} />;
+      case 'boolean':
+        return <BooleanField formik={formik} input={input} />;
+      case 'text':
+      default:
+        return <TextField formik={formik} input={input} />;
     }
   };
 

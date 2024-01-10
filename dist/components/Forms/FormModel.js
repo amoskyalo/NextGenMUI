@@ -1,6 +1,5 @@
 "use strict";
 
-require("core-js/modules/es.object.assign.js");
 require("core-js/modules/es.symbol.description.js");
 require("core-js/modules/es.weak-map.js");
 Object.defineProperty(exports, "__esModule", {
@@ -8,25 +7,26 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 require("core-js/modules/web.dom-collections.iterator.js");
+require("core-js/modules/es.array.reduce.js");
 require("core-js/modules/es.array.includes.js");
 require("core-js/modules/es.string.includes.js");
-require("core-js/modules/es.array.reduce.js");
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
+var _AutoComplete = _interopRequireDefault(require("./InputTypes/AutoComplete"));
+var _Select = _interopRequireDefault(require("./InputTypes/Select"));
+var _TextField = _interopRequireDefault(require("./InputTypes/TextField"));
+var _Boolean = _interopRequireDefault(require("./InputTypes/Boolean"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
-var _Visibility = _interopRequireDefault(require("@mui/icons-material/Visibility"));
-var _VisibilityOff = _interopRequireDefault(require("@mui/icons-material/VisibilityOff"));
 var Yup = _interopRequireWildcard(require("yup"));
 var _formik = require("formik");
 var _material = require("@mui/material");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 const FormModel = _ref => {
   let {
     validationSchema,
@@ -42,10 +42,6 @@ const FormModel = _ref => {
     showButton,
     CustomSubmitButton
   } = _ref;
-  const [visiblePasswordFields, setVisiblePasswordFields] = (0, _react.useState)([]);
-  const toggleVisibility = fieldName => {
-    setVisiblePasswordFields(prev => prev.includes(fieldName) ? prev.filter(name => name !== fieldName) : [...prev, fieldName]);
-  };
   const constructInitialValues = () => {
     let initialValues = {};
     for (let input of inputs) {
@@ -80,163 +76,38 @@ const FormModel = _ref => {
     }, {});
     return Yup.object().shape(schema);
   };
-  const renderInput = (input, formik) => {
+  const getInputType = input => {
     if (Array.isArray(input.lookups)) {
-      return input.multiple ? /*#__PURE__*/_react.default.createElement(_material.FormControl, {
-        sx: {
-          width: "100%"
-        },
-        size: "small",
-        key: input.label
-      }, /*#__PURE__*/_react.default.createElement(_material.Autocomplete, {
-        key: input.name,
-        multiple: true,
-        id: input.name,
-        defaultValue: input.value,
-        options: input.lookups,
-        getOptionLabel: option => option.title,
-        disabled: input.disabled,
-        size: "small",
-        onChange: (__, newValue) => {
-          const newValues = newValue.map(item => item.value);
-          formik.setFieldValue(input.name, newValues);
-        },
-        renderInput: params => /*#__PURE__*/_react.default.createElement(_material.TextField, _extends({}, params, {
-          error: formik.touched[input.name] && Boolean(formik.errors[input.name]),
-          helperText: formik.touched[input.name] && formik.errors[input.name],
-          label: input.label,
-          size: "small",
-          fullWidth: true
-        }))
-      })) : /*#__PURE__*/_react.default.createElement(_material.FormControl, {
-        sx: {
-          width: "100%"
-        },
-        size: "small",
-        key: input.label
-      }, /*#__PURE__*/_react.default.createElement(_material.InputLabel, {
-        id: "".concat(input.name, "-label")
-      }, input.label), /*#__PURE__*/_react.default.createElement(_material.Select, {
-        labelId: "".concat(input.name, "-label"),
-        id: input.name,
-        label: input.label,
-        name: input.name,
-        disabled: input.disabled,
-        error: formik.touched[input.name] && Boolean(formik.errors[input.name]),
-        helperText: formik.touched[input.name] && formik.errors[input.name],
-        value: input.value,
-        onChange: e => {
-          formik.setFieldValue(input.name, e.target.value, input.isRequired);
-          if (input.onChange) {
-            input.onChange(e);
-          }
-        },
-        input: /*#__PURE__*/_react.default.createElement(_material.OutlinedInput, {
-          label: input.label
-        }),
-        MenuProps: {
-          PaperProps: {
-            style: {
-              maxHeight: 300,
-              overflowY: 'auto'
-            }
-          }
-        }
-      }, input === null || input === void 0 ? void 0 : input.lookups.map((lookup, __) => /*#__PURE__*/_react.default.createElement(_material.MenuItem, {
-        key: lookup.title,
-        value: lookup === null || lookup === void 0 ? void 0 : lookup.value
-      }, lookup === null || lookup === void 0 ? void 0 : lookup.title))), formik.touched[input.name] && formik.errors[input.name] && /*#__PURE__*/_react.default.createElement(_material.Typography, {
-        sx: {
-          fontSize: 12,
-          color: "red",
-          mt: 1
-        }
-      }, formik.errors[input.name]));
+      return input.multiple ? 'multipleAutocomplete' : 'select';
     } else if (input.isBoolean) {
-      return /*#__PURE__*/_react.default.createElement(_material.FormControl, null, /*#__PURE__*/_react.default.createElement(_material.Typography, {
-        sx: {
-          opacity: "70%"
-        }
-      }, input.label), /*#__PURE__*/_react.default.createElement(_material.Box, {
-        sx: {
-          display: "flex",
-          columnGap: 4,
-          flexWrap: "wrap"
-        }
-      }, input.booleanOptions.map(option => /*#__PURE__*/_react.default.createElement(_material.Box, {
-        key: option.value,
-        sx: {
-          display: "flex",
-          alignItems: "center",
-          columnGap: 1
-        }
-      }, /*#__PURE__*/_react.default.createElement(_material.Checkbox, {
-        sx: {
-          m: 0,
-          px: 0
-        },
-        name: input.name,
-        value: option.value,
-        checked: formik.values[input.name] === option.value,
-        onChange: event => {
-          const newValue = event.target.checked ? option.value : null;
-          formik.setFieldValue(input.name, newValue, true);
-          if (input.onChange) {
-            input.onChange(event);
-          }
-        }
-      }), /*#__PURE__*/_react.default.createElement(_material.Typography, {
-        sx: {
-          opacity: "70%"
-        }
-      }, option.label)))), formik.touched[input.name] && formik.errors[input.name] && /*#__PURE__*/_react.default.createElement(_material.Typography, {
-        sx: {
-          fontSize: 12,
-          color: "red",
-          mt: 1
-        }
-      }, formik.errors[input.name]));
+      return 'boolean';
     } else {
-      return /*#__PURE__*/_react.default.createElement(_material.FormControl, {
-        sx: {
-          width: "100%"
-        },
-        size: "small",
-        key: input.name
-      }, /*#__PURE__*/_react.default.createElement(_material.InputLabel, {
-        htmlFor: input.name
-      }, input.label), /*#__PURE__*/_react.default.createElement(_material.OutlinedInput, {
-        id: input.name,
-        fullWidth: true,
-        label: input.label,
-        name: input.name,
-        error: formik.touched[input.name] && Boolean(formik.errors[input.name]),
-        helperText: formik.touched[input.name] && formik.errors[input.name],
-        type: input.type === "password" && visiblePasswordFields.includes(input.name) ? "text" : input.type,
-        disabled: input === null || input === void 0 ? void 0 : input.disabled,
-        autoFocus: !!input.value,
-        variant: "outlined",
-        size: "small",
-        onChange: e => {
-          formik.setFieldValue(input.name, e.target.value, input.isRequired);
-          if (input.onChange) {
-            input.onChange(e);
-          }
-        },
-        endAdornment: input.type === "password" && /*#__PURE__*/_react.default.createElement(_material.InputAdornment, {
-          position: "end"
-        }, /*#__PURE__*/_react.default.createElement(_material.IconButton, {
-          "aria-label": "toggle password visibility",
-          onClick: () => toggleVisibility(input.name),
-          edge: "end"
-        }, visiblePasswordFields.includes(input.name) ? /*#__PURE__*/_react.default.createElement(_VisibilityOff.default, null) : /*#__PURE__*/_react.default.createElement(_Visibility.default, null)))
-      }), formik.touched[input.name] && formik.errors[input.name] && /*#__PURE__*/_react.default.createElement(_material.Typography, {
-        sx: {
-          fontSize: 12,
-          color: "red",
-          mt: 1
-        }
-      }, formik.errors[input.name]));
+      return 'text';
+    }
+  };
+  const renderInput = (input, formik) => {
+    switch (getInputType(input)) {
+      case 'multipleAutocomplete':
+        return /*#__PURE__*/_react.default.createElement(_AutoComplete.default, {
+          formik: formik,
+          input: input
+        });
+      case 'select':
+        return /*#__PURE__*/_react.default.createElement(_Select.default, {
+          formik: formik,
+          input: input
+        });
+      case 'boolean':
+        return /*#__PURE__*/_react.default.createElement(_Boolean.default, {
+          formik: formik,
+          input: input
+        });
+      case 'text':
+      default:
+        return /*#__PURE__*/_react.default.createElement(_TextField.default, {
+          formik: formik,
+          input: input
+        });
     }
   };
   return /*#__PURE__*/_react.default.createElement(_formik.Formik, {
