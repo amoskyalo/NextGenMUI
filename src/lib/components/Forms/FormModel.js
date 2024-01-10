@@ -3,6 +3,7 @@ import AutoCompleteField from './InputTypes/AutoComplete';
 import SelectField from './InputTypes/Select';
 import TextField from './InputTypes/TextField';
 import BooleanField from './InputTypes/Boolean';
+import DatesField from './InputTypes/Dates';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -63,6 +64,17 @@ const FormModel = ({
         return schemaAcc;
       }
 
+      if (input.type === "dates") {
+        let validator = Yup.object().nullable(true);
+
+        if (input.isRequired) {
+          validator = validator.required("Dates must be provided")
+        }
+
+        schemaAcc[key] = validator;
+        return schemaAcc;
+      }
+
       let validator = Yup.string().nullable(true);
 
       if (input.isRequired) {
@@ -95,6 +107,8 @@ const FormModel = ({
       return input.multiple ? 'multipleAutocomplete' : 'select';
     } else if (input.isBoolean) {
       return 'boolean';
+    } else if (input.type === 'dates') {
+      return 'dates';
     } else {
       return 'text';
     }
@@ -108,6 +122,8 @@ const FormModel = ({
         return <SelectField formik={formik} input={input} />;
       case 'boolean':
         return <BooleanField formik={formik} input={input} />;
+      case 'dates':
+        return <DatesField formik={formik} input={input} />;
       case 'text':
       default:
         return <TextField formik={formik} input={input} />;
@@ -141,6 +157,7 @@ const FormModel = ({
               sx={{ textTransform: "capitalize", width: submitButtonWidth, gridColumn: `span ${gridColumnsCount}` }}
               size='medium'
               disabled={isLoading}
+              disableElevation
             >
               {isLoading ? <CircularProgress color="inherit" size={20} /> : buttonLabel}
             </Button>}

@@ -15,6 +15,7 @@ var _AutoComplete = _interopRequireDefault(require("./InputTypes/AutoComplete"))
 var _Select = _interopRequireDefault(require("./InputTypes/Select"));
 var _TextField = _interopRequireDefault(require("./InputTypes/TextField"));
 var _Boolean = _interopRequireDefault(require("./InputTypes/Boolean"));
+var _Dates = _interopRequireDefault(require("./InputTypes/Dates"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 var Yup = _interopRequireWildcard(require("yup"));
 var _formik = require("formik");
@@ -73,6 +74,14 @@ const FormModel = _ref => {
         schemaAcc[key] = validator;
         return schemaAcc;
       }
+      if (input.type === "dates") {
+        let validator = Yup.object().nullable(true);
+        if (input.isRequired) {
+          validator = validator.required("Dates must be provided");
+        }
+        schemaAcc[key] = validator;
+        return schemaAcc;
+      }
       let validator = Yup.string().nullable(true);
       if (input.isRequired) {
         validator = validator.required("This field is required");
@@ -92,6 +101,8 @@ const FormModel = _ref => {
       return input.multiple ? 'multipleAutocomplete' : 'select';
     } else if (input.isBoolean) {
       return 'boolean';
+    } else if (input.type === 'dates') {
+      return 'dates';
     } else {
       return 'text';
     }
@@ -110,6 +121,11 @@ const FormModel = _ref => {
         });
       case 'boolean':
         return /*#__PURE__*/_react.default.createElement(_Boolean.default, {
+          formik: formik,
+          input: input
+        });
+      case 'dates':
+        return /*#__PURE__*/_react.default.createElement(_Dates.default, {
           formik: formik,
           input: input
         });
@@ -153,7 +169,8 @@ const FormModel = _ref => {
       gridColumn: "span ".concat(gridColumnsCount)
     },
     size: "medium",
-    disabled: isLoading
+    disabled: isLoading,
+    disableElevation: true
   }, isLoading ? /*#__PURE__*/_react.default.createElement(_material.CircularProgress, {
     color: "inherit",
     size: 20
