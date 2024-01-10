@@ -116,10 +116,10 @@ function App() {
       name: "name",
       label: "User Name",
       type: "text",
+      isRequired: true,
       // disabled: true,
       value: null,
-      onChange: val => console.log(val),
-      isRequired: false
+      // onChange: val => console.log(val),
     },
     {
       name: "email",
@@ -132,33 +132,34 @@ function App() {
       name: "role",
       label: "Role",
       isRequired: true,
+      // value: [],
       // disabled: true,
-      lookups: [{ title: "Manager", value: { name: 1, id: 2 } }, { title: "Admin", value: { name: 2, id: 3 } }],
+      lookups: [{ title: "Manager", value: 1 }, { title: "Admin", value: 2 }],
     },
     {
-      name: "roles",
-      label: "Role",
+      name: "type",
+      label: "Type",
       isRequired: true,
       multiple: true,
-      // disabled: true,
       size: "small",
       lookups: [{ title: "Admin", value: 0 }, { title: "Employee", value: 1 }],
-      // renderInput: params => console.log(params)
+      // value: []
     },
     {
       name: "notifications",
       label: "Notifications",
       isBoolean: true,
+      isRequired: true,
       booleanOptions: [
         {
           label: "Yes",
           value: true,
-          disabled: true
+          // disabled: true
         },
         {
           label: "No",
           value: false,
-          disabled: true
+          // disabled: true
         }
       ]
     }
@@ -186,17 +187,17 @@ function App() {
   // console.log(React.isValidElement("p"));
 
   return (
-    <Box>
+    <Box sx={{ overflow: "hidden" }}>
       {/* <GridModel
         columns={columns}
         rows={[]}
         onApplyDateChanges={dates => console.log(dates)}
       /> */}
-      <Box sx={{ width: 400, mx: "auto" }}>
+      <Box sx={{ mx: "auto", padding: 2 }}>
         <FormModel inputs={inputs} onSubmit={val => console.log(val)} options={{
           form: {
             // backgroundColor: "red",
-            padding: 10
+            // padding: 10
           }
         }} />
       </Box>

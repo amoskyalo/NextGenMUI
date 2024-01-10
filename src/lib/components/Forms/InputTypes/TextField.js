@@ -50,10 +50,10 @@ const TextField = ({ formik, input: { name, label, type, onChange, renderField, 
     const content = typeof renderField === 'function' && React.isValidElement(renderField(inputProps)) ?
         renderField(inputProps) : (
             <FormControl sx={{ width: "100%" }} size="small" key={name}>
-                <InputLabel htmlFor={name}>{label}</InputLabel>
+                <InputLabel htmlFor={name} error={formik.touched[name] && Boolean(formik.errors[name])}>{label}</InputLabel>
                 {renderTextField({ formik, name, label, type, onChange, visiblePasswordFields, toggleVisibility, ...otherProps })}
                 {formik.touched[name] && formik.errors[name] && (
-                    <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>
+                    <Typography sx={{ fontSize: 12, color: "#d33247", mt: 1 }}>
                         {formik.errors[name]}
                     </Typography>
                 )}

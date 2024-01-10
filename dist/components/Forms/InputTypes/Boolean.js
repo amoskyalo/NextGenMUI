@@ -42,7 +42,8 @@ const renderBoolean = _ref => {
     }, /*#__PURE__*/_react.default.createElement(_material.Checkbox, _extends({
       sx: {
         m: 0,
-        px: 0
+        px: 0,
+        color: Boolean(formik.errors[name]) ? "#d33247" : null
       },
       name: name,
       checked: formik.values[name] === value,
@@ -55,7 +56,8 @@ const renderBoolean = _ref => {
       }
     }, otherProps)), /*#__PURE__*/_react.default.createElement(_material.Typography, {
       sx: {
-        opacity: "70%"
+        opacity: "70%",
+        color: Boolean(formik.errors[name]) ? "#d33247" : null
       }
     }, label));
   }));
@@ -81,7 +83,8 @@ const BooleanField = _ref3 => {
   };
   const content = typeof renderField === "function" && /*#__PURE__*/_react.default.isValidElement(renderField(inputProps)) ? renderField(inputProps) : /*#__PURE__*/_react.default.createElement(_material.FormControl, null, /*#__PURE__*/_react.default.createElement(_material.Typography, {
     sx: {
-      opacity: "70%"
+      opacity: "70%",
+      color: Boolean(formik.errors[name]) ? "#d33247" : null
     }
   }, label), renderBoolean({
     formik,
@@ -92,7 +95,7 @@ const BooleanField = _ref3 => {
   }), formik.touched[name] && formik.errors[name] && /*#__PURE__*/_react.default.createElement(_material.Typography, {
     sx: {
       fontSize: 12,
-      color: "red",
+      color: "#d33247",
       mt: 1
     }
   }, formik.errors[name]));

@@ -6,7 +6,7 @@ const renderBoolean = ({ booleanOptions, name, onChange, formik }) => (
         {booleanOptions.map(({ value, label, ...otherProps }) => (
             <Box key={value} sx={{ display: "flex", alignItems: "center", columnGap: 1 }}>
                 <Checkbox
-                    sx={{ m: 0, px: 0 }}
+                    sx={{ m: 0, px: 0, color: Boolean(formik.errors[name]) ? "#d33247" : null }}
                     name={name}
                     checked={formik.values[name] === value}
                     onChange={(event) => {
@@ -18,7 +18,7 @@ const renderBoolean = ({ booleanOptions, name, onChange, formik }) => (
                     }}
                     {...otherProps}
                 />
-                <Typography sx={{ opacity: "70%" }}>{label}</Typography>
+                <Typography sx={{ opacity: "70%", color: Boolean(formik.errors[name]) ? "#d33247" : null }}>{label}</Typography>
             </Box>
         ))}
     </Box>
@@ -30,10 +30,15 @@ const BooleanField = ({ formik, input: { booleanOptions, label, name, onChange, 
     const content = typeof renderField === "function" && React.isValidElement(renderField(inputProps)) ?
         renderField(inputProps) : (
             <FormControl>
-                <Typography sx={{ opacity: "70%" }}>{label}</Typography>
+                <Typography
+                    sx={{ opacity: "70%", color: Boolean(formik.errors[name]) ? "#d33247" : null }}
+
+                >
+                    {label}
+                </Typography>
                 {renderBoolean({ formik, booleanOptions, label, name, onChange })}
                 {formik.touched[name] && formik.errors[name] && (
-                    <Typography sx={{ fontSize: 12, color: "red", mt: 1 }}>
+                    <Typography sx={{ fontSize: 12, color: "#d33247", mt: 1 }}>
                         {formik.errors[name]}
                     </Typography>
                 )}

@@ -55,8 +55,24 @@ const FormModel = _ref => {
     return initialValues;
   };
   const getDefaultValidationSchema = () => {
-    const schema = inputs.reduce((schemaAcc, input) => {
+    const schema = inputs === null || inputs === void 0 ? void 0 : inputs.reduce((schemaAcc, input) => {
       const key = input.name;
+      if (input.multiple) {
+        let validator = Yup.array().of(Yup.string()).nullable(true);
+        if (input.isRequired) {
+          validator = validator.required("This field is required").min(1, "At least one item must be selected");
+        }
+        schemaAcc[key] = validator;
+        return schemaAcc;
+      }
+      if (input.isBoolean) {
+        let validator = Yup.string().nullable(true);
+        if (input.isRequired) {
+          validator = validator.required("At least one choice must be selected");
+        }
+        schemaAcc[key] = validator;
+        return schemaAcc;
+      }
       let validator = Yup.string().nullable(true);
       if (input.isRequired) {
         validator = validator.required("This field is required");
@@ -65,11 +81,6 @@ const FormModel = _ref => {
         validator = validator.email("Invalid email address");
       } else if (key.toLowerCase().includes("password")) {
         validator = validator.min(8, "Password must be at least 8 characters long").matches(/[a-zA-Z]/, "Password must contain at least one letter").matches(/[A-Z]/, "Password must contain at least one uppercase letter").matches(/[a-z]/, "Password must contain at least one lowercase letter").matches(/\d/, "Password must contain at least one number").matches(/[\W_]/, "Password must contain at least one special character");
-      } else if (Array.isArray(input.value)) {
-        validator = Yup.array().of(Yup.string().required("This field is required")).min(1, "At least one value is required");
-        if (input.isRequired) {
-          validator = validator.required("This field is required");
-        }
       }
       schemaAcc[key] = validator;
       return schemaAcc;
