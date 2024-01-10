@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, IconButton, Button } from "@mui/material";
 import StepperFormModel from "./lib/components/Forms/StepperFormModel";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
@@ -115,6 +116,7 @@ function App() {
       name: "name",
       label: "User Name",
       type: "text",
+      // disabled: true,
       value: null,
       onChange: val => console.log(val),
       isRequired: false
@@ -130,8 +132,35 @@ function App() {
       name: "role",
       label: "Role",
       isRequired: true,
-      lookups: [{ title: "Manager", value: 0 }, { title: "Admin", value: 1 }],
-      onChange: val => console.log(val)
+      // disabled: true,
+      lookups: [{ title: "Manager", value: { name: 1, id: 2 } }, { title: "Admin", value: { name: 2, id: 3 } }],
+    },
+    {
+      name: "roles",
+      label: "Role",
+      isRequired: true,
+      multiple: true,
+      // disabled: true,
+      size: "small",
+      lookups: [{ title: "Admin", value: 0 }, { title: "Employee", value: 1 }],
+      // renderInput: params => console.log(params)
+    },
+    {
+      name: "notifications",
+      label: "Notifications",
+      isBoolean: true,
+      booleanOptions: [
+        {
+          label: "Yes",
+          value: true,
+          disabled: true
+        },
+        {
+          label: "No",
+          value: false,
+          disabled: true
+        }
+      ]
     }
   ];
 
@@ -154,13 +183,15 @@ function App() {
   //   </Box>
   // );
 
+  // console.log(React.isValidElement("p"));
+
   return (
     <Box>
-      <GridModel
+      {/* <GridModel
         columns={columns}
         rows={[]}
         onApplyDateChanges={dates => console.log(dates)}
-      />
+      /> */}
       <Box sx={{ width: 400, mx: "auto" }}>
         <FormModel inputs={inputs} onSubmit={val => console.log(val)} options={{
           form: {
