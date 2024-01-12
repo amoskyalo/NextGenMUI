@@ -1,8 +1,9 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import { useState } from 'react';
 import { Box, Divider, Button, Menu } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider, DateCalendar } from '@mui/x-date-pickers';
+import { LocalizationProvider, DateCalendar, PickersDay } from '@mui/x-date-pickers';
 import { styled } from "@mui/material/styles";
 
 const StyledMenu = styled((props) => (
@@ -25,20 +26,130 @@ const CalendarComponent = ({ onChange, value, ...props }) => (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
             onChange={value => onChange(value)}
-            disableFuture={true}
+            views={['month', 'day']}
+            onViewChange={() => null}
             {...props}
         />
     </LocalizationProvider>
 );
 
-const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, defaultDates }) => {
+const dates = new Date();
+const currentDate = dates.getDate();
+const currentMonth = dates.getMonth();
+const currentYear = dates.getFullYear();
+
+function d() {
+    const padToTwoDigits = (num) => num.toString().padStart(2, "0");
+
+    const day = padToTwoDigits(currentDate);
+    const startMonth = padToTwoDigits(currentMonth === 0 ? 12 : currentMonth);
+    const endMonth = padToTwoDigits(currentMonth + 1);
+
+    const startYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+    const endYear = currentYear;
+
+    const startValues = `${startYear}-${startMonth}-${day}`;
+    const endValues = `${endYear}-${endMonth}-${day}`;
+
+    return { startValues, endValues };
+}
+
+
+
+const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges }) => {
+    const [datesValues, setDatesValues] = useState({ sd: null, ed: null });
+    const { sd, ed } = datesValues;
+
+    const handleChangeDay = (values, type) => {
+        if (!sd) {
+            setDatesValues(prev => ({ ...prev, sd: values }))
+        } else {
+            if (values?.$D !== sd?.$D) {
+                setDatesValues(prev => ({ ...prev, ed: values }))
+            }
+        }
+
+        onChange(type, values);
+    };
+
+    const handleSelection = (day) => {
+        if (!ed || !sd) return { f: null, s: null };
+
+        const startDay = sd.$D;
+        const endDay = ed.$D;
+        const isSameMonth = sd.$M === ed.$M;
+
+        const createDayRange = (start, end) => Array.from({ length: end - start + 1 }, (_, i) => start + i);
+
+        const daysWithinFirstCalendar = isSameMonth ? createDayRange(startDay, endDay) : createDayRange(1, startDay - 1);
+        const daysWithinSecondCalendar = isSameMonth ? [] : createDayRange(1, endDay);
+
+        const isInFirstCalendar = daysWithinFirstCalendar.includes(day.$D);
+        const isInSecondCalendar = daysWithinSecondCalendar.includes(day.$D);
+
+        return {
+            f: isSameMonth ? isInFirstCalendar : !isInFirstCalendar,
+            s: isInSecondCalendar
+        };
+    };
+
     return (
         <StyledMenu anchorEl={anchorEl} open={open} onClose={onClose} id="calender-range">
             <Box sx={{ backgroundColor: "white", pt: 2, px: 3, borderRadius: 3, width: "max-content" }}>
-                <Box display="flex">
+                <Box display="flex" mb={1}>
                     <Box sx={{ display: "flex" }}>
-                        <CalendarComponent onChange={value => onChange("startDate", value)} />
-                        <CalendarComponent onChange={value => onChange("endDate", value)} />
+                        <CalendarComponent
+                            referenceDate={dayjs(d().startValues)}
+                            slots={{
+                                nextIconButton: () => null,
+                                switchViewIcon: () => null,
+                                day: (params) => {
+                                    const { day, isFirstVisibleCell, isLastVisibleCell, outsideCurrentMonth } = params;
+                                    const selected = handleSelection(day).f;
+
+                                    return (
+                                        <PickersDay
+                                            day={day}
+                                            isFirstVisibleCell={isFirstVisibleCell}
+                                            isLastVisibleCell={isLastVisibleCell}
+                                            outsideCurrentMonth={outsideCurrentMonth}
+                                            selected={day === sd || day === ed || selected}
+                                            onDaySelect={values => handleChangeDay(values, "startDate")}
+                                        />
+                                    )
+                                }
+                            }}
+                        />
+                        <Divider orientation="vertical" flexItem />
+
+                        <CalendarComponent
+                            referenceDate={dayjs(d().endValues)}
+                            slots={{
+                                leftArrowIcon: () => null,
+                                switchViewIcon: () => null,
+                                day: (params) => {
+                                    const { day, isFirstVisibleCell, isLastVisibleCell, outsideCurrentMonth } = params;
+                                    const selected = handleSelection(day).s;
+
+                                    const disabled = () => {
+                                        const { $D, $M } = day;
+                                        return $M === currentMonth && $D > currentDate
+                                    };
+
+                                    return (
+                                        <PickersDay
+                                            day={day}
+                                            disabled={disabled()}
+                                            isFirstVisibleCell={isFirstVisibleCell}
+                                            isLastVisibleCell={isLastVisibleCell}
+                                            outsideCurrentMonth={outsideCurrentMonth}
+                                            selected={day === sd || day === ed || selected}
+                                            onDaySelect={values => handleChangeDay(values, "endDate")}
+                                        />
+                                    )
+                                }
+                            }}
+                        />
                     </Box>
                 </Box>
 

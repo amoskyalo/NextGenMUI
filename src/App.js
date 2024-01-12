@@ -178,20 +178,24 @@ function App() {
   ];
 
   return (
-    <Box sx={{ mx: "auto", padding: 2 }}>
-      <Typography sx={{ fontWeight: 900, fontSize: 24 }}>Registration Form</Typography>
-      <FormModel
-        inputs={inputs}
-        onSubmit={val => console.log(val)}
-        options={{
-          form: {
-            // backgroundColor: "red",
-            // padding: 10
-          }
-        }}
-      />
+    <Box>
+      <GridModel columns={columns} rows={[]} />
     </Box>
+    // <Box sx={{ mx: "auto", padding: 2 }}>
+    //   <Typography sx={{ fontWeight: 900, fontSize: 24 }}>Registration Form</Typography>
+    //   <FormModel
+    //     inputs={inputs}
+    //     onSubmit={val => console.log(val)}
+    //     options={{
+    //       form: {
+    //         // backgroundColor: "red",
+    //         // padding: 10
+    //       }
+    //     }}
+    //   />
+    // </Box>
   );
 }
 
 export default App;
+

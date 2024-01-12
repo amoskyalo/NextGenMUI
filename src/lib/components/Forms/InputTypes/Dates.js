@@ -25,7 +25,7 @@ const DatesField = ({ formik, input: { label, name, onChange } }) => {
                             paddingY: "8px",
                             borderRadius: "5px"
                         },
-                        ".MuiInputLabel-root": { top: 0 }
+                        ".MuiInputLabel-root": { top: formik.values[name] ? 0 : -7 }
                     }}
                 />
             </LocalizationProvider>
