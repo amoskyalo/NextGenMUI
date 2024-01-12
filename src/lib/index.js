@@ -9,6 +9,7 @@ import AutoCompleteField from "./components/Forms/InputTypes/AutoComplete";
 import SelectField from "./components/Forms/InputTypes/Select";
 import TextField from "./components/Forms/InputTypes/TextField";
 import BooleanField from "./components/Forms/InputTypes/Boolean";
+import CalenderModel from "./components/Calender";
 
 export {
     AlertDialog,
@@ -21,5 +22,6 @@ export {
     AutoCompleteField,
     SelectField,
     TextField,
-    BooleanField
+    BooleanField,
+    CalenderModel
 }
