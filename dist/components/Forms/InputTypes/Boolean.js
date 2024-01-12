@@ -31,7 +31,8 @@ const CheckboxOption = _ref => {
     sx: {
       m: 0,
       px: 0,
-      color: checkboxColor
+      color: checkboxColor,
+      flex: 1
     },
     name: name,
     checked: isChecked,
@@ -67,7 +68,7 @@ const renderBoolean = _ref2 => {
   return /*#__PURE__*/_react.default.createElement(_material.Box, {
     sx: {
       display: "flex",
-      columnGap: 4,
+      columnGap: 2,
       flexWrap: "wrap"
     }
   }, booleanOptions.map(option => {

@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+require("core-js/modules/web.dom-collections.iterator.js");
 var _react = _interopRequireDefault(require("react"));
 var _AdapterDayjs = require("@mui/x-date-pickers/AdapterDayjs");
 var _LocalizationProvider = require("@mui/x-date-pickers/LocalizationProvider");
@@ -39,7 +40,7 @@ const DatesField = _ref => {
         borderRadius: "5px"
       },
       ".MuiInputLabel-root": {
-        top: 0
+        top: formik.values[name] ? 0 : -7
       }
     }
   })));

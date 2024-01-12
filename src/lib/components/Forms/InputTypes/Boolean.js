@@ -4,7 +4,7 @@ import { Box, Typography, Checkbox, FormControl } from '@mui/material';
 const CheckboxOption = ({ name, value, label, isChecked, onChange, checkboxColor, labelColor }) => (
     <Box key={value} sx={{ display: "flex", alignItems: "center", columnGap: 1 }}>
         <Checkbox
-            sx={{ m: 0, px: 0, color: checkboxColor }}
+            sx={{ m: 0, px: 0, color: checkboxColor, flex: 1 }}
             name={name}
             checked={isChecked}
             onChange={onChange}
@@ -35,7 +35,7 @@ const renderBoolean = ({ booleanOptions, name, onChange, formik, multiple }) => 
     };
 
     return (
-        <Box sx={{ display: "flex", columnGap: 4, flexWrap: "wrap" }}>
+        <Box sx={{ display: "flex", columnGap: 2, flexWrap: "wrap" }}>
             {booleanOptions.map(option => {
                 const { value, label } = typeof option === "object" ? option : { value: option, label: option };
                 return (
