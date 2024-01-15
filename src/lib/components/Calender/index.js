@@ -1,7 +1,8 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import ReplayIcon from '@mui/icons-material/Replay';
 import { useState } from 'react';
-import { Box, Divider, Button, Menu } from '@mui/material';
+import { Box, Divider, Button, Menu, IconButton, Tooltip } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DateCalendar, PickersDay } from '@mui/x-date-pickers';
 import { styled } from "@mui/material/styles";
@@ -53,8 +54,6 @@ function d() {
 
     return { startValues, endValues };
 }
-
-
 
 const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges }) => {
     const [datesValues, setDatesValues] = useState({ sd: null, ed: null });
@@ -120,6 +119,7 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges }
                                 }
                             }}
                         />
+
                         <Divider orientation="vertical" flexItem />
 
                         <CalendarComponent
@@ -156,8 +156,30 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges }
                 <Divider />
 
                 <Box sx={{ display: "flex", justifyContent: "right", py: 2.5, gap: 2 }}>
-                    <Button size="small" sx={{ textTransform: "capitalize" }} variant="outlined" onClick={onClose}>Cancel</Button>
-                    <Button size="small" sx={{ textTransform: "capitalize" }} variant="contained" onClick={() => { onApplyDateChanges(); onClose() }}>Apply dates</Button>
+                    <Tooltip title="Reset dates">
+                        <IconButton
+                            onClick={() => setDatesValues({ sd: null, ed: null })}
+                        >
+                            <ReplayIcon />
+                        </IconButton>
+                    </Tooltip>
+
+                    <Button
+                        size="small"
+                        sx={{ textTransform: "capitalize" }}
+                        variant="outlined"
+                        onClick={onClose}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        size="small"
+                        sx={{ textTransform: "capitalize" }}
+                        variant="contained"
+                        onClick={() => { onApplyDateChanges(); onClose() }}
+                    >
+                        Apply dates
+                    </Button>
                 </Box>
             </Box>
         </StyledMenu>

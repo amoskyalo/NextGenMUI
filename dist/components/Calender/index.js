@@ -13,6 +13,7 @@ require("core-js/modules/es.string.includes.js");
 require("core-js/modules/es.object.assign.js");
 var _react = _interopRequireWildcard(require("react"));
 var _dayjs = _interopRequireDefault(require("dayjs"));
+var _Replay = _interopRequireDefault(require("@mui/icons-material/Replay"));
 var _material = require("@mui/material");
 var _AdapterDayjs = require("@mui/x-date-pickers/AdapterDayjs");
 var _xDatePickers = require("@mui/x-date-pickers");
@@ -218,7 +219,14 @@ const CalenderModel = _ref3 => {
       py: 2.5,
       gap: 2
     }
-  }, /*#__PURE__*/_react.default.createElement(_material.Button, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Tooltip, {
+    title: "Reset dates"
+  }, /*#__PURE__*/_react.default.createElement(_material.IconButton, {
+    onClick: () => setDatesValues({
+      sd: null,
+      ed: null
+    })
+  }, /*#__PURE__*/_react.default.createElement(_Replay.default, null))), /*#__PURE__*/_react.default.createElement(_material.Button, {
     size: "small",
     sx: {
       textTransform: "capitalize"
