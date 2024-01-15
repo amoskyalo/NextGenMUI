@@ -55,20 +55,20 @@ function d() {
     return { startValues, endValues };
 }
 
-const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges }) => {
+const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, resetDates }) => {
     const [datesValues, setDatesValues] = useState({ sd: null, ed: null });
     const { sd, ed } = datesValues;
 
-    const handleChangeDay = (values, type) => {
+    const handleChangeDay = (values) => {
         if (!sd) {
             setDatesValues(prev => ({ ...prev, sd: values }))
+            onChange('startDate', values);
         } else {
             if (values?.$D !== sd?.$D) {
                 setDatesValues(prev => ({ ...prev, ed: values }))
+                onChange('endDate', values);
             }
         }
-
-        onChange(type, values);
     };
 
     const handleSelection = (day) => {
@@ -113,7 +113,7 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges }
                                             isLastVisibleCell={isLastVisibleCell}
                                             outsideCurrentMonth={outsideCurrentMonth}
                                             selected={day === sd || day === ed || selected}
-                                            onDaySelect={values => handleChangeDay(values, "startDate")}
+                                            onDaySelect={values => handleChangeDay(values)}
                                         />
                                     )
                                 }
@@ -144,7 +144,7 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges }
                                             isLastVisibleCell={isLastVisibleCell}
                                             outsideCurrentMonth={outsideCurrentMonth}
                                             selected={day === sd || day === ed || selected}
-                                            onDaySelect={values => handleChangeDay(values, "endDate")}
+                                            onDaySelect={values => handleChangeDay(values)}
                                         />
                                     )
                                 }
@@ -158,7 +158,10 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges }
                 <Box sx={{ display: "flex", justifyContent: "right", py: 2.5, gap: 2 }}>
                     <Tooltip title="Reset dates">
                         <IconButton
-                            onClick={() => setDatesValues({ sd: null, ed: null })}
+                            onClick={() => {
+                                setDatesValues({ sd: null, ed: null });
+                                resetDates();
+                            }}
                         >
                             <ReplayIcon />
                         </IconButton>

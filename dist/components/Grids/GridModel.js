@@ -11,8 +11,6 @@ require("core-js/modules/es.regexp.to-string.js");
 require("core-js/modules/es.symbol.description.js");
 var _react = _interopRequireWildcard(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
-var _material = require("@mui/material");
-var _xDataGrid = require("@mui/x-data-grid");
 var _CalendarMonth = _interopRequireDefault(require("@mui/icons-material/CalendarMonth"));
 var _Print = _interopRequireDefault(require("@mui/icons-material/Print"));
 var _ExitToApp = _interopRequireDefault(require("@mui/icons-material/ExitToApp"));
@@ -22,6 +20,8 @@ var _empty = _interopRequireDefault(require("../../Assets/empty.gif"));
 var _loading = _interopRequireDefault(require("../../Assets/loading.json"));
 var _Calender = _interopRequireDefault(require("../Calender"));
 var _Utils = require("../../Utils/Utils");
+var _material = require("@mui/material");
+var _xDataGrid = require("@mui/x-data-grid");
 const _excluded = ["columns", "rows", "loading", "FilterComponent", "GridButtonsComponent", "onAdd", "disableAdd", "disablePrint", "disableExport", "showGridHeader", "onDateChange", "onApplyDateChanges", "disableDates"];
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
@@ -37,6 +37,7 @@ function _toPrimitive(input, hint) { if (typeof input !== "object" || input === 
 const buttonStyle = {
   textTransform: 'capitalize'
 };
+const date = new Date();
 const LoadingIndicator = _ref => {
   let {
     options
@@ -82,6 +83,14 @@ const NoDataIndicator = _ref2 => {
     startIcon: /*#__PURE__*/_react.default.createElement(_Add.default, null)
   }, "New"));
 };
+const d = {
+  startDate: _objectSpread(_objectSpread({}, _Utils.dateObject), {}, {
+    '$M': date.getMonth() === 0 ? 11 : date.getMonth() - 1
+  }),
+  endDate: _objectSpread(_objectSpread({}, _Utils.dateObject), {}, {
+    '$M': date.getMonth()
+  })
+};
 const GridModel = _ref3 => {
   let {
       columns,
@@ -99,15 +108,7 @@ const GridModel = _ref3 => {
       disableDates
     } = _ref3,
     gridProps = _objectWithoutProperties(_ref3, _excluded);
-  const date = new Date();
-  const [dates, setDates] = (0, _react.useState)({
-    startDate: _objectSpread(_objectSpread({}, _Utils.dateObject), {}, {
-      '$M': date.getMonth() === 0 ? 11 : date.getMonth() - 1
-    }),
-    endDate: _objectSpread(_objectSpread({}, _Utils.dateObject), {}, {
-      '$M': date.getMonth()
-    })
-  });
+  const [dates, setDates] = (0, _react.useState)(d);
   const [anchorEl, setAnchorEl] = (0, _react.useState)(null);
   const open = Boolean(anchorEl);
   const handleChangeDates = (type, value) => {
@@ -115,6 +116,7 @@ const GridModel = _ref3 => {
       [type]: value
     }));
   };
+  const handleResetDates = () => setDates(d);
   (0, _react.useEffect)(() => {
     if (onDateChange) {
       onDateChange(dates);
@@ -176,7 +178,8 @@ const GridModel = _ref3 => {
     onApplyDateChanges: () => _onApplyDateChanges(dates),
     anchorEl: anchorEl,
     open: open,
-    onClose: () => setAnchorEl(null)
+    onClose: () => setAnchorEl(null),
+    resetDates: handleResetDates
   }), FilterComponent && /*#__PURE__*/_react.default.createElement(FilterComponent, null), !disableAdd && /*#__PURE__*/_react.default.createElement(_material.Button, {
     startIcon: /*#__PURE__*/_react.default.createElement(_Add.default, null),
     onClick: onAdd,

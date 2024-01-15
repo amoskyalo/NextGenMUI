@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Button, Typography } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PrintIcon from '@mui/icons-material/Print';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AddIcon from '@mui/icons-material/Add';
 import Lottie from 'react-lottie';
-
 import emptyImage from '../../Assets/empty.gif';
 import loadingAnimation from '../../Assets/loading.json';
 import CalenderModel from '../Calender';
 import { handleExportToExcel, handlePrint, dateObject, monthsOfTheYear } from '../../Utils/Utils';
+import { Box, Button, Typography } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import { useEffect, useState } from 'react';
 
 const buttonStyle = { textTransform: 'capitalize' };
+const date = new Date();
 
 const LoadingIndicator = ({ options }) => (
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
@@ -33,6 +34,11 @@ const NoDataIndicator = ({ onAdd, disableAdd }) => (
     </Box>
 );
 
+const d = {
+    startDate: { ...dateObject, '$M': date.getMonth() === 0 ? 11 : date.getMonth() - 1 },
+    endDate: { ...dateObject, '$M': date.getMonth() }
+}
+
 const GridModel = ({
     columns,
     rows,
@@ -49,17 +55,15 @@ const GridModel = ({
     disableDates,
     ...gridProps
 }) => {
-    const date = new Date();
-    const [dates, setDates] = useState({
-        startDate: { ...dateObject, '$M': date.getMonth() === 0 ? 11 : date.getMonth() - 1 },
-        endDate: { ...dateObject, '$M': date.getMonth() }
-    });
+    const [dates, setDates] = useState(d);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
     const handleChangeDates = (type, value) => {
         setDates({ ...dates, [type]: value });
     };
+
+    const handleResetDates = () => setDates(d);
 
     useEffect(() => {
         if (onDateChange) {
@@ -132,6 +136,7 @@ const GridModel = ({
                                 anchorEl={anchorEl}
                                 open={open}
                                 onClose={() => setAnchorEl(null)}
+                                resetDates={handleResetDates}
                             />
 
                             {FilterComponent && <FilterComponent />}

@@ -91,7 +91,8 @@ const CalenderModel = _ref3 => {
     anchorEl,
     onClose,
     onChange,
-    onApplyDateChanges
+    onApplyDateChanges,
+    resetDates
   } = _ref3;
   const [datesValues, setDatesValues] = (0, _react.useState)({
     sd: null,
@@ -101,19 +102,20 @@ const CalenderModel = _ref3 => {
     sd,
     ed
   } = datesValues;
-  const handleChangeDay = (values, type) => {
+  const handleChangeDay = values => {
     if (!sd) {
       setDatesValues(prev => _objectSpread(_objectSpread({}, prev), {}, {
         sd: values
       }));
+      onChange('startDate', values);
     } else {
       if ((values === null || values === void 0 ? void 0 : values.$D) !== (sd === null || sd === void 0 ? void 0 : sd.$D)) {
         setDatesValues(prev => _objectSpread(_objectSpread({}, prev), {}, {
           ed: values
         }));
+        onChange('endDate', values);
       }
     }
-    onChange(type, values);
   };
   const handleSelection = day => {
     if (!ed || !sd) return {
@@ -174,7 +176,7 @@ const CalenderModel = _ref3 => {
           isLastVisibleCell: isLastVisibleCell,
           outsideCurrentMonth: outsideCurrentMonth,
           selected: day === sd || day === ed || selected,
-          onDaySelect: values => handleChangeDay(values, "startDate")
+          onDaySelect: values => handleChangeDay(values)
         });
       }
     }
@@ -208,7 +210,7 @@ const CalenderModel = _ref3 => {
           isLastVisibleCell: isLastVisibleCell,
           outsideCurrentMonth: outsideCurrentMonth,
           selected: day === sd || day === ed || selected,
-          onDaySelect: values => handleChangeDay(values, "endDate")
+          onDaySelect: values => handleChangeDay(values)
         });
       }
     }
@@ -222,10 +224,13 @@ const CalenderModel = _ref3 => {
   }, /*#__PURE__*/_react.default.createElement(_material.Tooltip, {
     title: "Reset dates"
   }, /*#__PURE__*/_react.default.createElement(_material.IconButton, {
-    onClick: () => setDatesValues({
-      sd: null,
-      ed: null
-    })
+    onClick: () => {
+      setDatesValues({
+        sd: null,
+        ed: null
+      });
+      resetDates();
+    }
   }, /*#__PURE__*/_react.default.createElement(_Replay.default, null))), /*#__PURE__*/_react.default.createElement(_material.Button, {
     size: "small",
     sx: {
