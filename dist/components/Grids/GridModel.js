@@ -179,7 +179,8 @@ const GridModel = _ref3 => {
     anchorEl: anchorEl,
     open: open,
     onClose: () => setAnchorEl(null),
-    resetDates: handleResetDates
+    resetDates: handleResetDates,
+    setDates: setDates
   }), FilterComponent && /*#__PURE__*/_react.default.createElement(FilterComponent, null), !disableAdd && /*#__PURE__*/_react.default.createElement(_material.Button, {
     startIcon: /*#__PURE__*/_react.default.createElement(_Add.default, null),
     onClick: onAdd,

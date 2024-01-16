@@ -137,6 +137,7 @@ const GridModel = ({
                                 open={open}
                                 onClose={() => setAnchorEl(null)}
                                 resetDates={handleResetDates}
+                                setDates={setDates}
                             />
 
                             {FilterComponent && <FilterComponent />}

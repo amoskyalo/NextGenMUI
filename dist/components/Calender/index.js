@@ -13,7 +13,6 @@ require("core-js/modules/es.string.includes.js");
 require("core-js/modules/es.object.assign.js");
 var _react = _interopRequireWildcard(require("react"));
 var _dayjs = _interopRequireDefault(require("dayjs"));
-var _Replay = _interopRequireDefault(require("@mui/icons-material/Replay"));
 var _material = require("@mui/material");
 var _AdapterDayjs = require("@mui/x-date-pickers/AdapterDayjs");
 var _xDatePickers = require("@mui/x-date-pickers");
@@ -92,7 +91,8 @@ const CalenderModel = _ref3 => {
     onClose,
     onChange,
     onApplyDateChanges,
-    resetDates
+    resetDates,
+    setDates
   } = _ref3;
   const [datesValues, setDatesValues] = (0, _react.useState)({
     sd: null,
@@ -103,13 +103,17 @@ const CalenderModel = _ref3 => {
     ed
   } = datesValues;
   const handleChangeDay = values => {
-    if (!sd) {
+    if (sd && ed && (values === null || values === void 0 ? void 0 : values.$D) < (sd === null || sd === void 0 ? void 0 : sd.$D)) {
+      setDatesValues(prev => _objectSpread(_objectSpread({}, prev), {}, {
+        sd: values
+      }));
+    } else if (!sd) {
       setDatesValues(prev => _objectSpread(_objectSpread({}, prev), {}, {
         sd: values
       }));
       onChange('startDate', values);
     } else {
-      if ((values === null || values === void 0 ? void 0 : values.$D) !== (sd === null || sd === void 0 ? void 0 : sd.$D)) {
+      if ((values === null || values === void 0 ? void 0 : values.$D) !== (sd === null || sd === void 0 ? void 0 : sd.$D) || (values === null || values === void 0 ? void 0 : values.$M) !== (sd === null || sd === void 0 ? void 0 : sd.$M)) {
         setDatesValues(prev => _objectSpread(_objectSpread({}, prev), {}, {
           ed: values
         }));
@@ -130,12 +134,62 @@ const CalenderModel = _ref3 => {
     }, (_, i) => start + i);
     const daysWithinFirstCalendar = isSameMonth ? createDayRange(startDay, endDay) : createDayRange(1, startDay - 1);
     const daysWithinSecondCalendar = isSameMonth ? [] : createDayRange(1, endDay);
-    const isInFirstCalendar = daysWithinFirstCalendar.includes(day.$D);
-    const isInSecondCalendar = daysWithinSecondCalendar.includes(day.$D);
+    function getX() {
+      const p = daysWithinFirstCalendar.includes(day.$D);
+      return !isSameMonth ? p : p && (day === null || day === void 0 ? void 0 : day.$M) === (sd === null || sd === void 0 ? void 0 : sd.$M);
+    }
+    const x = getX();
+    const y = daysWithinSecondCalendar.includes(day.$D);
     return {
-      f: isSameMonth ? isInFirstCalendar : !isInFirstCalendar,
-      s: isInSecondCalendar
+      f: isSameMonth ? x : !x,
+      s: isSameMonth ? x : y
     };
+  };
+  const handleSelectRange = range => {
+    const v = range.toLowerCase();
+    const lastMonth = currentMonth === 0 ? 11 : currentMonth;
+    const year = currentMonth === 0 ? currentYear - 1 : currentYear;
+    let dateRange;
+    switch (v) {
+      case 'this week':
+        dateRange = {
+          ed: (0, _dayjs.default)(),
+          sd: (0, _dayjs.default)().subtract(7, 'day')
+        };
+        break;
+      case 'last 7 days':
+        dateRange = {
+          ed: (0, _dayjs.default)().subtract(7, 'day'),
+          sd: (0, _dayjs.default)().subtract(14, 'day')
+        };
+        break;
+      case 'current month':
+        dateRange = {
+          ed: (0, _dayjs.default)().date(currentDate),
+          sd: (0, _dayjs.default)().date(1)
+        };
+        break;
+      case 'last month':
+        dateRange = {
+          ed: (0, _dayjs.default)().year(year).month(lastMonth).date((0, _dayjs.default)(lastMonth).daysInMonth()),
+          sd: (0, _dayjs.default)().year(year).month(lastMonth).date(1)
+        };
+        break;
+      case 'reset':
+        setDatesValues({
+          sd: null,
+          ed: null
+        });
+        resetDates();
+        break;
+    }
+    if (v !== 'reset') {
+      setDatesValues(dateRange);
+      setDates({
+        startDate: dateRange.sd,
+        endDate: dateRange.ed
+      });
+    }
   };
   return /*#__PURE__*/_react.default.createElement(StyledMenu, {
     anchorEl: anchorEl,
@@ -157,7 +211,25 @@ const CalenderModel = _ref3 => {
     sx: {
       display: "flex"
     }
-  }, /*#__PURE__*/_react.default.createElement(CalendarComponent, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Box, {
+    sx: {
+      display: 'flex',
+      flexDirection: "column",
+      rowGap: 2,
+      mt: 3,
+      pr: 4
+    }
+  }, ["This Week", "Last 7 days", "Current Month", "Last Month", "Reset"].map(val => /*#__PURE__*/_react.default.createElement(_material.Chip, {
+    label: val,
+    sx: {
+      cursor: "pointer",
+      maxWidth: "max-content"
+    },
+    onClick: () => handleSelectRange(val)
+  }))), /*#__PURE__*/_react.default.createElement(_material.Divider, {
+    orientation: "vertical",
+    flexItem: true
+  }), /*#__PURE__*/_react.default.createElement(CalendarComponent, {
     referenceDate: (0, _dayjs.default)(d().startValues),
     slots: {
       nextIconButton: () => null,
@@ -195,7 +267,6 @@ const CalenderModel = _ref3 => {
           isLastVisibleCell,
           outsideCurrentMonth
         } = params;
-        const selected = handleSelection(day).s;
         const disabled = () => {
           const {
             $D,
@@ -203,6 +274,7 @@ const CalenderModel = _ref3 => {
           } = day;
           return $M === currentMonth && $D > currentDate;
         };
+        const selected = handleSelection(day).s && !disabled();
         return /*#__PURE__*/_react.default.createElement(_xDatePickers.PickersDay, {
           day: day,
           disabled: disabled(),
@@ -221,17 +293,7 @@ const CalenderModel = _ref3 => {
       py: 2.5,
       gap: 2
     }
-  }, /*#__PURE__*/_react.default.createElement(_material.Tooltip, {
-    title: "Reset dates"
-  }, /*#__PURE__*/_react.default.createElement(_material.IconButton, {
-    onClick: () => {
-      setDatesValues({
-        sd: null,
-        ed: null
-      });
-      resetDates();
-    }
-  }, /*#__PURE__*/_react.default.createElement(_Replay.default, null))), /*#__PURE__*/_react.default.createElement(_material.Button, {
+  }, /*#__PURE__*/_react.default.createElement(_material.Button, {
     size: "small",
     sx: {
       textTransform: "capitalize"
