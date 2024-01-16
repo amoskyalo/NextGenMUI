@@ -1,8 +1,7 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import ReplayIcon from '@mui/icons-material/Replay';
 import { useState } from 'react';
-import { Box, Divider, Button, Menu, IconButton, Tooltip } from '@mui/material';
+import { Box, Divider, Button, Menu, Chip } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DateCalendar, PickersDay } from '@mui/x-date-pickers';
 import { styled } from "@mui/material/styles";
@@ -55,16 +54,18 @@ function d() {
     return { startValues, endValues };
 }
 
-const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, resetDates }) => {
+const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, resetDates, setDates }) => {
     const [datesValues, setDatesValues] = useState({ sd: null, ed: null });
     const { sd, ed } = datesValues;
 
     const handleChangeDay = (values) => {
-        if (!sd) {
+        if (sd && ed && (values?.$D < sd?.$D)) {
+            setDatesValues(prev => ({ ...prev, sd: values }))
+        } else if (!sd) {
             setDatesValues(prev => ({ ...prev, sd: values }))
             onChange('startDate', values);
         } else {
-            if (values?.$D !== sd?.$D) {
+            if ((values?.$D !== sd?.$D) || (values?.$M !== sd?.$M)) {
                 setDatesValues(prev => ({ ...prev, ed: values }))
                 onChange('endDate', values);
             }
@@ -83,13 +84,47 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, 
         const daysWithinFirstCalendar = isSameMonth ? createDayRange(startDay, endDay) : createDayRange(1, startDay - 1);
         const daysWithinSecondCalendar = isSameMonth ? [] : createDayRange(1, endDay);
 
-        const isInFirstCalendar = daysWithinFirstCalendar.includes(day.$D);
-        const isInSecondCalendar = daysWithinSecondCalendar.includes(day.$D);
+        function getX() {
+            const p = daysWithinFirstCalendar.includes(day.$D);
 
-        return {
-            f: isSameMonth ? isInFirstCalendar : !isInFirstCalendar,
-            s: isInSecondCalendar
-        };
+            return !isSameMonth ? p : p && (day?.$M === sd?.$M)
+        }
+
+        const x = getX()
+        const y = daysWithinSecondCalendar.includes(day.$D);
+
+        return { f: isSameMonth ? x : !x, s: isSameMonth ? x : y };
+    };
+
+    const handleSelectRange = (range) => {
+        const v = range.toLowerCase();
+        const lastMonth = currentMonth === 0 ? 11 : currentMonth;
+
+        let dateRange;
+
+        switch (v) {
+            case 'this week':
+                dateRange = { ed: dayjs(), sd: dayjs().subtract(7, 'day') }
+                break;
+            case 'last 7 days':
+                dateRange = { ed: dayjs().subtract(7, 'day'), sd: dayjs().subtract(14, 'day') }
+                break;
+            case 'current month':
+                dateRange = { ed: dayjs().date(currentDate), sd: dayjs().date(1) }
+                break;
+            case 'last month':
+                dateRange = { ed: dayjs().month(lastMonth).date(dayjs(lastMonth).daysInMonth()), sd: dayjs().month(lastMonth).date(1) }
+                break;
+            case 'reset':
+                setDatesValues({ sd: null, ed: null });
+                resetDates();
+                break;
+        }
+
+        if (v !== 'reset') {
+            setDatesValues(dateRange);
+            setDates({ startDate: dateRange.sd, endDate: dateRange.ed })
+        }
     };
 
     return (
@@ -97,6 +132,20 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, 
             <Box sx={{ backgroundColor: "white", pt: 2, px: 3, borderRadius: 3, width: "max-content" }}>
                 <Box display="flex" mb={1}>
                     <Box sx={{ display: "flex" }}>
+                        <Box sx={{ display: 'flex', flexDirection: "column", rowGap: 2, mt: 3, pr: 4 }}>
+                            {
+                                ["This Week", "Last 7 days", "Current Month", "Last Month", "Reset"].map(val => (
+                                    <Chip
+                                        label={val}
+                                        sx={{ cursor: "pointer", maxWidth: "max-content" }}
+                                        onClick={() => handleSelectRange(val)}
+                                    />
+                                ))
+                            }
+                        </Box>
+
+                        <Divider orientation="vertical" flexItem />
+
                         <CalendarComponent
                             referenceDate={dayjs(d().startValues)}
                             slots={{
@@ -129,12 +178,13 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, 
                                 switchViewIcon: () => null,
                                 day: (params) => {
                                     const { day, isFirstVisibleCell, isLastVisibleCell, outsideCurrentMonth } = params;
-                                    const selected = handleSelection(day).s;
 
                                     const disabled = () => {
                                         const { $D, $M } = day;
                                         return $M === currentMonth && $D > currentDate
                                     };
+
+                                    const selected = handleSelection(day).s && !disabled();
 
                                     return (
                                         <PickersDay
@@ -156,17 +206,6 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, 
                 <Divider />
 
                 <Box sx={{ display: "flex", justifyContent: "right", py: 2.5, gap: 2 }}>
-                    <Tooltip title="Reset dates">
-                        <IconButton
-                            onClick={() => {
-                                setDatesValues({ sd: null, ed: null });
-                                resetDates();
-                            }}
-                        >
-                            <ReplayIcon />
-                        </IconButton>
-                    </Tooltip>
-
                     <Button
                         size="small"
                         sx={{ textTransform: "capitalize" }}
