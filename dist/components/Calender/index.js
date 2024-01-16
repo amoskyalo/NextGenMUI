@@ -148,6 +148,7 @@ const CalenderModel = _ref3 => {
   const handleSelectRange = range => {
     const v = range.toLowerCase();
     const lastMonth = currentMonth === 0 ? 11 : currentMonth;
+    const year = currentMonth === 0 ? currentYear - 1 : currentYear;
     let dateRange;
     switch (v) {
       case 'this week':
@@ -170,8 +171,8 @@ const CalenderModel = _ref3 => {
         break;
       case 'last month':
         dateRange = {
-          ed: (0, _dayjs.default)().month(lastMonth).date((0, _dayjs.default)(lastMonth).daysInMonth()),
-          sd: (0, _dayjs.default)().month(lastMonth).date(1)
+          ed: (0, _dayjs.default)().year(year).month(lastMonth).date((0, _dayjs.default)(lastMonth).daysInMonth()),
+          sd: (0, _dayjs.default)().year(year).month(lastMonth).date(1)
         };
         break;
       case 'reset':

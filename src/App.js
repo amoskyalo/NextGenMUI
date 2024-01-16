@@ -179,7 +179,7 @@ function App() {
 
   return (
     <Box>
-      <GridModel columns={columns} rows={[]} />
+      <GridModel columns={columns} rows={[]} onApplyDateChanges={dates => console.log(dates)} />
     </Box>
     // <Box sx={{ mx: "auto", padding: 2 }}>
     //   <Typography sx={{ fontWeight: 900, fontSize: 24 }}>Registration Form</Typography>

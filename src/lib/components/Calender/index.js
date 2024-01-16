@@ -99,6 +99,7 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, 
     const handleSelectRange = (range) => {
         const v = range.toLowerCase();
         const lastMonth = currentMonth === 0 ? 11 : currentMonth;
+        const year = currentMonth === 0 ? currentYear - 1 : currentYear;
 
         let dateRange;
 
@@ -113,7 +114,7 @@ const CalenderModel = ({ open, anchorEl, onClose, onChange, onApplyDateChanges, 
                 dateRange = { ed: dayjs().date(currentDate), sd: dayjs().date(1) }
                 break;
             case 'last month':
-                dateRange = { ed: dayjs().month(lastMonth).date(dayjs(lastMonth).daysInMonth()), sd: dayjs().month(lastMonth).date(1) }
+                dateRange = { ed: dayjs().year(year).month(lastMonth).date(dayjs(lastMonth).daysInMonth()), sd: dayjs().year(year).month(lastMonth).date(1) }
                 break;
             case 'reset':
                 setDatesValues({ sd: null, ed: null });
