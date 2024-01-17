@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import Lottie from 'react-lottie';
 import emptyImage from '../../Assets/empty.gif';
 import loadingAnimation from '../../Assets/loading.json';
-import CalenderModel from '../Calender';
+import CalenderModel from '../Calender/Calender';
 import { handleExportToExcel, handlePrint, dateObject, monthsOfTheYear } from '../../Utils/Utils';
 import { Box, Button, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';

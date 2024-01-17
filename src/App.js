@@ -20,6 +20,7 @@ import ListIcon from '@mui/icons-material/List';
 import MapIcon from '@mui/icons-material/Map';
 import GridModel from "./lib/components/Grids/GridModel";
 import FormModel from "./lib/components/Forms/FormModel";
+import Calender from "./lib/components/Calender/Calender";
 import './App.css'
 
 function App() {
@@ -180,6 +181,7 @@ function App() {
   return (
     <Box>
       <GridModel columns={columns} rows={[]} onApplyDateChanges={dates => console.log(dates)} />
+      <Calender />
     </Box>
     // <Box sx={{ mx: "auto", padding: 2 }}>
     //   <Typography sx={{ fontWeight: 900, fontSize: 24 }}>Registration Form</Typography>
