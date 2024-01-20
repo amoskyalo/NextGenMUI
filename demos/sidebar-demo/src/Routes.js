@@ -43,17 +43,17 @@ export const routes = {
                 },
                 {
                     name: "Service Schedule",
-                    path: "/n",
+                    path: "/s",
                     icon: TaskAltIcon
                 },
                 {
                     name: "Tasks",
-                    path: "/n",
+                    path: "/t",
                     icon: AssignmentIndIcon
                 },
                 {
                     name: "Reporting",
-                    path: "/n",
+                    path: "/r",
                     icon: InsightsIcon
                 }
             ]
