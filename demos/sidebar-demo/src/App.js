@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SideBarModel } from 'next-gen-mui';
+import { SideBarModel } from 'next-gen';
 import { Box, TextField, InputAdornment, Typography, Switch } from '@mui/material';
 import { routes } from './Routes';
 import logo from './Assets/logo.png';

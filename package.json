@@ -1,12 +1,7 @@
 {
   "name": "next-gen-monorepo",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "demos/*"
-    ]
-  },
+  "workspaces": ["packages/*", "demos/*"],
   "dependencies": {},
   "devDependencies": {
     "lerna": "^8.0.2"
