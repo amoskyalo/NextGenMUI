@@ -1,0 +1,10 @@
+/* body {
+    background-color: red;
+} */
+/* .bar {
+    background-color: red;
+} */
+
+body {
+    overflow-x: hidden !important;
+}
