@@ -1,0 +1,74 @@
+{
+  "name": "next-gen-mui",
+  "version": "0.2.0",
+  "private": false,
+  "main": "dist/index.js",
+  "files": ["dist"],
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.16",
+    "@mui/material": "^5.14.17",
+    "@mui/x-data-grid": "^6.18.1",
+    "@mui/x-date-pickers": "^6.18.1",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "dayjs": "^1.11.10",
+    "formik": "^2.4.5",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-lottie": "^1.2.3",
+    "react-router-dom": "^6.19.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5",
+    "yup": "^1.3.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "rm -rf dist && cross-env NODE_ENV=production babel src/lib --out-dir dist --copy-files",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.3",
+    "@babel/preset-env": "^7.23.3",
+    "cross-env": "^7.0.3"
+  },
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amoskyalo/NextGenMUI.git"
+  },
+  "keywords": [
+    "materialUI"
+  ],
+  "author": "Amos Kyalo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amoskyalo/NextGenMUI/issues"
+  },
+  "homepage": ""
+}
