@@ -2,13 +2,30 @@
 
 <img width="142" alt="image" src="https://github.com/amoskyalo/NextGenMUI/assets/91586973/f62ec0db-c7c4-4b3c-943f-9bd30403a645">
 
-NextGenMUI is an innovative plugin designed to extend the capabilities of Material-UI, providing developers with an enhanced toolkit for creating dynamic, responsive, and visually appealing web applications. This plugin is a collection of thoughtfully designed components built on top of Material-UI, offering additional functionality and customization options to streamline the development process.
+NextGenMUI is a plugin that integrates seamlessly with the popular React UI framework Material-UI, offering additional functionality and customization options to streamline the development process.
+It consists of a collection of pre-styled easy-to-use components that efficiently manage dialogs, handle user interactions, and create dynamic and responsive forms and other features, while following Material-UI's design specifications.
 
-## Key Components
+Incorporating NextGenMUI components contributes to an improved development experience and enhanced user interfaces in your React applications.
 
-1. **AlertDialogModel**: It offers a streamlined and effective way to present information and capture user responses. Key features include customizable titles and content texts, straightforward action handling with 'Ok' and 'Cancel' buttons, and adjustable sizing for various application contexts. This component is ideal for confirmations, warnings, or informational alerts in your application, providing both simplicity and flexibility in dialog management.
+## Installation
 
-   **Usage**
+Run one of the following commands to add NextGenMUI to your React project:
+
+```shell
+yarn add next-gen-mui
+
+npm install next-gen-mui
+```
+
+## Usage
+
+After installation, import the components and start using them.
+
+## Components
+
+1. **AlertDialogModel**: The purpose of this component is a modal or dialog box with an alert interface that interrupts the user’s workflow to present important information and capture a response. Examples include action confirmation prompts and error message confirmations. Key features include customizable titles and content texts, straightforward action handling with **Ok** and **Cancel** buttons, and adjustable sizing for various application contexts.
+
+   **Usage**:
 
    ```javascript
    import { AlertDialogModel } from "next-gen-mui";
@@ -28,7 +45,7 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
    };
    ```
 
-2. **DialogModel**: It seamlessly integrates user content through its children prop and offers a user-friendly interface with an optional title and a close button. Key features include flexible width settings, adjustable maximum width, and a clean, responsive design. This component excels in providing a dynamic container for a wide range of content, from simple messages to complex forms, making it ideal for various application scenarios where user interaction and content presentation are key.
+2. **DialogModel**: The purpose of this component is to create dialog modals within the user interface . Dialog is a type of modal window that temporarily interrupts the user's interaction with the main content to present important information, requests for confirmation, or input forms.Key features include flexible width settings, adjustable maximum width, and a clean, responsive design with an optional title and a close button.
 
    **Usage**
 
@@ -51,7 +68,7 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
    };
    ```
 
-3. **FormModel**: A highly customizable and versatile form builder compatible with Material-UI, offering seamless integration of Formik for form state management and Yup for validation. It supports various input types, including password fields with visibility toggle, and provides real-time validation feedback. Adjustable grid columns, input widths, and a dynamic schema ensure flexibility for diverse form layouts, making it an essential tool for efficient form creation in React applications.
+3. **FormModel**: The purpose of this component is to render a form within a modal dialog window based on the provided input configuration. It supports various input types, including password fields with visibility toggle, and provides real-time validation feedback.Key features includes adjustable grid columns, input widths, and a dynamic schema ensure flexibility for diverse form layouts.
 
    **Usage**
 
@@ -108,7 +125,7 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
    };
    ```
 
-4. **StepperFormModel**: combines Material-UI's Stepper with form functionalities, providing a step-by-step user experience for complex form processes. It's perfect for scenarios like registrations or multi-stage data entries, offering customizable step labels, input fields, and navigation buttons.
+4. **StepperFormModel**: The purpose of this component is to provide the functionality of a stepper (or multi-step) form with that of a modal dialog. It allows users to complete a form in a step-by-step manner within a modal window, making it perfect for scenarios like registrations or multi-stage data entries, offering customizable step labels, input fields, and navigation buttons.
 
    **Usage**
 
@@ -172,7 +189,7 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
    };
    ```
 
-5. **GridModel**: an advanced and highly customizable data grid solution, seamlessly integrated with Material-UI. Designed for flexibility and ease of use, it supports features like dynamic data rendering, printing, and exporting functionalities. The component includes interactive elements such as a calendar for date filtering, custom button actions, and an option to add new data entries, making it suitable for a wide range of data management tasks.
+5. **GridModel**: The purpose of this component is to set up a grid component to display tabular data with custom column configuration, data rows, and styling. The component seamlessly integrated with material UI is designed for flexibility and ease of use. It supports features like dynamic data rendering, printing, and exporting functionalities.It also includes interactive elements such as a calendar for date filtering, custom button actions, and an option to add new data entries, making it suitable for a wide range of data management tasks.
 
    **Usage**
 
@@ -225,7 +242,9 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
    };
    ```
 
-6. **SideBarModel**: a sleek, responsive sidebar navigation system designed to enhance Material-UI applications. It features a collapsible drawer with customizable width, color themes, and icon-based navigation items. This model is composed of DrawerItemsModel and ListItemsModel, which collectively handle the rendering of navigation items, including support for nested sub-links and sections. The sidebar's functionality is augmented with React Router for seamless navigation and route management. Users can expand or collapse the sidebar, offering a space-efficient way to access various parts of an application. The SideBarModel is an ideal solution for applications requiring a robust, aesthetically pleasing navigation system with adaptable features and a user-friendly interface.
+6. **SideBarModel**: The SideBarModel component provides a robust, aesthetically pleasing navigation system with adaptable features and a user-friendly interface. It's suitable for applications requiring a comprehensive sidebar navigation solution within a Material-UI environment.
+
+   This component is composed of _DrawerItemsModel_ and _ListItemsModel_, which collectively handle the rendering of navigation items, including support for nested sub-links and sections. The sidebar's functionality is augmented with React Router for seamless navigation and route management. Users can expand or collapse the sidebar, offering a space-efficient way to access various parts of an application.
 
    **Usage**
 
@@ -235,13 +254,13 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
    import { SideBarModel } from "next-gen-mui";
 
    const App = () => {
-        const NavHeader = () => {
-            return (
-                {** nav header component here**}
-            )
-        }
+       const NavHeader = () => {
+           return (
+               {** nav header component here**}
+           )
+       }
 
-    //for splain sidebar
+   //for splain sidebar
      const navigation = [
        {
          name: "Dashboard",
@@ -284,64 +303,64 @@ NextGenMUI is an innovative plugin designed to extend the capabilities of Materi
      ];
 
      //for sidebar with sections
-    const nav = {
-    sections: [
-      {
-        title: "Overview",
-        list: [...navigation],
-      },
-      {
-        title: "Accounts",
-        list: [
-          {
-            name: "Chat",
-            icon: ChatBubbleIcon
-          },
-          {
-            name: "Settings",
-            icon: SettingsIcon
-          },
-          {
-            name: "Logout",
-            icon: LogoutIcon
-          }
-        ]
-      }
-    ]
+   const nav = {
+   sections: [
+     {
+       title: "Overview",
+       list: [...navigation],
+     },
+     {
+       title: "Accounts",
+       list: [
+         {
+           name: "Chat",
+           icon: ChatBubbleIcon
+         },
+         {
+           name: "Settings",
+           icon: SettingsIcon
+         },
+         {
+           name: "Logout",
+           icon: LogoutIcon
+         }
+       ]
+     }
+   ]
    }
 
      return (
-        <SideBarModel
-            navigateItems=//if it has section, nav, else navigation
-            NavHeader={NavHeader}
-            openHeader={open}
-            activeTabBackgroundColor="#395759"
-            backgroundColor="#001d25"
-            textColor="#c8cecf"
-            options={{
-            listItemButton: {
-                border: "1px solid red",
-                padding: .7
-            }
-            listItemButton: (list) => (
-                {
-                border: "1px solid red",
-                paddingY: list.isActiveTab ? 1 : 0
-                }
-            ),
-            listItemText: {
-                color: "red"
-            },
-            getColor: (params) => {
-                return params.isActiveTab ? "red" : "white"
-            }
-            }}
-        />
+       <SideBarModel
+           navigateItems=//if it has section, nav, else navigation
+           NavHeader={NavHeader}
+           openHeader={open}
+           activeTabBackgroundColor="#395759"
+           backgroundColor="#001d25"
+           textColor="#c8cecf"
+           options={{
+           listItemButton: {
+               border: "1px solid red",
+               padding: .7
+           }
+           listItemButton: (list) => (
+               {
+               border: "1px solid red",
+               paddingY: list.isActiveTab ? 1 : 0
+               }
+           ),
+           listItemText: {
+               color: "red"
+           },
+           getColor: (params) => {
+               return params.isActiveTab ? "red" : "white"
+           }
+           }}
+       />
      )
    };
    ```
 
-7. **PopoverModel**: Enriches Material-UI applications with a stylish, customizable menu, featuring a sleek dropdown design. It allows for dynamic menu item rendering, each with optional icons and individual click handlers. This model elegantly integrates with Material-UI's Menu component, offering a visually appealing and user-friendly interface. It's ideal for adding context-sensitive menus to enhance user interaction in modern web applications.
+7. **PopoverModel**: This component is designed to display a popover menu with customizable options. It allows for dynamic menu item rendering, each with optional icons and individual click handlers. This model elegantly integrates with Material-UI's Menu component, offering a visually appealing and user-friendly interface. It's ideal for adding context-sensitive menus to enhance user interaction in modern web applications.
 
    **Usage**
 
@@ -414,12 +433,12 @@ Begin by forking the repository to your own GitHub account. This creates a copy 
 Clone the forked repository to your local machine. This step allows you to work on the codebase locally.
 
 ### 3. Install Dependencies
-  
+
 ```shell
 cd YOUR-REPOSITORY
 yarn install
 ```
-  
+
 ### 4. Create a New Branch
 
 ```shell
