@@ -8,9 +8,10 @@ Incorporating NextGenMUI components contributes to an improved development exper
 ## Installation
 
 Run one of the following commands to add NextGenMUI to your React project:
-``yarn add next-gen-mui
 
-npm install next-gen-mui``
+````yarn add next-gen-mui
+
+npm install next-gen-mui```
 
 ## Usage
 
@@ -38,7 +39,7 @@ const App = () => {
     />
   );
 };
-```
+````
 
 2. **DialogModel**: The purpose of this component is to create dialog modals within the user interface . Dialog is a type of modal window that temporarily interrupts the user's interaction with the main content to present important information, requests for confirmation, or input forms.Key features include flexible width settings, adjustable maximum width, and a clean, responsive design with an optional title and a close button.
 
