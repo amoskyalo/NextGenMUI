@@ -2,14 +2,16 @@
 
 <img width="142" alt="image" src="https://github.com/amoskyalo/NextGenMUI/assets/91586973/f62ec0db-c7c4-4b3c-943f-9bd30403a645">
 
-NextGenMUI is a plugin that integrates seamlessly with the popular React UI framework Material-UI, offering additional functionality and customization options to streamline the development process. It consists of a collection of pre-styled easy-to-use components that efficiently manage dialogs, handle user interactions, and create dynamic and responsive forms and other features, while following Material-UI's design specifications.
+NextGenMUI is a plugin that integrates seamlessly with the popular React UI framework Material-UI, offering additional functionality and customization options to streamline the development process.
+It consists of a collection of pre-styled easy-to-use components that efficiently manage dialogs, handle user interactions, and create dynamic and responsive forms and other features, while following Material-UI's design specifications.
+
 Incorporating NextGenMUI components contributes to an improved development experience and enhanced user interfaces in your React applications.
 
 ## Installation
 
 Run one of the following commands to add NextGenMUI to your React project:
 
-```
+```shell
 yarn add next-gen-mui
 
 npm install next-gen-mui
@@ -242,7 +244,7 @@ After installation, import the components and start using them.
 
 6. **SideBarModel**: The SideBarModel component provides a robust, aesthetically pleasing navigation system with adaptable features and a user-friendly interface. It's suitable for applications requiring a comprehensive sidebar navigation solution within a Material-UI environment.
 
-   This component is composed of DrawerItemsModel and ListItemsModel, which collectively handle the rendering of navigation items, including support for nested sub-links and sections. The sidebar's functionality is augmented with React Router for seamless navigation and route management. Users can expand or collapse the sidebar, offering a space-efficient way to access various parts of an application.
+   This component is composed of _DrawerItemsModel_ and _ListItemsModel_, which collectively handle the rendering of navigation items, including support for nested sub-links and sections. The sidebar's functionality is augmented with React Router for seamless navigation and route management. Users can expand or collapse the sidebar, offering a space-efficient way to access various parts of an application.
 
    **Usage**
 
@@ -470,7 +472,3 @@ git push origin your-branch-name
 Go to your forked repository on GitHub and open a pull request to the original repository. Provide a detailed description your changes and reference any related issues. Give a reason too of why they should be merged.
 
 Please ensure your code adheres to our coding standards and include any necessary tests. We look forward to your contributions! 🌟
-
-```
-
-```
